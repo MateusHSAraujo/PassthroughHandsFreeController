@@ -1,0 +1,78 @@
+using UnityEngine;
+
+
+public class CursorController : MonoBehaviour
+{
+    public float distanceThreshold; // Distance threshold to change cursor position
+    public float hitpointTimeToTrigger; // Time spent scaling the hitpoint indicator before it is triggered
+    public float maxHitpointIndicatorScale; // Maximum scale for hitpoint indicator
+
+    private Vector3 prevPosition; // Previous position of the cursor
+    private HitpointIndicator hitpointIndicator;
+
+    void Awake()
+    {
+        Debug.Log("CursorController Awake method called.", this);
+        // Ensure the cursor is initially inactive
+        gameObject.SetActive(false);
+        hitpointIndicator = GetComponentInChildren<HitpointIndicator>();
+        if (hitpointIndicator == null) Debug.LogError("HitpointIndicator component not found on this GameObject.");
+            
+        // Initiate the hitpoint indicator with the specified parameters
+        hitpointIndicator.Init(hitpointTimeToTrigger, maxHitpointIndicatorScale);
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        Debug.Log("CursorController Start method called.", this);
+        prevPosition = Vector3.zero; // Initialize previous position to zero
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("CursorController OnEnable method called.", this);
+        // Subscribe to the OnIndicatorFilled event
+        if (hitpointIndicator != null) hitpointIndicator.OnIndicatorFilled += DeactivateCursor; 
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("CursorController OnDisable method called.", this);
+        // Unsubscribe from the OnIndicatorFilled event
+        if (hitpointIndicator != null) hitpointIndicator.OnIndicatorFilled -= DeactivateCursor;
+    }
+
+
+    public void UpdateCursorPosition(Vector3 newPosition, Quaternion cursorRotation)
+    {
+        Debug.Log($"Updating cursor position. New position: {newPosition}");
+        Debug.Log($"Distance calculation: prevPosition = {prevPosition}, newPosition = {newPosition}, distance = {Vector3.Distance(prevPosition, newPosition)}");
+        if (gameObject.activeSelf == false)
+        {
+            Debug.Log("Floor hit and cursor disabled. Enabling cursor.");
+            prevPosition = newPosition; // Store the initial hit point
+            transform.SetPositionAndRotation(newPosition, cursorRotation); // Update cursor position and rotation
+            gameObject.SetActive(true); // Activate cursor
+        }
+        else if (Vector3.Distance(prevPosition, newPosition) > distanceThreshold)
+        {
+            Debug.Log("Floor hit outside threshold distance. Changing cursor position. Reseting hitpoint indicator.");
+            prevPosition = newPosition; // Update the previous hit point
+            hitpointIndicator.StartScaling(); // Reset the hitpoint indicator
+            transform.SetPositionAndRotation(newPosition, cursorRotation); // Update cursor position and rotation
+        }
+        else
+        {
+            Debug.Log("Floor hit inside distance. Keep scaling hitpoint indicator.");
+        }
+    }
+
+    public void DeactivateCursor()
+    {
+        Debug.Log("Deactivating cursor and hitpoint indicator.");
+        hitpointIndicator.StopScaling(); // Stop scaling the hitpoint indicator
+        gameObject.SetActive(false); // Deactivate the cursor
+        prevPosition = Vector3.zero; // Reset previous position
+    }
+}

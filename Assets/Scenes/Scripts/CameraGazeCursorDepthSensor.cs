@@ -26,7 +26,7 @@ public class CameraGazeCursorDepthSensor : MonoBehaviour
         raycastManager = FindFirstObjectByType<EnvironmentRaycastManager>();
         if (raycastManager == null)
         {
-            Debug.LogError("EnvironmentRaycastManager not found in the scene.");
+            DebugLogger.LogError("EnvironmentRaycastManager not found in the scene.");
         }
     }
 
@@ -47,7 +47,7 @@ public class CameraGazeCursorDepthSensor : MonoBehaviour
         ray = new Ray(cameraTransform.position, cameraTransform.forward);
         if (raycastManager.Raycast(ray, out EnvironmentRaycastHit hit1))
         {
-            Debug.Log("Hit: " + hit1.point);
+            DebugLogger.Log("Hit: " + hit1.point);
 
             // Define a rotação do cursor para que ele se alinhe com a normal da superfície.
             // O primeiro argumento (hit1.normal) faz com que o "frente" do cursor aponte na direção da normal.
@@ -84,26 +84,26 @@ public class CameraGazeCursorDepthSensor : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
 
-                Debug.Log("Hit: " + hit.collider.gameObject.name);
+                DebugLogger.Log("Hit: " + hit.collider.gameObject.name);
                 if (hit.collider.gameObject.name == "FLOOR_EffectMesh")
                 {
                     if (cursor.activeSelf == false)
                     {
-                        Debug.Log("Floor hit and cursor disabled. Enabling cursor.");
+                        DebugLogger.Log("Floor hit and cursor disabled. Enabling cursor.");
                         prevHit = hit; // Store the initial hit point
                         cursor.transform.position = hit.point;
                         cursor.SetActive(true);
                     }
                     else if (Vector3.Distance(prevHit.point, hit.point) > distanceThreshold)
                     {
-                        Debug.Log("Floor hit outside distance. Changing cursor position. Deactivating hitpoint indicator.");
+                        DebugLogger.Log("Floor hit outside distance. Changing cursor position. Deactivating hitpoint indicator.");
                         hitpointIndicator.SetActive(false);
                         prevHit = hit; // Update the previous hit point
                         cursor.transform.position = hit.point;
                     }
                     else
                     {
-                        Debug.Log("Floor hit inside distance. Scaling hitpoint indicator.");
+                        DebugLogger.Log("Floor hit inside distance. Scaling hitpoint indicator.");
                         if (hitpointIndicator.activeSelf == false)
                         {
                             hitpointIndicator.transform.localScale = Vector3.one;
@@ -114,14 +114,14 @@ public class CameraGazeCursorDepthSensor : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Hit on non-floor object. Deactivating cursor and hitpoint indicator.");
+                    DebugLogger.Log("Hit on non-floor object. Deactivating cursor and hitpoint indicator.");
                     cursor.SetActive(false); // Disable cursor if not hitting the floor
                     hitpointIndicator.SetActive(false); // Disable hitpoint indicator if not hitting the floor
                 }
             }
             else
             {
-                Debug.Log("No hit detected");
+                DebugLogger.Log("No hit detected");
             }
             */
         }

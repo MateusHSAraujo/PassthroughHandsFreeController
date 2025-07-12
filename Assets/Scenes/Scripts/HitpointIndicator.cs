@@ -16,21 +16,21 @@ public class HitpointIndicator : MonoBehaviour
     {
         if (isScaling)
         {
-            Debug.Log("Scaling hitpoint indicator.", this);
+            DebugLogger.Log("Scaling hitpoint indicator.", this);
             // Calculate the new scale for the hitpoint indicator
             float scaleDelta = scaleSpeed * Time.deltaTime;
-            Debug.Log($@"Scaling hitpoint indicator.  
+            DebugLogger.Log($@"Scaling hitpoint indicator.  
                      Current hitpoint indicator scale: {transform.localScale}; 
                      Hitpoint indicator scale speed: {scaleSpeed}; 
                      Time.deltaTime: {Time.deltaTime};
                      Scaling hitpoint indicator by: {scaleDelta}", this);
             // Applying new scale
             transform.localScale += new Vector3(scaleDelta, scaleDelta, scaleDelta);
-            Debug.Log($"New hitpoint indicator scale{transform.localScale}", this);
+            DebugLogger.Log($"New hitpoint indicator scale{transform.localScale}", this);
         
             if (transform.localScale.x >= maxScale)
             {
-                Debug.Log("Hitpoint indicator reached maximum scale. Triggering activation callback.", this);
+                DebugLogger.Log("Hitpoint indicator reached maximum scale. Triggering activation callback.", this);
                 StopScaling(); // Stop scaling after reaching maximum scale
                 OnIndicatorFilled?.Invoke(); // Invoke the activation callback if set
             }
@@ -39,7 +39,7 @@ public class HitpointIndicator : MonoBehaviour
 
     public void Init(float timeToTrigger, float maxScale)
     {
-        Debug.Log("Initializing hitpoint indicator with time to trigger: " + timeToTrigger + ", max scale: " + maxScale, this);
+        DebugLogger.Log("Initializing hitpoint indicator with time to trigger: " + timeToTrigger + ", max scale: " + maxScale, this);
         gameObject.SetActive(false);
         transform.localScale = Vector3.one; // Reset scale to default when activated
         this.timeToTrigger = timeToTrigger;

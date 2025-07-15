@@ -4,47 +4,42 @@ using System.Collections.Generic;
 using Meta.XR;
 using Meta.XR.MRUtilityKit;
 
-public class CameraGazeCursor : MonoBehaviour
+namespace PassthroughHandsFreeController.MainScene
 {
-    public Transform cameraTransform;
-    public GameObject prefabCursor;
-    public GameObject canvasPrefab;
-
-    private GameObject cursorObject;
-    private GameObject canvasObject;
-
-    private MovementCanvas MovementCanvas;
-    private CursorController CursorController;
-
-    private bool isCanvasOpen;
-
-    // Awake is called when the script instance is being loaded
-    void Awake()
+    /// <summary>
+    /// This script manages the camera gaze cursor functionality, allowing interaction with the environment.
+    /// </summary>
+    public class CameraGazeCursor : MonoBehaviour
     {
-        cursorObject = Instantiate(prefabCursor, Vector3.zero, Quaternion.identity);
-        canvasObject = Instantiate(canvasPrefab, Vector3.zero, Quaternion.identity);
-        CursorController = cursorObject.GetComponent<CursorController>();
-        HitpointIndicator indicator = cursorObject.GetComponentInChildren<HitpointIndicator>(true);
-        if (indicator == null) DebugLogger.LogError("HitpointIndicator component not found on the cursor object.");
-        else
+        public GameObject MainCamera;
+        public GameObject prefabCursor;
+
+        private MovementCanvas MovementCanvas;
+        private CursorController CursorController;
+
+        // Awake is called when the script instance is being loaded
+        void Awake()
         {
-            indicator.OnIndicatorFilled += ActivateCanvas;
+            CursorController = Instantiate(prefabCursor, Vector3.zero, Quaternion.identity).GetComponent<CursorController>();
+            HitpointIndicator indicator = CursorController.GetComponentInChildren<HitpointIndicator>(true);
+            if (indicator == null) DebugLogger.LogError("HitpointIndicator component not found on the cursor object.");
+            else
+            {
+                indicator.OnIndicatorFilled += ActivateCanvas;
+            }
+            MovementCanvas = MovementCanvas.Instance;
+            if (MovementCanvas == null) DebugLogger.LogError("MovementCanvas component not found on the scene");
         }
-        MovementCanvas = canvasObject.GetComponent<MovementCanvas>();
-        if (MovementCanvas == null) DebugLogger.LogError("MovementCanvas component not found on the scene");
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!isCanvasOpen)
+        // Update is called once per frame
+        void Update()
         {
-            Ray ray = new(cameraTransform.position, cameraTransform.forward);
+            Ray ray = new(MainCamera.transform.position, MainCamera.transform.forward);
 
             // Logic to make de camera gaze cursor work with the raycast based on the scene mesh pre-loaded
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Quaternion cursorRotation = Quaternion.LookRotation(hit.normal, cameraTransform.up);
+                Quaternion cursorRotation = Quaternion.LookRotation(hit.normal, MainCamera.transform.up);
                 DebugLogger.Log("Hit: " + hit.collider.gameObject.name);
                 if (hit.collider.gameObject.name == "FLOOR_EffectMesh")
                 {
@@ -54,7 +49,7 @@ public class CameraGazeCursor : MonoBehaviour
                 else
                 {
                     DebugLogger.Log("Hit on non-floor object. Deactivating CursorController.");
-                    if (cursorObject.activeSelf) CursorController.DeactivateCursor();
+                    if (CursorController.gameObject.activeSelf) CursorController.DeactivateCursor();
                 }
             }
             else
@@ -62,21 +57,27 @@ public class CameraGazeCursor : MonoBehaviour
                 DebugLogger.Log("No hit detected");
             }
         }
-        else
+
+        private void ActivateCanvas()
         {
-            DebugLogger.Log("Canvas open. Not updating");
+            DebugLogger.Log("Activating canvas.");
+            Vector3 canvasPosition = CursorController.gameObject.transform.position;
+            canvasPosition.y = MainCamera.transform.position.y - 0.2f; // Align the canvas with the camera height
+            MovementCanvas.ShowCanvas(canvasPosition, MainCamera.transform);
+            gameObject.SetActive(false);
         }
-    
+
+        public void OnMovementConfirmed()
+        {
+            DebugLogger.Log("Confirm toggle was activated. Starting movement sequence.");
+            MovementCanvas.HideCanvas();
+        }
+
+        public void OnMovementCancelled()
+        {
+            DebugLogger.Log("Cancel toggle was activated. Restarting CameraGazeCursor functionalities");
+            MovementCanvas.HideCanvas();
+            gameObject.SetActive(true);
+        }
     }
-    
-    private void ActivateCanvas()
-    {
-        DebugLogger.Log("Activating canvas.");
-        isCanvasOpen = true;
-        Vector3 canvasPosition = cursorObject.transform.position;
-        canvasPosition.y = cameraTransform.position.y - 0.2f; // Align the canvas with the camera height
-        MovementCanvas.ShowCanvas(canvasPosition, cameraTransform);
-    }
-    
-    
 }

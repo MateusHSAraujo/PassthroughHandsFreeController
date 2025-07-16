@@ -7,6 +7,9 @@ public class CursorController : MonoBehaviour
     public float hitpointTimeToTrigger; // Time spent scaling the hitpoint indicator before it is triggered
     public float maxHitpointIndicatorScale; // Maximum scale for hitpoint indicator
 
+    //[TODO]: Add a scale factor to make the cursor bigger the further the hitpoint. Also scale the distanceThreshold to
+    // make selecting the point easier.
+
     private Vector3 prevPosition; // Previous position of the cursor
     private HitpointIndicator hitpointIndicator;
 

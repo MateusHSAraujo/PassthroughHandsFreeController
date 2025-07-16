@@ -63,7 +63,7 @@ namespace PassthroughHandsFreeController.MainScene
             DebugLogger.Log("Activating canvas.");
             Vector3 canvasPosition = CursorController.gameObject.transform.position;
             canvasPosition.y = MainCamera.transform.position.y - 0.2f; // Align the canvas with the camera height
-            MovementCanvas.ShowCanvas(canvasPosition, MainCamera.transform);
+            MovementCanvas.ShowCanvas(canvasPosition, MainCamera.transform, Vector3.Distance(MainCamera.transform.position,canvasPosition));
             gameObject.SetActive(false);
         }
 

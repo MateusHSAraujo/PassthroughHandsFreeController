@@ -1032,6 +1032,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6747005688939382251, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
+      propertyPath: somAbrirMenu
+      value: 
+      objectReference: {fileID: 8300000, guid: 1310bd00360df084e96ccc9a42f601b7, type: 3}
+    - target: {fileID: 6747005688939382251, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
+      propertyPath: uiHelpersPrefab
+      value: 
+      objectReference: {fileID: 1732808951507650, guid: a9d2de84afb308a4796cc671d3432b4d, type: 3}
+    - target: {fileID: 6747005688939382251, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
       propertyPath: m_uiHelpersToInstantiate
       value: 
       objectReference: {fileID: 1732808951507650, guid: a9d2de84afb308a4796cc671d3432b4d, type: 3}
@@ -1132,11 +1140,23 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1426379183}
     - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 842984229}
+    - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
@@ -1144,11 +1164,23 @@ PrefabInstance:
       value: OnMovementConfirmed
       objectReference: {fileID: 0}
     - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PassthroughHandsFreeController.MainScene.CameraGazeCursor, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.AudioSource, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890894074989033886, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8964696818580643124, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
@@ -1184,6 +1216,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
+--- !u!82 &842984229 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4931111458137564082, guid: 17a0179d553d8c04d928c02e636f0b18, type: 3}
+  m_PrefabInstance: {fileID: 842984228}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &881484158
 GameObject:
   m_ObjectHideFlags: 0

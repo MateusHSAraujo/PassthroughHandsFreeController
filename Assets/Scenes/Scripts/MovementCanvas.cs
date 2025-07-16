@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +11,20 @@ namespace PassthroughHandsFreeController.MainScene
     public class MovementCanvas : MonoBehaviour
     {
         [SerializeField]
-        private GameObject m_uiHelpersToInstantiate = null;
+        private GameObject uiHelpersPrefab = null;
+        private GameObject m_uiHelpers;
 
         public static MovementCanvas Instance;
+
         
+        private readonly float scaleFactor = 0.001f;
+        private readonly float minScale = 0.002f;
+        private readonly float maxScale = 0.008f;
+
         private Toggle[] m_toggles;
         private LaserPointer m_lp;
+        private AudioSource m_audioSource;
+        private CanvasGroup m_canvasGroup;
 
         void Awake()
         {
@@ -24,7 +33,7 @@ namespace PassthroughHandsFreeController.MainScene
             Debug.Assert(Instance == null);
             Instance = this;
 
-            _ = Instantiate(m_uiHelpersToInstantiate);
+            m_uiHelpers = Instantiate(uiHelpersPrefab);
 
             // Laser pointer
             m_lp = FindFirstObjectByType<LaserPointer>();
@@ -45,26 +54,51 @@ namespace PassthroughHandsFreeController.MainScene
             if (m_toggles.Length != 2) DebugLogger.LogError($@"Movement cancelation or confirmation toggles not found. 
                                                                Toggles count:{m_toggles.Length}");
 
-            gameObject.SetActive(false); // Initially deactivate the canvas
+            m_audioSource = GetComponent<AudioSource>();
+
+            m_canvasGroup = GetComponent<CanvasGroup>();
+
+            // Initially hide canvas
+            m_canvasGroup.alpha = 0;
+            m_canvasGroup.interactable = false;
+            m_canvasGroup.blocksRaycasts = false;
         }
 
-        public void ShowCanvas(Vector3 position, Transform lookAt)
+        public void ShowCanvas(Vector3 position, Transform lookAt, float distance)
         {
-            Debug.Log("Showing Movement Canvas at position: " + position);
+            DebugLogger.Log($"Distance from canvas to camera: {distance}");
             transform.position = position;
             transform.LookAt(lookAt);
             transform.Rotate(0f, 180f, 0f, Space.Self);
+
+            // Distance scaling
+            float calculatedScaling = Math.Clamp(scaleFactor * distance, minScale, maxScale);
+            transform.localScale = Vector3.one * calculatedScaling;
+
+            Debug.Log($"Showing Movement Canvas at position: {position}, with scale: {transform.localScale.x}");
+
             foreach (Toggle t in m_toggles)
             {
                 t.SetIsOnWithoutNotify(false);
             }
+
             gameObject.SetActive(true); // Activate the canvas
+
+            m_audioSource.Play();
+
+            // Showing canvas
+            m_canvasGroup.alpha = 1;
+            m_canvasGroup.interactable = true;
+            m_canvasGroup.blocksRaycasts = true;
         }
 
         public void HideCanvas()
         {
             Debug.Log("Hiding Movement Canvas.");
-            gameObject.SetActive(false); // Deactivate the canvas
+            // Hide canvas
+            m_canvasGroup.alpha = 0;
+            m_canvasGroup.interactable = false;
+            m_canvasGroup.blocksRaycasts = false;
         }
     }
 }

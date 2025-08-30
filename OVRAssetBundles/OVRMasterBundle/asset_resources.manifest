@@ -1,0 +1,167 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.44f1
+CRC: 1371385906
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9c7372012f13cf03980e8c93e016406a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ee1c3a7e98ac2a4e695a21804c07325
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: b157ebf39f55651096372f0f2d19e770
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8922a6ca86889d84f8371a29d37b6dc8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2705215ac5b84b70bacc50632be6e391, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b95e00e48ede4f8c896318a0e47ea88a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2b76bcf034ab49e4a8cd30239a716460, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f3fe6e38ac2d4c22b04340d6eda2a47e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 84a92b25f83d49b9bc132d206b370281, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a7d75bea1662418ab5f9e0c22110bc09, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: efa1458c2bc55e04b872c61942be2866, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ab2114bdc8544297b417dfefe9f1e410, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 54d21f6ece3b46479f0c328f8c6007e0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 60e5406209e5ed147bb02ed71f9c40f3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3863570e7e6387a40ae4f323d83291e5, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.FaceInfo_Legacy
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.FontAssetCreationSettings
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.KerningTable
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_Character
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_FontFeatureTable
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_FontWeightPair
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_Sprite
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_SpriteCharacter
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_SpriteGlyph
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_Style
+- AssemblyName: Unity.XR.CompositionLayers
+  ClassName: Unity.XR.CompositionLayers.Layers.CylinderLayerData
+- AssemblyName: Unity.XR.CompositionLayers
+  ClassName: Unity.XR.CompositionLayers.Layers.QuadLayerData
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.FaceInfo
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.Glyph
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.GlyphMetrics
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.GlyphRect
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.LowLevel.GlyphAdjustmentRecord
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.LowLevel.GlyphPairAdjustmentRecord
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.LowLevel.GlyphValueRecord
+Assets:
+- Assets/Resources/MetaXRAcousticMaterialMapping.asset
+- Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Drop Shadow.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/LiberationSans
+  SDF - Metalic Green.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Sprite Assets/Default Sprite Asset.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/LiberationSans
+  SDF - Soft Mask.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset
+- Assets/TextMesh Pro/Resources/Sprite Assets/EmojiOne.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Sprite Assets/DropCap Numbers.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF
+  - HDRP Unlit.mat
+- Assets/Resources/MetaXRAcousticSettings.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/LiberationSans
+  SDF - Overlay.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF
+  - URP.mat
+- Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF Glow.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF - Drop
+  Shadow.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Oswald Bold SDF.asset
+- Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Outline.mat
+- Assets/Resources/MetaXRAudioSettings.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Unity SDF - HDRP
+  LIT - Bloom.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF
+  - Surface.mat
+- Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt
+- Assets/TextMesh Pro/Examples & Extras/Resources/Color Gradient Presets/Blue to
+  Purple - Vertical.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Color Gradient Presets/Light to
+  Dark Green - Vertical.asset
+- Assets/Resources/OVRBuildConfig.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF Logo
+  - URP.mat
+- Assets/Resources/PerformanceTestRunSettings.json
+- Assets/Resources/OVROverlayCanvasSettings.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF - Outline.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Electronic Highway
+  Sign SDF.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Unity SDF - HDRP
+  LIT - Outline.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF - Sunny
+  Days.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Unity SDF.asset
+- Assets/Resources/InputActions.asset
+- Assets/Resources/PerformanceTestRunInfo.json
+- Assets/TextMesh Pro/Resources/TMP Settings.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF
+  - Drop Shadow.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF -
+  Outline.mat
+- Assets/CompositionLayers/UserSettings/Resources/CompositionLayersRuntimeSettings.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Color Gradient Presets/Dark to
+  Light Green - Vertical.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF -
+  Drop Shadow.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF -
+  Drop Shadow - 2 Pass.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF Logo.mat
+- Assets/Resources/ImmersiveDebuggerSettings.asset
+- Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
+- Assets/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Color Gradient Presets/Yellow to
+  Orange - Vertical.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF.asset
+- Assets/Resources/OculusRuntimeSettings.asset
+- Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt
+- Assets/Resources/OVRPlatformToolSettings.asset
+Dependencies:
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_shader0
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_ttf0

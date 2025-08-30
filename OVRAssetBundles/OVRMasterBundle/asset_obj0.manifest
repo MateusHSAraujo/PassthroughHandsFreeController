@@ -1,0 +1,35 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.44f1
+CRC: 3242096082
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a6afaece12cbba1e34b94c16afe75bd3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: d09b92296f2caa0222796a41c2defd69
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 9b029295536a953a657ec55e80b58936
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Scenes/PassthroughHandsFreeController/Prefabs/half_sphere.obj
+- Assets/Scenes/PassthroughHandsFreeController/Prefabs/half_torus.obj
+Dependencies:
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_shader0

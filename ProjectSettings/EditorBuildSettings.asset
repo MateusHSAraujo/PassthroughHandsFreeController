@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PassthroughHandsFreeController.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/3 QRCodeTracking/QRCodeScannerTest.unity
+    guid: 5f2c8257902ecdd47a8b6bf1f9fa007e
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 8b8e4945fa9478047a0d332dfff5acf6, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

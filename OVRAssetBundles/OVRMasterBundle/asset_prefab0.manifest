@@ -1,0 +1,163 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.44f1
+CRC: 2462512013
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f1e6004421deb98937d0f75a3b607258
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 881f8a12cca8ec5ee053d180a20df66c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 234266f7412211692192e7d93cae4b5c
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 81
+  Script: {instanceID: 0}
+- Class: 82
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 05c5c168184154d4fa7c207883c1eb8c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5178bc8574ce2bf4388e787a2e2af326, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b558aa8ebb866bd4da56c536a7b4eb71, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71a155ece80369d4e99bdaf5e59169b5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ef803169364cc6e4d9b4df31d9c7fed7, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: af96daf6abf4f58429d3913845b5bc8a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2150cf2475fb80d4794ccb7c7f1bc58a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: df9f338034892c44ebb62d97894772f1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 56549cdaaf4d81e4387b02698fd3daa0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6f5e9631f3cd04da0acc02bc5b51f5d4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7e933e81d3c20c74ea6fdc708a67e3a5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8f1a9a1d119a5944aacfb87d1ec283a2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d3e04486f26dd074ca94302bd788a1ea, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 093b4031c300bd241849c0c39523b111, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ef9a7893e57c04c0db4114c70954b915, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2d8affdff7ba47d892cc734baac9ac71, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7aaf960227867044282d921171d2d7ac, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5b023183069df224080314a560e6e1ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a07f270ac36c49789466c75ceb88424c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 120
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+- Class: 225
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Meta.XR.BuildingBlocks
+  ClassName: Meta.XR.BuildingBlocks.InstallationRoutineCheckpoint
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.TemporalAA/Settings
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.VertexGradient
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.RectOffset
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.AnimationTriggers
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.ColorBlock
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Navigation
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.SpriteState
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Toggle/ToggleEvent
+Assets:
+- Assets/Scenes/PassthroughHandsFreeController/Prefabs/MovementCanvas.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Rooms/Prefabs/LivingRoom/LivingRoom05.prefab
+- Assets/Scenes/PassthroughHandsFreeController/Prefabs/UIHelpers.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Tools/ImmersiveSceneDebugger.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Rooms/Prefabs/LivingRoom/LivingRoom01.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Rooms/Prefabs/Office/Office08.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Rooms/Prefabs/LivingRoom/LivingRoom07.prefab
+- Packages/com.meta.xr.sdk.interaction/Runtime/Sample/Objects/UISet/Prefabs/Button/UnityUIToggleBased/SecondaryButton_IconAndLabel.prefab
+- Assets/Scenes/PassthroughHandsFreeController/Prefabs/CursorController.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Rooms/Prefabs/Bedroom/Bedroom00.prefab
+- Packages/com.meta.xr.sdk.interaction/Runtime/Sample/Objects/UISet/Prefabs/Button/UnityUIToggleBased/PrimaryButton_IconAndLabel.prefab
+- Packages/com.meta.xr.mrutilitykit/Editor/BuildingBlocks/InstantContentPlacement/Prefabs/EnvironmentRaycastManager.prefab
+- Assets/PassthroughCamera/Prefabs/WebCamTextureManagerPrefab.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Rooms/Prefabs/Office/Office09.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Rooms/Prefabs/Bedroom/Bedroom06.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Rooms/Prefabs/Other/OtherRoom04_empty.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Rooms/Prefabs/LivingRoom/LivingRoom02.prefab
+- Packages/com.meta.xr.mrutilitykit/Core/Rooms/Prefabs/Bedroom/Bedroom03.prefab
+Dependencies:
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_controller0
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_mat0
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_obj0
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_png0
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_resources
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_shader0
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_wav0

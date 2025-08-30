@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.44f1
+CRC: 1981213585
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6115823f821d3b3a26e04b1ffc2388ed
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9a2ca7bdbd1871f7131daf57de908e0c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: d50f69c19a1035b0b66e418bc97ca7e9
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Packages/com.meta.xr.sdk.interaction/Runtime/Sample/Audio/Content/Interaction_BasicRay_Hover.wav
+- Packages/com.meta.xr.sdk.interaction/Runtime/Sample/Audio/Content/Interaction_BasicRay_Back.wav
+- Packages/com.meta.xr.sdk.interaction/Runtime/Sample/Audio/Content/Interaction_DistanceGrab_Unhover.wav
+Dependencies: []

@@ -1,0 +1,40 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.44f1
+CRC: 215347735
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fa3f5567ffba6a319cf0fe9ed44aebae
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4afb0d898c1c22a5e88248733bd69457
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 2f1d9c5f34144de5df252648e936ade4
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Packages/com.meta.xr.sdk.interaction/Runtime/Sample/Materials/RoundedBoxUI.mat
+- Assets/Scenes/PassthroughHandsFreeController/Materials/DebugDrawLine.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/PURPLE_Storage.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/Wireframe.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/BLACK_Window.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/PINK_Bed.mat
+- Assets/Scenes/PassthroughHandsFreeController/Materials/New Material.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/RED_Couch.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/DARKGRAY_WallArt.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/BLUE_Table.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/GREEN_Plant.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/GRAY_Wall.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/RoomBoxEffects.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/ORANGE_Lamp.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/BROWN_Door.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/YELLOW_Screen.mat
+- Packages/com.meta.xr.mrutilitykit/Core/Materials/WHITE_Other.mat
+Dependencies:
+- C:/Users/mateu/Documentos Unicamp/2025-2/EA006/PassthroughHandsFreeController/OVRAssetBundles/OVRMasterBundle/asset_shader0

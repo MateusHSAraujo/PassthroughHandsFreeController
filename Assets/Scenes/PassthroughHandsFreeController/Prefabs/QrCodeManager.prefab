@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3613869948418658708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9107309316567076098}
+  - component: {fileID: 3163753696959145312}
+  - component: {fileID: 4852672344113011901}
+  m_Layer: 0
+  m_Name: QrCodeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9107309316567076098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3613869948418658708}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.060346894, y: 0.1, z: -0.1684718}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3163753696959145312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3613869948418658708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b7ba1bce27de444aa7a963691bd54c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 3125165527598978782, guid: 779f5eab1277241d6b58ee2c44909b20, type: 3}
+  scanUIPrefab: {fileID: 7782473361536767996, guid: 0cb6bf4e3a8db994ca07e33608506120, type: 3}
+  scanTimeout: 3
+  distanceThreshold: 0.1
+  rotationThreshold: 2.5
+  calculatePositionTimeout: 60
+  debug: 1
+  lineRendererDebugTool_l: {fileID: 0}
+  lineRendererDebugTool_r: {fileID: 0}
+  m_WheelchairTrackers: {fileID: 4852672344113011901}
+--- !u!114 &4852672344113011901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3613869948418658708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b2656d276821c4cac0aba3882c0458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

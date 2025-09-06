@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Meta.XR;
 using Meta.XR.MRUtilityKit;
+using System;
 
 namespace PassthroughHandsFreeController.MainScene
 {
@@ -14,21 +15,31 @@ namespace PassthroughHandsFreeController.MainScene
         public GameObject MainCamera;
         public GameObject prefabCursor;
 
-        private MovementCanvas MovementCanvas;
-        private CursorController CursorController;
+        private CameraGazeCursorSelecTargetUI m_GazeCursorCanvas;
+        private CursorController m_CursorController;
+        
+        public event Action<Vector3> OnRequestedMovement; // Callback for activation events
 
         // Awake is called when the script instance is being loaded
         void Awake()
         {
-            CursorController = Instantiate(prefabCursor, Vector3.zero, Quaternion.identity).GetComponent<CursorController>();
-            HitpointIndicator indicator = CursorController.GetComponentInChildren<HitpointIndicator>(true);
+            m_CursorController = Instantiate(prefabCursor, Vector3.zero, Quaternion.identity).GetComponent<CursorController>();
+            HitpointIndicator indicator = m_CursorController.GetComponentInChildren<HitpointIndicator>(true);
             if (indicator == null) DebugLogger.LogError("HitpointIndicator component not found on the cursor object.");
             else
             {
                 indicator.OnIndicatorFilled += ActivateCanvas;
             }
-            MovementCanvas = MovementCanvas.Instance;
-            if (MovementCanvas == null) DebugLogger.LogError("MovementCanvas component not found on the scene");
+            m_GazeCursorCanvas = CameraGazeCursorSelecTargetUI.Instance;
+            if (m_GazeCursorCanvas == null) DebugLogger.LogError("MovementCanvas component not found on the scene");
+
+            // Await for controller to activate
+            gameObject.SetActive(false);
+        }
+
+        public void Activate()
+        {
+            gameObject.SetActive(true);
         }
 
         // Update is called once per frame
@@ -44,12 +55,12 @@ namespace PassthroughHandsFreeController.MainScene
                 if (hit.collider.gameObject.name == "FLOOR_EffectMesh")
                 {
                     DebugLogger.Log("Hit on floor object. Sending to cursor controller.");
-                    CursorController.UpdateCursorPosition(hit.point, cursorRotation);
+                    m_CursorController.UpdateCursorPosition(hit.point, cursorRotation);
                 }
                 else
                 {
                     DebugLogger.Log("Hit on non-floor object. Deactivating CursorController.");
-                    if (CursorController.gameObject.activeSelf) CursorController.DeactivateCursor();
+                    if (m_CursorController.gameObject.activeSelf) m_CursorController.DeactivateCursor();
                 }
             }
             else
@@ -61,22 +72,23 @@ namespace PassthroughHandsFreeController.MainScene
         private void ActivateCanvas()
         {
             DebugLogger.Log("Activating canvas.");
-            Vector3 canvasPosition = CursorController.gameObject.transform.position;
+            Vector3 canvasPosition = m_CursorController.gameObject.transform.position;
             canvasPosition.y = MainCamera.transform.position.y - 0.2f; // Align the canvas with the camera height
-            MovementCanvas.ShowCanvas(canvasPosition, MainCamera.transform, Vector3.Distance(MainCamera.transform.position,canvasPosition));
+            m_GazeCursorCanvas.ShowCanvas(canvasPosition, MainCamera.transform, Vector3.Distance(MainCamera.transform.position,canvasPosition));
             gameObject.SetActive(false);
         }
 
         public void OnMovementConfirmed()
         {
             DebugLogger.Log("Confirm toggle was activated. Starting movement sequence.");
-            MovementCanvas.HideCanvas();
+            m_GazeCursorCanvas.HideCanvas();
+            OnRequestedMovement?.Invoke(m_CursorController.gameObject.transform.position);
         }
 
         public void OnMovementCancelled()
         {
             DebugLogger.Log("Cancel toggle was activated. Restarting CameraGazeCursor functionalities");
-            MovementCanvas.HideCanvas();
+            m_GazeCursorCanvas.HideCanvas();
             gameObject.SetActive(true);
         }
     }

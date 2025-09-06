@@ -6,7 +6,7 @@ public static class DebugLogger
     // Tag format
     private static string FormatTag(string className, string methodName)
     {
-        return $"[{className}::{methodName}]";
+        return $"[PFHFC - {className}::{methodName}]";
     }
 
     // [CallerMemberName] gets the name of the method that called the function

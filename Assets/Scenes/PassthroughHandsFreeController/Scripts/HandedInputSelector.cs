@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace PassthroughHandsFreeController.MainScene
 {
-    
+
     public class HandedInputSelector : MonoBehaviour
     {
 
@@ -24,26 +24,9 @@ namespace PassthroughHandsFreeController.MainScene
             m_inputModule.rayTransform = m_cameraRig.centerEyeAnchor;
         }
 
-        private void Update()
+        void LateUpdate()
         {
-            if (DebugMode)
-            {
-                if (OVRInput.GetActiveController() == OVRInput.Controller.LTouch)
-                {
-                    SetActiveController(OVRInput.Controller.LTouch);
-                }
-                else
-                {
-                    SetActiveController(OVRInput.Controller.RTouch);
-                }
-            }
-            
-        }
-
-        private void SetActiveController(OVRInput.Controller c)
-        {
-            var t = c == OVRInput.Controller.LTouch ? m_cameraRig.leftHandAnchor : m_cameraRig.rightHandAnchor;
-            m_inputModule.rayTransform = t;
+            m_inputModule.rayTransform = m_cameraRig.centerEyeAnchor;
         }
     }
 }

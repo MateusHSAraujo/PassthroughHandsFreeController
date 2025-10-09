@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
 using PassthroughHandsFreeController.MainScene;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AplicationController : MonoBehaviour
 {
     [SerializeField] private CameraGazeCursor m_cameraGazeCursor;
     [SerializeField] private MovementSequenceController m_movementSequenceController;
-    [SerializeField] Task movementTask;
 
     private enum ApplicationControllerStates
     {
@@ -24,7 +24,6 @@ public class AplicationController : MonoBehaviour
 
         if (!m_movementSequenceController) DebugLogger.LogError("MovementSequenceController not attributed on Unity.");
         else m_movementSequenceController.OnMovementSequenceEnded += SystemMovementEnded;
-        movementTask = null;
 
         TransitionTo(ApplicationControllerStates.IDLE);
         m_cameraGazeCursor.Activate();
@@ -38,7 +37,7 @@ public class AplicationController : MonoBehaviour
         {
             case ApplicationControllerStates.IDLE:
                 DebugLogger.Log("Invoking MovementSequenceController to perform movement");
-                movementTask = m_movementSequenceController.PerformMovementSequence(TargetPosition);
+                m_movementSequenceController.PerformMovementSequence(TargetPosition);
                 TransitionTo(ApplicationControllerStates.MOVING);
                 break;
             default:
@@ -51,7 +50,8 @@ public class AplicationController : MonoBehaviour
     void SystemMovementEnded(bool movementSuccess)
     {
         DebugLogger.Log($"Callback invoked. state={m_state} ; movementSuccess={movementSuccess}");
-        switch (m_state) {
+        switch (m_state)
+        {
             case ApplicationControllerStates.MOVING:
                 DebugLogger.Log("Resuming CameraGazeController");
                 m_cameraGazeCursor.Activate();
@@ -61,12 +61,18 @@ public class AplicationController : MonoBehaviour
                 DebugLogger.LogWarning("Invalid state for SystemMovementEnded. Ignoring");
                 break;
         }
-            
+
     }
 
     private void TransitionTo(ApplicationControllerStates dest)
     {
         DebugLogger.Log($"Transitioning state. {m_state} -> {dest}");
         m_state = dest;
+    }
+
+    void OnDisable()
+    {
+        if (m_cameraGazeCursor) m_cameraGazeCursor.OnRequestedMovement -= MoveSystemTo;
+        if (m_movementSequenceController) m_movementSequenceController.OnMovementSequenceEnded -= SystemMovementEnded;
     }
 }

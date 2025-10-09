@@ -40,7 +40,7 @@ namespace PassthroughHandsFreeController.MainScene
         private Vector3 m_forward;
         private Vector3 m_endPoint;
         private bool m_hitTarget;
-        private LineRenderer m_lineRenderer;
+        [SerializeField] private LineRenderer m_lineRenderer;
 
         private void Awake()
         {
@@ -68,7 +68,6 @@ namespace PassthroughHandsFreeController.MainScene
             m_hitTarget = false;
         }
 
-// Isso me parece uma função de callback similar a de Update()
         private void LateUpdate()
         {
             m_lineRenderer.SetPosition(0, m_startPoint);

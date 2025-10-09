@@ -1,0 +1,1955 @@
+// Teste falho que ocorreu logo após o teste de sucesso 3. Novamente, o controlador se perdeu. Mas dessa vez desviou para a
+// direita
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.50, 0.12)",
+                "CurrentDistance":"(-0.70, -0.67)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,34012",
+                "ErrorDistance":"0",
+                "ErrorInt":"0",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"0",
+                "currKhead*errorHead":"24,12217",
+                "Kint*errorInt":"0",
+                "Vr":37,93892,
+                "Vl":62,06108,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<ResThruServer/ServerResponse>:SetResult (ResThruServer/ServerResponse)
+ResThruServer/<SendPayloadToServer>d__1:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruServer.cs:50)
+UnityEngine.Awaitable:RunContinuation ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.49, 0.12)",
+                "CurrentDistance":"(-0.69, -0.67)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,339311",
+                "ErrorDistance":"-0,002585342",
+                "ErrorInt":"-0,3231677",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,002326807",
+                "currKhead*errorHead":"24,1076",
+                "Kint*errorInt":"-0,0003231677",
+                "Vr":43,97384,
+                "Vl":56,02616,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.49, 0.12)",
+                "CurrentDistance":"(-0.69, -0.67)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,340073",
+                "ErrorDistance":"-0,006334419",
+                "ErrorInt":"-1,11497",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,005700977",
+                "currKhead*errorHead":"24,12131",
+                "Kint*errorInt":"-0,00111497",
+                "Vr":43,97166,
+                "Vl":56,02834,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.48, 0.12)",
+                "CurrentDistance":"(-0.68, -0.66)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,326022",
+                "ErrorDistance":"-0,009625429",
+                "ErrorInt":"-2,318149",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,008662886",
+                "currKhead*errorHead":"23,86839",
+                "Kint*errorInt":"-0,002318149",
+                "Vr":44,03622,
+                "Vl":55,96378,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.47, 0.12)",
+                "CurrentDistance":"(-0.68, -0.66)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,324901",
+                "ErrorDistance":"-0,01135012",
+                "ErrorInt":"-3,736914",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,01021511",
+                "currKhead*errorHead":"23,84822",
+                "Kint*errorInt":"-0,003736915",
+                "Vr":44,04237,
+                "Vl":55,95763,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.47, 0.11)",
+                "CurrentDistance":"(-0.67, -0.66)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,325756",
+                "ErrorDistance":"-0,01263908",
+                "ErrorInt":"-5,3168",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,01137517",
+                "currKhead*errorHead":"23,8636",
+                "Kint*errorInt":"-0,0053168",
+                "Vr":44,0396,
+                "Vl":55,9604,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.46, 0.11)",
+                "CurrentDistance":"(-0.67, -0.66)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,33044",
+                "ErrorDistance":"-0,01456104",
+                "ErrorInt":"-7,13693",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,01310494",
+                "currKhead*errorHead":"23,94792",
+                "Kint*errorInt":"-0,00713693",
+                "Vr":44,01987,
+                "Vl":55,98013,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.46, 0.11)",
+                "CurrentDistance":"(-0.66, -0.66)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,328567",
+                "ErrorDistance":"-0,01627907",
+                "ErrorInt":"-9,171813",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,01465116",
+                "currKhead*errorHead":"23,9142",
+                "Kint*errorInt":"-0,009171814",
+                "Vr":44,0297,
+                "Vl":55,9703,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.45, 0.11)",
+                "CurrentDistance":"(-0.66, -0.65)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,326644",
+                "ErrorDistance":"-0,01774479",
+                "ErrorInt":"-11,38991",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,01597031",
+                "currKhead*errorHead":"23,87959",
+                "Kint*errorInt":"-0,01138991",
+                "Vr":44,03979,
+                "Vl":55,96021,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.45, 0.10)",
+                "CurrentDistance":"(-0.65, -0.65)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,324731",
+                "ErrorDistance":"-0,0193904",
+                "ErrorInt":"-13,81371",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,01745136",
+                "currKhead*errorHead":"23,84517",
+                "Kint*errorInt":"-0,01381371",
+                "Vr":44,04998,
+                "Vl":55,95002,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.44, 0.10)",
+                "CurrentDistance":"(-0.64, -0.65)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,326395",
+                "ErrorDistance":"-0,02134251",
+                "ErrorInt":"-16,48153",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,01920826",
+                "currKhead*errorHead":"23,87512",
+                "Kint*errorInt":"-0,01648153",
+                "Vr":44,04426,
+                "Vl":55,95574,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.44, 0.10)",
+                "CurrentDistance":"(-0.64, -0.64)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,326098",
+                "ErrorDistance":"-0,02269693",
+                "ErrorInt":"-19,31864",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,02042724",
+                "currKhead*errorHead":"23,86976",
+                "Kint*errorInt":"-0,01931864",
+                "Vr":44,04733,
+                "Vl":55,95267,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.43, 0.09)",
+                "CurrentDistance":"(-0.63, -0.64)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,323009",
+                "ErrorDistance":"-0,02579531",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,02321578",
+                "currKhead*errorHead":"23,81417",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,06226,
+                "Vl":55,93774,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.42, 0.09)",
+                "CurrentDistance":"(-0.62, -0.64)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,319517",
+                "ErrorDistance":"-0,02953277",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,02657949",
+                "currKhead*errorHead":"23,7513",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,07882,
+                "Vl":55,92118,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.42, 0.09)",
+                "CurrentDistance":"(-0.62, -0.63)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,318767",
+                "ErrorDistance":"-0,03175683",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,02858114",
+                "currKhead*errorHead":"23,7378",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,0827,
+                "Vl":55,9173,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.41, 0.09)",
+                "CurrentDistance":"(-0.61, -0.63)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,318744",
+                "ErrorDistance":"-0,0344458",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,03100122",
+                "currKhead*errorHead":"23,73739",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,0834,
+                "Vl":55,9166,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.40, 0.08)",
+                "CurrentDistance":"(-0.60, -0.63)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,318",
+                "ErrorDistance":"-0,03681045",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,03312941",
+                "currKhead*errorHead":"23,72401",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,08728,
+                "Vl":55,91272,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.40, 0.08)",
+                "CurrentDistance":"(-0.60, -0.63)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,31781",
+                "ErrorDistance":"-0,03973943",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,03576548",
+                "currKhead*errorHead":"23,72058",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,08879,
+                "Vl":55,91121,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.39, 0.08)",
+                "CurrentDistance":"(-0.59, -0.63)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,318312",
+                "ErrorDistance":"-0,04314592",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,03883132",
+                "currKhead*errorHead":"23,72962",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,0873,
+                "Vl":55,9127,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.38, 0.08)",
+                "CurrentDistance":"(-0.58, -0.62)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,318292",
+                "ErrorDistance":"-0,04583323",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,0412499",
+                "currKhead*errorHead":"23,72926",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,088,
+                "Vl":55,912,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.37, 0.07)",
+                "CurrentDistance":"(-0.58, -0.62)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,32619",
+                "ErrorDistance":"-0,04928198",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,04435378",
+                "currKhead*errorHead":"23,87143",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,05323,
+                "Vl":55,94677,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.37, 0.07)",
+                "CurrentDistance":"(-0.57, -0.62)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,315697",
+                "ErrorDistance":"-0,05293333",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,04764",
+                "currKhead*errorHead":"23,68255",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,10127,
+                "Vl":55,89873,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.36, 0.07)",
+                "CurrentDistance":"(-0.56, -0.62)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,312228",
+                "ErrorDistance":"-0,05577473",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,05019726",
+                "currKhead*errorHead":"23,6201",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,11752,
+                "Vl":55,88248,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.35, 0.06)",
+                "CurrentDistance":"(-0.56, -0.61)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,314362",
+                "ErrorDistance":"-0,05714701",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,05143231",
+                "currKhead*errorHead":"23,65852",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,10823,
+                "Vl":55,89177,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.35, 0.06)",
+                "CurrentDistance":"(-0.55, -0.61)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,34521",
+                "ErrorDistance":"-0,05985716",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,05387144",
+                "currKhead*errorHead":"24,21378",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,97002,
+                "Vl":56,02998,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.34, 0.07)",
+                "CurrentDistance":"(-0.54, -0.61)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,356308",
+                "ErrorDistance":"-0,0651634",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,05864706",
+                "currKhead*errorHead":"24,41354",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,92128,
+                "Vl":56,07872,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.34, 0.06)",
+                "CurrentDistance":"(-0.54, -0.61)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,310616",
+                "ErrorDistance":"-0,06849431",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,06164487",
+                "currKhead*errorHead":"23,59109",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,12764,
+                "Vl":55,87236,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.33, 0.06)",
+                "CurrentDistance":"(-0.53, -0.61)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,307788",
+                "ErrorDistance":"-0,07028133",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,06325319",
+                "currKhead*errorHead":"23,54018",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,14077,
+                "Vl":55,85923,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.32, 0.06)",
+                "CurrentDistance":"(-0.52, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,312514",
+                "ErrorDistance":"-0,0728171",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,06553539",
+                "currKhead*errorHead":"23,62525",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,12007,
+                "Vl":55,87993,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.32, 0.06)",
+                "CurrentDistance":"(-0.52, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,316616",
+                "ErrorDistance":"-0,07628585",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,06865726",
+                "currKhead*errorHead":"23,69909",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,10239,
+                "Vl":55,89761,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.31, 0.06)",
+                "CurrentDistance":"(-0.51, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,319593",
+                "ErrorDistance":"-0,08055601",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,0725004",
+                "currKhead*errorHead":"23,75267",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,08996,
+                "Vl":55,91004,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.30, 0.05)",
+                "CurrentDistance":"(-0.50, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,322432",
+                "ErrorDistance":"-0,08410285",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,07569256",
+                "currKhead*errorHead":"23,80378",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,07798,
+                "Vl":55,92202,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.29, 0.05)",
+                "CurrentDistance":"(-0.50, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,327741",
+                "ErrorDistance":"-0,08827817",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,07945035",
+                "currKhead*errorHead":"23,89934",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,05503,
+                "Vl":55,94497,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.29, 0.05)",
+                "CurrentDistance":"(-0.49, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,330538",
+                "ErrorDistance":"-0,09222221",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,08299999",
+                "currKhead*errorHead":"23,94968",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,04333,
+                "Vl":55,95667,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.28, 0.05)",
+                "CurrentDistance":"(-0.48, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,333235",
+                "ErrorDistance":"-0,09627029",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,08664326",
+                "currKhead*errorHead":"23,99823",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,0321,
+                "Vl":55,9679,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.28, 0.05)",
+                "CurrentDistance":"(-0.48, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,334708",
+                "ErrorDistance":"-0,09966633",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,08969969",
+                "currKhead*errorHead":"24,02475",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,02624,
+                "Vl":55,97376,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.27, 0.05)",
+                "CurrentDistance":"(-0.47, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,339416",
+                "ErrorDistance":"-0,1040715",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,09366434",
+                "currKhead*errorHead":"24,10949",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,00604,
+                "Vl":55,99396,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.26, 0.05)",
+                "CurrentDistance":"(-0.46, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,337402",
+                "ErrorDistance":"-0,1064741",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,09582673",
+                "currKhead*errorHead":"24,07324",
+                "Kint*errorInt":"-0,02",
+                "Vr":44,01565,
+                "Vl":55,98435,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.26, 0.05)",
+                "CurrentDistance":"(-0.46, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,344041",
+                "ErrorDistance":"-0,1112708",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1001437",
+                "currKhead*errorHead":"24,19274",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,98685,
+                "Vl":56,01315,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.25, 0.05)",
+                "CurrentDistance":"(-0.45, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,350542",
+                "ErrorDistance":"-0,1167384",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1050645",
+                "currKhead*errorHead":"24,30975",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,95883,
+                "Vl":56,04117,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.24, 0.05)",
+                "CurrentDistance":"(-0.44, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,352612",
+                "ErrorDistance":"-0,120965",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1088685",
+                "currKhead*errorHead":"24,34702",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,95046,
+                "Vl":56,04954,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.23, 0.05)",
+                "CurrentDistance":"(-0.43, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,358313",
+                "ErrorDistance":"-0,1254306",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1128875",
+                "currKhead*errorHead":"24,44964",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,92581,
+                "Vl":56,07419,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.22, 0.04)",
+                "CurrentDistance":"(-0.43, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,36348",
+                "ErrorDistance":"-0,1300101",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1170091",
+                "currKhead*errorHead":"24,54265",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,90359,
+                "Vl":56,09641,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.22, 0.04)",
+                "CurrentDistance":"(-0.42, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,367052",
+                "ErrorDistance":"-0,1336316",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1202684",
+                "currKhead*errorHead":"24,60694",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,88833,
+                "Vl":56,11167,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.21, 0.04)",
+                "CurrentDistance":"(-0.41, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,372582",
+                "ErrorDistance":"-0,1381287",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1243158",
+                "currKhead*errorHead":"24,70648",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,86446,
+                "Vl":56,13554,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.20, 0.04)",
+                "CurrentDistance":"(-0.41, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,377324",
+                "ErrorDistance":"-0,1428891",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1286002",
+                "currKhead*errorHead":"24,79183",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,84419,
+                "Vl":56,15581,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.20, 0.04)",
+                "CurrentDistance":"(-0.40, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,383854",
+                "ErrorDistance":"-0,1476716",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1329044",
+                "currKhead*errorHead":"24,90938",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,81588,
+                "Vl":56,18412,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.19, 0.04)",
+                "CurrentDistance":"(-0.39, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,389847",
+                "ErrorDistance":"-0,1522383",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1370145",
+                "currKhead*errorHead":"25,01725",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,78994,
+                "Vl":56,21006,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.19, 0.04)",
+                "CurrentDistance":"(-0.39, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,393612",
+                "ErrorDistance":"-0,1560389",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,140435",
+                "currKhead*errorHead":"25,08502",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,77385,
+                "Vl":56,22615,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.18, 0.04)",
+                "CurrentDistance":"(-0.38, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,40243",
+                "ErrorDistance":"-0,1612047",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1450842",
+                "currKhead*errorHead":"25,24373",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,73534,
+                "Vl":56,26466,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.17, 0.04)",
+                "CurrentDistance":"(-0.37, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,409407",
+                "ErrorDistance":"-0,166078",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1494702",
+                "currKhead*errorHead":"25,36934",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,70503,
+                "Vl":56,29497,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.16, 0.04)",
+                "CurrentDistance":"(-0.36, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,414777",
+                "ErrorDistance":"-0,1708605",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1537745",
+                "currKhead*errorHead":"25,46599",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,68195,
+                "Vl":56,31805,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.16, 0.04)",
+                "CurrentDistance":"(-0.36, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,422358",
+                "ErrorDistance":"-0,175654",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1580886",
+                "currKhead*errorHead":"25,60245",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,64891,
+                "Vl":56,35109,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.15, 0.04)",
+                "CurrentDistance":"(-0.35, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,430066",
+                "ErrorDistance":"-0,1805601",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1625041",
+                "currKhead*errorHead":"25,74118",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,61533,
+                "Vl":56,38467,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.14, 0.04)",
+                "CurrentDistance":"(-0.34, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,438305",
+                "ErrorDistance":"-0,1857155",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1671439",
+                "currKhead*errorHead":"25,88948",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,57941,
+                "Vl":56,42059,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.13, 0.04)",
+                "CurrentDistance":"(-0.34, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,445398",
+                "ErrorDistance":"-0,1907163",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1716447",
+                "currKhead*errorHead":"26,01717",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,54862,
+                "Vl":56,45138,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.13, 0.04)",
+                "CurrentDistance":"(-0.33, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,453171",
+                "ErrorDistance":"-0,1955133",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,175962",
+                "currKhead*errorHead":"26,15709",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,51472,
+                "Vl":56,48528,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.12, 0.04)",
+                "CurrentDistance":"(-0.32, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,460273",
+                "ErrorDistance":"-0,1999558",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1799602",
+                "currKhead*errorHead":"26,28492",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,48376,
+                "Vl":56,51624,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.12, 0.04)",
+                "CurrentDistance":"(-0.32, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,466727",
+                "ErrorDistance":"-0,2038788",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1834909",
+                "currKhead*errorHead":"26,40109",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,4556,
+                "Vl":56,5444,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.11, 0.04)",
+                "CurrentDistance":"(-0.31, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,480736",
+                "ErrorDistance":"-0,2102017",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1891816",
+                "currKhead*errorHead":"26,65325",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,39398,
+                "Vl":56,60602,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.10, 0.05)",
+                "CurrentDistance":"(-0.30, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,489832",
+                "ErrorDistance":"-0,215793",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1942137",
+                "currKhead*errorHead":"26,81698",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,35431,
+                "Vl":56,64569,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.09, 0.05)",
+                "CurrentDistance":"(-0.29, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,497889",
+                "ErrorDistance":"-0,2212894",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,1991605",
+                "currKhead*errorHead":"26,962",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,31929,
+                "Vl":56,68071,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.09, 0.05)",
+                "CurrentDistance":"(-0.29, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,507222",
+                "ErrorDistance":"-0,2265919",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2039327",
+                "currKhead*errorHead":"27,12999",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,27849,
+                "Vl":56,72151,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.08, 0.05)",
+                "CurrentDistance":"(-0.28, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,518205",
+                "ErrorDistance":"-0,23242",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,209178",
+                "currKhead*errorHead":"27,32769",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,23037,
+                "Vl":56,76963,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.07, 0.05)",
+                "CurrentDistance":"(-0.28, -0.59)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,522951",
+                "ErrorDistance":"-0,2359693",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2123724",
+                "currKhead*errorHead":"27,41312",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,20981,
+                "Vl":56,79019,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.06, 0.05)",
+                "CurrentDistance":"(-0.27, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,537957",
+                "ErrorDistance":"-0,2427596",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2184836",
+                "currKhead*errorHead":"27,68323",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,14381,
+                "Vl":56,85619,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.06, 0.05)",
+                "CurrentDistance":"(-0.26, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,548626",
+                "ErrorDistance":"-0,2489353",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2240418",
+                "currKhead*errorHead":"27,87526",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,09719,
+                "Vl":56,90281,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.05, 0.05)",
+                "CurrentDistance":"(-0.25, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,558049",
+                "ErrorDistance":"-0,2544149",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2289734",
+                "currKhead*errorHead":"28,04487",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,05602,
+                "Vl":56,94398,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.04, 0.05)",
+                "CurrentDistance":"(-0.24, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,567871",
+                "ErrorDistance":"-0,260005",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2340045",
+                "currKhead*errorHead":"28,22167",
+                "Kint*errorInt":"-0,02",
+                "Vr":43,01308,
+                "Vl":56,98692,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.04, 0.05)",
+                "CurrentDistance":"(-0.24, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,577581",
+                "ErrorDistance":"-0,2657906",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2392115",
+                "currKhead*errorHead":"28,39646",
+                "Kint*errorInt":"-0,02",
+                "Vr":42,97069,
+                "Vl":57,02931,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.03, 0.05)",
+                "CurrentDistance":"(-0.23, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,587194",
+                "ErrorDistance":"-0,2710738",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2439664",
+                "currKhead*errorHead":"28,56949",
+                "Kint*errorInt":"-0,02",
+                "Vr":42,92862,
+                "Vl":57,07138,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.02, 0.06)",
+                "CurrentDistance":"(-0.23, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,596932",
+                "ErrorDistance":"-0,2765529",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2488976",
+                "currKhead*errorHead":"28,74477",
+                "Kint*errorInt":"-0,02",
+                "Vr":42,88603,
+                "Vl":57,11397,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.02, 0.06)",
+                "CurrentDistance":"(-0.22, -0.60)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,606693",
+                "ErrorDistance":"-0,2822433",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,254019",
+                "currKhead*errorHead":"28,92047",
+                "Kint*errorInt":"-0,02",
+                "Vr":42,84339,
+                "Vl":57,15661,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.01, 0.06)",
+                "CurrentDistance":"(-0.21, -0.61)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,613681",
+                "ErrorDistance":"-0,2867728",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2580955",
+                "currKhead*errorHead":"29,04626",
+                "Kint*errorInt":"-0,02",
+                "Vr":42,81296,
+                "Vl":57,18704,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.00, 0.06)",
+                "CurrentDistance":"(-0.21, -0.61)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,626924",
+                "ErrorDistance":"-0,2929661",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2636695",
+                "currKhead*errorHead":"29,28463",
+                "Kint*errorInt":"-0,02",
+                "Vr":42,75476,
+                "Vl":57,24524,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(0.00, 0.06)",
+                "CurrentDistance":"(-0.20, -0.61)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,640498",
+                "ErrorDistance":"-0,2997474",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2697726",
+                "currKhead*errorHead":"29,52897",
+                "Kint*errorInt":"-0,02",
+                "Vr":42,6952,
+                "Vl":57,3048,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(-0.01, 0.06)",
+                "CurrentDistance":"(-0.19, -0.61)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,649627",
+                "ErrorDistance":"-0,3054723",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,274925",
+                "currKhead*errorHead":"29,69329",
+                "Kint*errorInt":"-0,02",
+                "Vr":42,65541,
+                "Vl":57,34459,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+
+<b><color=yellow>[PTHFC - ResThruAPI::GotoPoint2D]</color>  :</b>  
+                <control_info>
+                {
+                "CurrentPos":"(-0.02, 0.07)",
+                "CurrentDistance":"(-0.18, -0.61)",
+                "TargetPosition":"(-0.20, -0.55)",
+                "ErrorHead":"1,658603",
+                "ErrorDistance":"-0,3124038",
+                "ErrorInt":"-20",
+                "currKdist":"0,45",
+                "currKhead":"9",
+                "currKdist*errorDist":"-0,2811634",
+                "currKhead*errorHead":"29,85486",
+                "Kint*errorInt":"-0,02",
+                "Vr":42,61658,
+                "Vl":57,38342,
+                "currdt":125
+                }
+                </control_info>
+            
+UnityEngine.Debug:LogWarning (object)
+DebugLogger:LogWarning (object,string,string) (at Assets/Scenes/PassthroughHandsFreeController/Scripts/DebugLogger.cs:40)
+ResThruAPI/<GotoPoint2D>d__27:MoveNext () (at Assets/Scenes/PassthroughHandsFreeController/Scripts/ResThruAPI.cs:304)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks ()
+

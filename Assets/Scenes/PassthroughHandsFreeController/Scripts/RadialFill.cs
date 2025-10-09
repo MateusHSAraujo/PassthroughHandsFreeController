@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Meta.XR.MRUtilityKit;
-using UnityEditor.Search;
 
 public class RadialFill : MonoBehaviour
 {

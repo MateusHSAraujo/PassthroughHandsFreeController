@@ -31,8 +31,8 @@ public class HitpointIndicator : MonoBehaviour
             if (transform.localScale.x >= maxScale)
             {
                 DebugLogger.Log("Hitpoint indicator reached maximum scale. Triggering activation callback.", this);
-                StopScaling(); // Stop scaling after reaching maximum scale
                 OnIndicatorFilled?.Invoke(); // Invoke the activation callback if set
+                StopScaling(); // Stop scaling after reaching maximum scale
             }
         }
     }

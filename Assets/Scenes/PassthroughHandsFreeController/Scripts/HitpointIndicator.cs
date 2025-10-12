@@ -28,9 +28,10 @@ public class HitpointIndicator : MonoBehaviour
             transform.localScale += new Vector3(scaleDelta, scaleDelta, scaleDelta);
             DebugLogger.Log($"New hitpoint indicator scale{transform.localScale}", this);
         
-            if (transform.localScale.x >= maxScale)
+            if (transform.localScale.x >= maxScale || OVRInput.Get(OVRInput.RawButton.A))
             {
-                DebugLogger.Log("Hitpoint indicator reached maximum scale. Triggering activation callback.", this);
+                if ( OVRInput.Get(OVRInput.RawButton.A)) DebugLogger.Log("User skipped scalation. Triggering activation callback.");
+                else DebugLogger.Log("Hitpoint indicator reached maximum scale. Triggering activation callback.", this);
                 OnIndicatorFilled?.Invoke(); // Invoke the activation callback if set
                 StopScaling(); // Stop scaling after reaching maximum scale
             }

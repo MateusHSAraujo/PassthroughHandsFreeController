@@ -4,8 +4,7 @@
 
 using UnityEngine;
 
-namespace PassthroughHandsFreeController.MainScene
-{
+
     /// <summary>
     /// This script manages the laser pointer functionality, allowing interaction with the environment.
     /// </summary>
@@ -151,4 +150,4 @@ namespace PassthroughHandsFreeController.MainScene
             OVRManager.InputFocusLost -= OnInputFocusLost;
         }
     }
-}
+

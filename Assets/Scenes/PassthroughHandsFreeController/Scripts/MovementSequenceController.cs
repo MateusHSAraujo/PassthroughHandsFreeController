@@ -8,10 +8,6 @@ public class MovementSequenceController : MonoBehaviour
 
     private ResThruAPI ServerAPI;
 
-    [Tooltip("Debug prfed to indicate the center of the wheelchair")]
-    [SerializeField] private GameObject d_prefab;
-
-    
     [SerializeField] LineRenderer TrajectoryLine;
 
     public Action<bool> OnMovementSequenceEnded;
@@ -27,21 +23,53 @@ public class MovementSequenceController : MonoBehaviour
         else TrajectoryLine.enabled = false;
     }
 
+    // =========================================================================
+    // For debug purpose only
+    /*
+    public Transform CenterEyeAnchor;
+    private bool following = false;
+    void Update()
+    {
+        
+        if (OVRInput.Get(OVRInput.RawButton.A) && !following)
+        {
+            DebugLogger.Log("A pressed");
+            FollowTargetAligment(CenterEyeAnchor);
+        }
+        if (OVRInput.Get(OVRInput.RawButton.X) && following)
+        {
+            DebugLogger.Log("X pressed");
+            ServerAPI.CancelLastOperation();
+        }
+    }
+    */
+    // =========================================================================
+
     public void PerformMovementSequence(Vector3 TargetPosition)
     {
         DebugLogger.Log($"Movement sequence controller triggered: TargetPosition={TargetPosition}");
-        
+
         Transform WheelchairTransform = MyAnchorManager.GetWheelchairTransform();
         DebugLogger.Log($"WheelchairPosition={WheelchairTransform.position}");
 
         TrajectoryLine.enabled = true;
-        TrajectoryLine.SetPosition(0, new Vector3(WheelchairTransform.position.x,TargetPosition.y, WheelchairTransform.position.z));
+        TrajectoryLine.SetPosition(0, new Vector3(WheelchairTransform.position.x, TargetPosition.y, WheelchairTransform.position.z));
         TrajectoryLine.SetPosition(1, TargetPosition);
-        
-        ServerAPI.ScheduleGotoPoint2d(TargetPosition,WheelchairTransform,AbortMovementSequence);
+
+        ServerAPI.ScheduleGotoPoint2d(TargetPosition, WheelchairTransform, AbortMovementSequence);
         return;
     }
 
+    public void FollowTargetAligment(Transform TargetTransform)
+    {
+        DebugLogger.Log($"Movement sequence controller triggered to follow transform");
+
+        Transform WheelchairTransform = MyAnchorManager.GetWheelchairTransform();
+        DebugLogger.Log($"WheelchairPosition={WheelchairTransform.position}");
+
+        ServerAPI.ScheduleAlignHeading2D(TargetTransform, WheelchairTransform, AbortMovementSequence);
+        return;
+    }
 
     private void AbortMovementSequence(bool res)
     {

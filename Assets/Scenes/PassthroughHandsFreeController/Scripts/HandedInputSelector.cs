@@ -2,8 +2,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace PassthroughHandsFreeController.MainScene
-{
 
     public class HandedInputSelector : MonoBehaviour
     {
@@ -29,4 +27,4 @@ namespace PassthroughHandsFreeController.MainScene
             m_inputModule.rayTransform = m_cameraRig.centerEyeAnchor;
         }
     }
-}
+

@@ -5,80 +5,14 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 using System.Threading;
+using System.Xml;
+using UnityEngine.InputSystem.Controls;
+using Meta.WitAi;
 
+// TODO : Fix name typo
 public class ResThruAPI : MonoBehaviour
 {
     public static ResThruAPI Instance;
-
-    #region Endpoints and payloads
-    //private readonly string LinearDisplacementEndpoint = "http://192.168.0.2:8080/motion/displ";
-    //private readonly string LinearDisplacementStatusEndpoint = "http://192.168.0.2:8080/motion/displ/status";
-    //private readonly string HeadingEndpoint = "http://192.168.0.2:8080/motion/heading";
-    //private readonly string HeadingStatusEndpoint = "http://192.168.0.2:8080/motion/heading/status";
-    //private readonly string PoseEndpoint = "http://192.168.0.2:8080/motion/pose";
-    private readonly string Velocity2Endpoint = "http://192.168.0.2:8080/motion/vel2";
-    private readonly string StopEndpoint = "http://192.168.0.2:8080/motion/stop";
-
-
-    private readonly string POST = "POST";
-    private readonly string PUT = "PUT";
-    private readonly string GET = "GET";
-
-    [System.Serializable] private class LinearDisplacementPayload { public float displ; }
-    [System.Serializable] private class HeadingPayload { public float heading; }
-
-    [System.Serializable]
-    private class VelocityData
-    {
-        public float right;
-        public float left;
-
-        public VelocityData() { }
-
-        public VelocityData(float r, float l)
-        {
-            right = r;
-            left = l;
-        }
-    }
-    [System.Serializable]
-    private class Velocity2Payload
-    {
-        public VelocityData vel2;
-
-        public Velocity2Payload() { }
-
-        public Velocity2Payload(float r, float l)
-        {
-            vel2 = new(r, l);
-        }
-    }
-
-    [System.Serializable]
-    private class PoseData
-    {
-        public float x { get; private set; }
-        public float y { get; private set; }
-        public float th { get; private set; }
-
-        public PoseData(float x, float y, float th)
-        {
-            this.x = x;
-            this.y = y;
-            this.th = th;
-        }
-    }
-    [System.Serializable]
-    private class PosePayload
-    {
-        public PoseData pose { get; private set; }
-
-        public PosePayload(float x, float y, float th)
-        {
-            pose = new(x, y, th);
-        }
-    }
-    #endregion
 
     private enum APIStates
     {
@@ -93,7 +27,7 @@ public class ResThruAPI : MonoBehaviour
     #region Unity standard functions
     void Awake()
     {
-        DebugLogger.Log("ResThruAPI Awake called.");
+        DebugLogger.Log("RestThruAPI Awake called.");
         Debug.Assert(Instance == null);
         Instance = this;
         State = APIStates.IDLE;
@@ -102,20 +36,38 @@ public class ResThruAPI : MonoBehaviour
     void Update()
     {
         // Emergency stop
+        
         if (OVRInput.GetDown(OVRInput.Button.Four) &&
             OVRInput.GetDown(OVRInput.Button.Three))
         {
-            if (State != APIStates.EMERGENCY_STOP)
+            if (State == APIStates.BUSY)
             {
                 DebugLogger.LogWarning("Emergency stop triggered. Stoping");
                 State = APIStates.EMERGENCY_STOP;
-                _ = ResThruServer.SendPayloadToServer(StopEndpoint, PUT, "");
                 currtOperationCt.Cancel();
             }
         }
+        
+        /*
+        if (OVRInput.Get(OVRInput.RawButton.A))
+        {
+            DebugLogger.Log("A pressed");
+            AlignHeadingConfigurations.UIFeedback.StartFilling(5);
+        }
+        if (OVRInput.Get(OVRInput.RawButton.X))
+        {
+            DebugLogger.Log("X pressed");
+            AlignHeadingConfigurations.UIFeedback.ResetFilling();
+        }
+        if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger))
+        {
+            DebugLogger.Log("RIndexTrigger");
+            AlignHeadingConfigurations.UIFeedback.ShowCanvas();
+        }
+        */
     }
     #endregion
-    
+
     #region Operations scheduler
     private async void ScheduleOperation(Func<CancellationToken, Task<bool>> operation, Action<bool> onCompleted)
     {
@@ -149,7 +101,14 @@ public class ResThruAPI : MonoBehaviour
         {
             if (State == APIStates.EMERGENCY_STOP)
             {
-                _ = await ResThruServer.SendPayloadToServer(StopEndpoint, PUT, "");
+                try
+                {
+                    await ForceStopRobot();
+                }
+                catch (ResThruServer.ServerConnectionException ex)
+                {
+                    DebugLogger.LogError($"Couldn't reach server to emergency stop. {ex}");
+                }
             }
             currtOperationCt?.Dispose();
             currtOperationCt = null;
@@ -158,42 +117,75 @@ public class ResThruAPI : MonoBehaviour
 
     }
 
-
-    public void ScheduleGotoPoint2d(Vector3 targetPosition, Transform robotTransform, Action<bool> onCompleted)
+    public void CancelLastOperation()
     {
-        ScheduleOperation(token => GotoPoint2D(new Vector2(targetPosition.x, targetPosition.z), robotTransform, token), onCompleted);
+        DebugLogger.Log("Canceling last operation");
+        currtOperationCt?.Cancel();
     }
+
+    public void ScheduleGotoPoint2d(Vector3 targetPosition, Transform RobotTransform, Action<bool> onCompleted)
+    {
+        ScheduleOperation(token => GotoPoint2D(new Vector2(targetPosition.x, targetPosition.z), RobotTransform, token), onCompleted);
+    }
+
+    public void ScheduleAlignHeading2D(Transform TransformToFollow, Transform RobotTransform, Action<bool> onCompleted)
+    {
+        ScheduleOperation(token => AlignHeading2D(TransformToFollow, RobotTransform, token), onCompleted);
+    }
+
     #endregion
 
     #region Operations
-    [Header("GotoPoint Control parameters")]
-    [Tooltip("Tolerance in degrees to consider the heading reached")]
-    [SerializeField] private float HeadingTolerance = 5;
-    [Tooltip("Tolerance in m to consider the final goal point reached")]
-    [SerializeField] private float TravelTolerance = 0.1f;
 
-    [Tooltip("First aligment rotation speed (deg/s)")]
-    [SerializeField] private float Vrot = 50;
+    #region GotoPoint
 
-    [Tooltip("Linear travel speed (mm/s)")]
-    [SerializeField] private float Vlin = 100;
+    [System.Serializable]
+    private class GotoPoint2DConfig
+    {
+        [Tooltip("Tolerance in degrees to consider the heading reached")]
+        public float HeadingTolerance = 5;
 
-    [Tooltip("Control period (sec)")]
-    [SerializeField] private float dt = 0.5f;
+        [Tooltip("Tolerance in m to consider the final goal point reached")]
+        public float TravelTolerance = 0.1f;
 
-    [Tooltip("Proportional gain for distance error")]
-    [SerializeField] private float Kdist = 0.1f;
-    [Tooltip("Proportional gain for heading error")]
-    [SerializeField] private float Khead = 15;
-    [Tooltip("Integral gain for distance error")]
-    [SerializeField] private float Kint = 0.001f;
+        [Tooltip("First aligment rotation speed (deg/s)")]
+        public float Vrot = 50;
+
+        [Tooltip("Linear travel speed (mm/s)")]
+        public float Vlin = 100;
+
+        [Tooltip("Control period (sec)")]
+        public float dt = 0.5f;
+
+        [Tooltip("Proportional gain for distance error")]
+        public float Kdist = 100;
+
+        [Tooltip("Proportional gain for heading error")]
+        public float Khead = 0.1f;
+
+        [Tooltip("Integral gain for distance error")]
+        public float Kint = 0.01f;
+    }
+
+    [SerializeField] private GotoPoint2DConfig GotoPoint2DConfigurations;
 
     private async Task<bool> GotoPoint2D(Vector2 TargetPosition, Transform RobotTransform, CancellationToken ct)
     {
         DebugLogger.Log($"TargetPosition={TargetPosition} ; RobotTransform.position = {RobotTransform.position} ; RobotTransform.foward = {RobotTransform.forward}");
 
-        Velocity2Payload vel2;
-        string jsonData;
+        // ==================================================================
+        // Deconstructing config to local variables
+        float HeadingTolerance = GotoPoint2DConfigurations.HeadingTolerance;
+        float TravelTolerance = GotoPoint2DConfigurations.TravelTolerance;
+        float Vrot = GotoPoint2DConfigurations.Vrot;
+        float Vlin = GotoPoint2DConfigurations.Vlin;
+        float dt = GotoPoint2DConfigurations.dt;
+        float Kdist = GotoPoint2DConfigurations.Kdist;
+        float Khead = GotoPoint2DConfigurations.Khead;
+        float Kint = GotoPoint2DConfigurations.Kint;
+        // ==================================================================
+
+        ResThruServer.Velocity2Payload vel2;
         ResThruServer.ServerResponse response;
 
         // First, rotate to face the goal point
@@ -204,9 +196,8 @@ public class ResThruAPI : MonoBehaviour
         if (Math.Abs(Angle) > HeadingTolerance)
         {
             vel2 = (Angle > 0) ? new(Vrot, -Vrot) : new(-Vrot, Vrot);
-            jsonData = JsonUtility.ToJson(vel2);
 
-            response = await ResThruServer.SendPayloadToServer(Velocity2Endpoint, PUT, jsonData);
+            response = await ResThruServer.SendPayloadToServer(ResThruServer.Velocity2Endpoint, "PUT", vel2, ct);
 
             if (response.Result != UnityWebRequest.Result.Success)
             {
@@ -231,8 +222,7 @@ public class ResThruAPI : MonoBehaviour
 
         // Then, move to target
         vel2 = new(Vlin, Vlin);
-        jsonData = JsonUtility.ToJson(vel2);
-        response = await ResThruServer.SendPayloadToServer(Velocity2Endpoint, PUT, jsonData);
+        response = await ResThruServer.SendPayloadToServer(ResThruServer.Velocity2Endpoint, "PUT", vel2, ct);
 
 
         if (response.Result != UnityWebRequest.Result.Success)
@@ -240,7 +230,7 @@ public class ResThruAPI : MonoBehaviour
             DebugLogger.LogError($"Unable to start linear movement. response={response}");
             return false;
         }
-        
+
         Vector2 InitialPos = new(RobotTransform.position.x, RobotTransform.position.z);
         Vector2 IdealTrajectory = TargetPosition - InitialPos;
 
@@ -250,6 +240,8 @@ public class ResThruAPI : MonoBehaviour
         float currKhead = Khead;
         float currdt = dt * 1000;
 
+        // We will measure how much time the request took to be answered and discard this time from the delay
+        Stopwatch stopwatch = new();
         while (true)
         {
             ct.ThrowIfCancellationRequested(); // Throw exception if task cancel was requested
@@ -282,7 +274,7 @@ public class ResThruAPI : MonoBehaviour
             prevErrorDist = errorDist;
 
             // Acumulate integral error
-            errorInt += errorDist * (currdt/1000); // Should dt be used here ?
+            errorInt += errorDist * (currdt / 1000); // Should dt be used here ?
             // Clamping to prevent integral windup
             errorInt = Mathf.Clamp(errorInt, -20f, 20f);
 
@@ -303,6 +295,16 @@ public class ResThruAPI : MonoBehaviour
                 currKdist = Kdist / 2;
                 currKhead = Khead / 2;
             }
+
+            // Sending new velocity command
+            vel2 = new(Vr, Vl);
+
+            stopwatch.Restart();
+            response = await ResThruServer.SendPayloadToServer(ResThruServer.Velocity2Endpoint, "PUT", vel2, ct);
+            stopwatch.Stop();
+            DebugLogger.Log($"Last control action took {stopwatch.ElapsedMilliseconds} ms to be answered by the server. respose={response}");
+            float delayTime = currdt;
+            delayTime = (stopwatch.ElapsedMilliseconds < delayTime) ? delayTime - stopwatch.ElapsedMilliseconds : 0;
 
             // Logs for debuging PID controller
             DebugLogger.LogWarning($@"
@@ -326,28 +328,213 @@ public class ResThruAPI : MonoBehaviour
                 </control_info>
             ");
 
-            // We will measure how much time the request took to be answered and discard this time from the delay
-            Stopwatch stopwatch = new Stopwatch();
-
-            // Sending new velocity command
-            vel2 = new Velocity2Payload(Vr, Vl);
-            jsonData = JsonUtility.ToJson(vel2);
-
-            stopwatch.Start();
-            response = await ResThruServer.SendPayloadToServer(Velocity2Endpoint, PUT, jsonData);
-            stopwatch.Stop();
-            DebugLogger.Log($"Last control action took {stopwatch.ElapsedMilliseconds} to be answered by the server. respose={response}");
-            float delayTime = currdt;
-            delayTime = (stopwatch.ElapsedMilliseconds < delayTime) ? delayTime - stopwatch.ElapsedMilliseconds : 0;
-
             await Task.Delay((int)delayTime, ct);
         }
 
         // We've arrived. Stop movement.
-        response = await ResThruServer.SendPayloadToServer(StopEndpoint, PUT, "");
-        if (response.Result != UnityWebRequest.Result.Success) DebugLogger.LogError($"Error while stopping robot after initial rotation: response={response}");
-
+        await ForceStopRobot();
         return true;
     }
+    #endregion
+
+    #region AlignHeading
+    [System.Serializable]
+    private class AlignHeadingConfig
+    {
+        [Tooltip("Tolerance in degrees to consider the heading is aligned")]
+        public float HeadingTolerance = 10;
+
+        [Tooltip("Max rotational velocity")]
+        public float maxVrot = 100;
+        
+        [Tooltip("Control period (sec)")]
+        public float dt = 0.5f;
+
+        [Tooltip("How many seconds should the robot wait without target updates")]
+        public float TimeoutToCompletion = 3;
+
+        [Tooltip("Proportional gain for heading error")]
+        public float Kp = 15;
+
+        [Tooltip("Integral gain for distance error")]
+        public float Ki = 0.001f;
+
+        [Tooltip("Derivative gain for distance error")]
+        public float Kd = 0.001f;
+
+        [Tooltip("UI RadialFill that should appear when inside the tolerance zone.")]
+        public RotationUI UIFeedback;
+    }
+
+    [SerializeField] private AlignHeadingConfig AlignHeadingConfigurations;
+
+    private async Task<bool> AlignHeading2D(Transform TransformToFollow, Transform RobotTransform, CancellationToken ct)
+    {
+        // ==================================================================
+        // Deconstructing config to local variables
+        float HeadingTolerance = AlignHeadingConfigurations.HeadingTolerance;
+        float dt = AlignHeadingConfigurations.dt;
+        float Kp = AlignHeadingConfigurations.Kp;
+        float Ki = AlignHeadingConfigurations.Ki;
+        float Kd = AlignHeadingConfigurations.Kd;
+        float maxVrot = AlignHeadingConfigurations.maxVrot;
+        float timeout = AlignHeadingConfigurations.TimeoutToCompletion;
+        RotationUI canvas = AlignHeadingConfigurations.UIFeedback;
+        // ==================================================================
+
+        float prevErr = 0f;
+        float intErr = 0f;
+        float derErr = 0f;
+        float headingErr = 0f;
+
+
+        Stopwatch stopwatch = new();
+        ResThruServer.Velocity2Payload vel2;
+        ResThruServer.ServerResponse response;
+
+        float StableTime = 0;
+        bool isStopped = false;
+        bool isCompleted = false;
+
+        canvas.ShowCanvas();
+        while (!isCompleted)
+        {
+            ct.ThrowIfCancellationRequested();
+            Vector2 TargetFoward2 = new(TransformToFollow.forward.x, TransformToFollow.forward.z);
+            Vector2 RobotFoward2 = new(RobotTransform.forward.x, RobotTransform.forward.z);
+
+            // If outside the tolerance, start control process
+            if (Vector2.Angle(RobotFoward2, TargetFoward2) > HeadingTolerance)
+            {
+                canvas.ResetFilling();
+                // Reseting stable time. Robot resume moving
+                isStopped = false;
+                StableTime = 0;
+
+                headingErr = Vector2.SignedAngle(RobotFoward2, TargetFoward2) * Mathf.Deg2Rad;
+
+                float Delta = 0;
+                if(Math.Abs(headingErr) > 30 * Mathf.Deg2Rad)
+                {
+                    // Target is far, go full power
+                    Delta = (headingErr > 0) ? maxVrot : -maxVrot;
+
+                    // Reset integral error variables
+                    intErr = 0f;
+                    derErr = 0f;
+                }
+                else
+                {
+                    // Target is close, use PID controller
+
+                    // Suavization filter
+                    headingErr = 0.4f * prevErr + 0.6f * headingErr;
+
+                    intErr += headingErr;
+                    derErr = (headingErr - prevErr) / dt;
+
+
+                    Delta = headingErr * Kp + intErr * Ki + derErr * Kd;
+                    Delta = Math.Clamp(Delta, -maxVrot, maxVrot);
+                }
+                prevErr = headingErr;
+
+                
+                float Vl = - Delta;
+                float Vr = Delta;
+                // Sending velocity comand
+                vel2 = new(Vr, Vl);
+
+                stopwatch.Restart();
+                try
+                {
+                    response = await ResThruServer.SendPayloadToServer(ResThruServer.Velocity2Endpoint, "PUT", vel2, ct); 
+                } catch (ResThruServer.ServerConnectionException ex)
+                {
+                    stopwatch.Stop();
+                    canvas.HideCanvas();
+                    throw ex;
+                }
+                stopwatch.Stop();
+                DebugLogger.Log($"Last control action took {stopwatch.ElapsedMilliseconds} ms to be answered by the server. respose={response}");
+                float delayTime = dt;
+                delayTime = (stopwatch.ElapsedMilliseconds < delayTime) ? delayTime - stopwatch.ElapsedMilliseconds : 0;
+
+                // Logs for debuging PID controller
+                DebugLogger.LogWarning($@"
+                    <control_info>
+                    {{
+                    ""RobotFoward2"":""{RobotFoward2}"",
+                    ""TargetFoward2"":""{TargetFoward2}"",
+                    ""headingErr"":""{headingErr}"",
+                    ""intErr"":""{intErr}"",
+                    ""derErr"":""{derErr}"",
+                    ""Proportional contribution"":""{headingErr * Kp}"",
+                    ""Derivative contribution"":""{derErr * Kd}"",
+                    ""Integral contribution"":""{intErr * Ki}"",
+                    ""Delta"":""{Delta}"",
+                    ""Vr"":{Vr},
+                    ""Vl"":{Vl},
+                    ""dt"":{dt}
+                    }}
+                    </control_info>
+                ");
+
+                await Task.Delay((int)delayTime, ct);
+            }
+            else // If inside the tolerance...
+            {
+                if (!isStopped)
+                {
+                    // Stop robot
+                    await ForceStopRobot();
+                    isStopped = true;
+
+                    // Reset control variables
+                    prevErr = 0f;
+                    intErr = 0f;
+                    derErr = 0f;
+
+                    //Start UI feedback
+                    canvas.StartFilling(timeout);
+                }
+                else
+                {
+                    // check timeout out for activation
+                    if (StableTime < timeout) StableTime += Time.deltaTime;
+                    else isCompleted = true;
+                }
+                await Task.Yield();
+            }
+        }
+
+        // Task finished. Garanteeing the robot stopped and returning.
+        await ForceStopRobot();
+
+        // Hiding UI
+        canvas.HideCanvas();
+        
+        return true;
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Utils
+    private async Task ForceStopRobot()
+    {
+        ResThruServer.ServerResponse response;
+        int retryAttemps = 0;
+        int maxRetrys = 3;
+        do
+        {
+            retryAttemps++;
+            response = await ResThruServer.SendPayloadToServer(ResThruServer.StopEndpoint, "PUT");
+            if (response.Result != UnityWebRequest.Result.Success) DebugLogger.LogError($"Error while attempting to stopping robot. Retrying");
+        } while (response.Result != UnityWebRequest.Result.Success && retryAttemps < maxRetrys);
+    }
+
+
     #endregion
 }

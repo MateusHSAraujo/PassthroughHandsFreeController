@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 using System.Threading;
-using System.Xml;
-using UnityEngine.InputSystem.Controls;
-using Meta.WitAi;
 
 // TODO : Fix name typo
 public class ResThruAPI : MonoBehaviour
@@ -30,6 +27,7 @@ public class ResThruAPI : MonoBehaviour
         DebugLogger.Log("RestThruAPI Awake called.");
         Debug.Assert(Instance == null);
         Instance = this;
+        DebugLogger.LogWarning("State -> IDLE");
         State = APIStates.IDLE;
     }
 
@@ -37,82 +35,71 @@ public class ResThruAPI : MonoBehaviour
     {
         // Emergency stop
         
-        if (OVRInput.GetDown(OVRInput.Button.Four) &&
-            OVRInput.GetDown(OVRInput.Button.Three))
+        if (OVRInput.Get(OVRInput.RawButton.X) &&  OVRInput.Get(OVRInput.RawButton.Y))
         {
             if (State == APIStates.BUSY)
             {
                 DebugLogger.LogWarning("Emergency stop triggered. Stoping");
+                DebugLogger.LogWarning("State -> EMERGENCY_STOP");
                 State = APIStates.EMERGENCY_STOP;
                 currtOperationCt.Cancel();
             }
         }
-        
-        /*
-        if (OVRInput.Get(OVRInput.RawButton.A))
-        {
-            DebugLogger.Log("A pressed");
-            AlignHeadingConfigurations.UIFeedback.StartFilling(5);
-        }
-        if (OVRInput.Get(OVRInput.RawButton.X))
-        {
-            DebugLogger.Log("X pressed");
-            AlignHeadingConfigurations.UIFeedback.ResetFilling();
-        }
-        if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger))
-        {
-            DebugLogger.Log("RIndexTrigger");
-            AlignHeadingConfigurations.UIFeedback.ShowCanvas();
-        }
-        */
     }
     #endregion
 
     #region Operations scheduler
     private async void ScheduleOperation(Func<CancellationToken, Task<bool>> operation, Action<bool> onCompleted)
     {
+        bool res = false;
         DebugLogger.Log($"Scheduling new operation: {operation}");
         if (State != APIStates.IDLE)
         {
             DebugLogger.LogWarning("API not in idle. Ignoring request");
-            onCompleted?.Invoke(false);
-        }
-        else State = APIStates.BUSY;
-
-        currtOperationCt?.Dispose();
-        currtOperationCt = new CancellationTokenSource();
-
-        try
-        {
-            bool res = await operation(currtOperationCt.Token);
             onCompleted?.Invoke(res);
+            return;
         }
-        catch (OperationCanceledException)
+        else
         {
-            DebugLogger.LogWarning("Last operation was canceled");
-            onCompleted?.Invoke(false);
-        }
-        catch (Exception ex)
-        {
-            DebugLogger.LogError($"An error occurred during operation execution: {ex.Message}");
-            onCompleted?.Invoke(false);
-        }
-        finally
-        {
-            if (State == APIStates.EMERGENCY_STOP)
-            {
-                try
-                {
-                    await ForceStopRobot();
-                }
-                catch (ResThruServer.ServerConnectionException ex)
-                {
-                    DebugLogger.LogError($"Couldn't reach server to emergency stop. {ex}");
-                }
-            }
+            DebugLogger.LogWarning("State -> BUSY");
+            State = APIStates.BUSY;
             currtOperationCt?.Dispose();
-            currtOperationCt = null;
-            State = APIStates.IDLE;
+            currtOperationCt = new CancellationTokenSource();
+
+            try
+            {
+                res = await operation(currtOperationCt.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                DebugLogger.LogWarning("Last operation was canceled");
+                res = false;
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.LogError($"An error occurred during operation execution: {ex.Message}");
+                res = false;
+            }
+            finally
+            {
+                if (State == APIStates.EMERGENCY_STOP)
+                {
+                    try
+                    {
+                        await ForceStopRobot();
+                    }
+                    catch (ResThruServer.ServerConnectionException ex)
+                    {
+                        DebugLogger.LogError($"Couldn't reach server to emergency stop. {ex}");
+                    }
+                }
+                currtOperationCt?.Dispose();
+                currtOperationCt = null;
+                onCompleted?.Invoke(res);
+                DebugLogger.LogWarning("State -> IDLE");
+                State = APIStates.IDLE;
+            }
+            return;
         }
 
     }
@@ -397,116 +384,122 @@ public class ResThruAPI : MonoBehaviour
         bool isCompleted = false;
 
         canvas.ShowCanvas();
-        while (!isCompleted)
+        try
         {
-            ct.ThrowIfCancellationRequested();
-            Vector2 TargetFoward2 = new(TransformToFollow.forward.x, TransformToFollow.forward.z);
-            Vector2 RobotFoward2 = new(RobotTransform.forward.x, RobotTransform.forward.z);
-
-            // If outside the tolerance, start control process
-            if (Vector2.Angle(RobotFoward2, TargetFoward2) > HeadingTolerance)
+            while (!isCompleted)
             {
-                canvas.ResetFilling();
-                // Reseting stable time. Robot resume moving
-                isStopped = false;
-                StableTime = 0;
+                ct.ThrowIfCancellationRequested();
+                Vector2 TargetFoward2 = new(TransformToFollow.forward.x, TransformToFollow.forward.z);
+                Vector2 RobotFoward2 = new(RobotTransform.forward.x, RobotTransform.forward.z);
 
-                headingErr = Vector2.SignedAngle(RobotFoward2, TargetFoward2) * Mathf.Deg2Rad;
-
-                float Delta = 0;
-                if(Math.Abs(headingErr) > 30 * Mathf.Deg2Rad)
+                // If outside the tolerance, start control process
+                if (Vector2.Angle(RobotFoward2, TargetFoward2) > HeadingTolerance)
                 {
-                    // Target is far, go full power
-                    Delta = (headingErr > 0) ? maxVrot : -maxVrot;
+                    canvas.ResetFilling();
+                    // Reseting stable time. Robot resume moving
+                    isStopped = false;
+                    StableTime = 0;
 
-                    // Reset integral error variables
-                    intErr = 0f;
-                    derErr = 0f;
-                }
-                else
-                {
-                    // Target is close, use PID controller
+                    headingErr = Vector2.SignedAngle(RobotFoward2, TargetFoward2) * Mathf.Deg2Rad;
 
-                    // Suavization filter
-                    headingErr = 0.4f * prevErr + 0.6f * headingErr;
+                    float Delta = 0;
+                    if(Math.Abs(headingErr) > 30 * Mathf.Deg2Rad)
+                    {
+                        // Target is far, go full power
+                        Delta = (headingErr > 0) ? maxVrot : -maxVrot;
 
-                    intErr += headingErr;
-                    derErr = (headingErr - prevErr) / dt;
+                        // Reset integral error variables
+                        intErr = 0f;
+                        derErr = 0f;
+                    }
+                    else
+                    {
+                        // Target is close, use PID controller
+
+                        // Suavization filter
+                        headingErr = 0.4f * prevErr + 0.6f * headingErr;
+
+                        intErr += headingErr;
+                        derErr = (headingErr - prevErr) / dt;
 
 
-                    Delta = headingErr * Kp + intErr * Ki + derErr * Kd;
-                    Delta = Math.Clamp(Delta, -maxVrot, maxVrot);
-                }
-                prevErr = headingErr;
+                        Delta = headingErr * Kp + intErr * Ki + derErr * Kd;
+                        Delta = Math.Clamp(Delta, -maxVrot, maxVrot);
+                    }
+                    prevErr = headingErr;
 
-                
-                float Vl = - Delta;
-                float Vr = Delta;
-                // Sending velocity comand
-                vel2 = new(Vr, Vl);
+                    float Vl = - Delta;
+                    float Vr = Delta;
+                    // Sending velocity comand
+                    vel2 = new(Vr, Vl);
 
-                stopwatch.Restart();
-                try
-                {
+                    stopwatch.Restart();
                     response = await ResThruServer.SendPayloadToServer(ResThruServer.Velocity2Endpoint, "PUT", vel2, ct); 
-                } catch (ResThruServer.ServerConnectionException ex)
-                {
                     stopwatch.Stop();
-                    canvas.HideCanvas();
-                    throw ex;
+                    DebugLogger.Log($"Last control action took {stopwatch.ElapsedMilliseconds} ms to be answered by the server. respose={response}");
+                    float delayTime = dt;
+                    delayTime = (stopwatch.ElapsedMilliseconds < delayTime) ? delayTime - stopwatch.ElapsedMilliseconds : 0;
+
+                    // Logs for debuging PID controller
+                    DebugLogger.LogWarning($@"
+                        <control_info>
+                        {{
+                        ""RobotFoward2"":""{RobotFoward2}"",
+                        ""TargetFoward2"":""{TargetFoward2}"",
+                        ""headingErr"":""{headingErr}"",
+                        ""intErr"":""{intErr}"",
+                        ""derErr"":""{derErr}"",
+                        ""Proportional contribution"":""{headingErr * Kp}"",
+                        ""Derivative contribution"":""{derErr * Kd}"",
+                        ""Integral contribution"":""{intErr * Ki}"",
+                        ""Delta"":""{Delta}"",
+                        ""Vr"":{Vr},
+                        ""Vl"":{Vl},
+                        ""dt"":{dt}
+                        }}
+                        </control_info>
+                    ");
+
+                    await Task.Delay((int)delayTime, ct);
                 }
-                stopwatch.Stop();
-                DebugLogger.Log($"Last control action took {stopwatch.ElapsedMilliseconds} ms to be answered by the server. respose={response}");
-                float delayTime = dt;
-                delayTime = (stopwatch.ElapsedMilliseconds < delayTime) ? delayTime - stopwatch.ElapsedMilliseconds : 0;
-
-                // Logs for debuging PID controller
-                DebugLogger.LogWarning($@"
-                    <control_info>
-                    {{
-                    ""RobotFoward2"":""{RobotFoward2}"",
-                    ""TargetFoward2"":""{TargetFoward2}"",
-                    ""headingErr"":""{headingErr}"",
-                    ""intErr"":""{intErr}"",
-                    ""derErr"":""{derErr}"",
-                    ""Proportional contribution"":""{headingErr * Kp}"",
-                    ""Derivative contribution"":""{derErr * Kd}"",
-                    ""Integral contribution"":""{intErr * Ki}"",
-                    ""Delta"":""{Delta}"",
-                    ""Vr"":{Vr},
-                    ""Vl"":{Vl},
-                    ""dt"":{dt}
-                    }}
-                    </control_info>
-                ");
-
-                await Task.Delay((int)delayTime, ct);
-            }
-            else // If inside the tolerance...
-            {
-                if (!isStopped)
+                else // If inside the tolerance...
                 {
-                    // Stop robot
-                    await ForceStopRobot();
-                    isStopped = true;
+                    if (!isStopped)
+                    {
+                        DebugLogger.LogWarning($"<control_info> Stopped </control_info>");
+                        // Stop robot
+                        await ForceStopRobot();
+                        isStopped = true;
 
-                    // Reset control variables
-                    prevErr = 0f;
-                    intErr = 0f;
-                    derErr = 0f;
+                        // Reset control variables
+                        prevErr = 0f;
+                        intErr = 0f;
+                        derErr = 0f;
 
-                    //Start UI feedback
-                    canvas.StartFilling(timeout);
+                        //Start UI feedback
+                        canvas.StartFilling(timeout);
+                    }
+                    else
+                    {
+                        // check timeout out for activation
+                        if (StableTime < timeout)
+                        {
+                            StableTime += Time.deltaTime;  
+                            DebugLogger.LogWarning($"<control_info> Stopped for {StableTime} </control_info>");
+                        } 
+                        else isCompleted = true;
+                    }
+                    await Task.Yield();
                 }
-                else
-                {
-                    // check timeout out for activation
-                    if (StableTime < timeout) StableTime += Time.deltaTime;
-                    else isCompleted = true;
-                }
-                await Task.Yield();
             }
         }
+        catch(Exception ex)
+        {
+            stopwatch.Stop();
+            canvas.HideCanvas();
+            throw ex;
+        }
+        
 
         // Task finished. Garanteeing the robot stopped and returning.
         await ForceStopRobot();

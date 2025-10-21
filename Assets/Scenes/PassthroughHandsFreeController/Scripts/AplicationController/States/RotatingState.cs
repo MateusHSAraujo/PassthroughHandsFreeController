@@ -1,5 +1,3 @@
-using UnityEditorInternal;
-
 public class RotatingState : ApplicationState
 {
     public RotatingState(StateContext context) : base(context) {}

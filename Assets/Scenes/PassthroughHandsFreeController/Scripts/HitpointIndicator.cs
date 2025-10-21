@@ -16,17 +16,11 @@ public class HitpointIndicator : MonoBehaviour
     {
         if (isScaling)
         {
-            DebugLogger.Log("Scaling hitpoint indicator.", this);
             // Calculate the new scale for the hitpoint indicator
             float scaleDelta = scaleSpeed * Time.deltaTime;
-            DebugLogger.Log($@"Scaling hitpoint indicator.  
-                     Current hitpoint indicator scale: {transform.localScale}; 
-                     Hitpoint indicator scale speed: {scaleSpeed}; 
-                     Time.deltaTime: {Time.deltaTime};
-                     Scaling hitpoint indicator by: {scaleDelta}", this);
+            
             // Applying new scale
             transform.localScale += new Vector3(scaleDelta, scaleDelta, scaleDelta);
-            DebugLogger.Log($"New hitpoint indicator scale{transform.localScale}", this);
         
             if (transform.localScale.x >= maxScale || OVRInput.Get(OVRInput.RawButton.A))
             {

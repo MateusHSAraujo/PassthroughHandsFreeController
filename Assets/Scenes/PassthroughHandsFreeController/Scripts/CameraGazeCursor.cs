@@ -44,7 +44,7 @@ public class CameraGazeCursor : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             Quaternion cursorRotation = Quaternion.LookRotation(hit.normal, MainCamera.transform.up);
-            DebugLogger.Log("Hit: " + hit.collider.gameObject.name);
+            //DebugLogger.Log("Hit: " + hit.collider.gameObject.name);
             if (hit.collider.gameObject.name == "FLOOR_EffectMesh")
             {
                 DebugLogger.Log("Hit on floor object. Sending to cursor controller.");

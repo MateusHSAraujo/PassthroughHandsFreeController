@@ -3199,6 +3199,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 173762816}
     m_Modifications:
+    - target: {fileID: 322590064828962914, guid: 82cd3d85e94aa0d45ba41081436473eb, type: 3}
+      propertyPath: AlignHeadingConfigurations.Kd
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 322590064828962914, guid: 82cd3d85e94aa0d45ba41081436473eb, type: 3}
+      propertyPath: AlignHeadingConfigurations.Ki
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 322590064828962914, guid: 82cd3d85e94aa0d45ba41081436473eb, type: 3}
+      propertyPath: AlignHeadingConfigurations.HeadingTolerance
+      value: 7.5
+      objectReference: {fileID: 0}
     - target: {fileID: 356318133094072304, guid: 82cd3d85e94aa0d45ba41081436473eb, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.0015

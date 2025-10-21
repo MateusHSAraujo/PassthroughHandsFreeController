@@ -3,7 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(MetaXRAudioSource))]
 [RequireComponent(typeof(CanvasGroup))]
-[RequireComponent(typeof(ICanvasPositioner))]
 public class CameraGazeControlledCanvas : MonoBehaviour
 {
     [Header("Camera Gaze Controlled Canvas configurations:")]

@@ -4,19 +4,19 @@ using UnityEngine;
 public class MovementSequenceController : MonoBehaviour
 {
     [Tooltip("The QR code scanner on the scene")]
-    [SerializeField] private AnchorManager MyAnchorManager;
+    [SerializeField] private AnchorManager AnchorManager;
 
-    private ResThruAPI ServerAPI;
+    private RestThruAPI ServerAPI;
 
     [SerializeField] LineRenderer TrajectoryLine;
 
-    public Action<bool> OnMovementSequenceEnded;
+    public event Action<bool> OnMovementSequenceEnded;
 
     void Start()
     {
-        if (!MyAnchorManager) DebugLogger.LogError("AnchorManager not attributed on Unity.");
+        if (!AnchorManager) DebugLogger.LogError("AnchorManager not attributed on Unity.");
 
-        ServerAPI = ResThruAPI.Instance;
+        ServerAPI = RestThruAPI.Instance;
         if (!ServerAPI) DebugLogger.LogError("ResThruServer singleton not found.");
 
         if (!TrajectoryLine) DebugLogger.LogError("Trajectory line renderer not assigned on Unity.");
@@ -45,11 +45,11 @@ public class MovementSequenceController : MonoBehaviour
     */
     // =========================================================================
 
-    public void PerformMovementSequence(Vector3 TargetPosition)
+    public void PerformLinearDisplacement(Vector3 TargetPosition)
     {
         DebugLogger.Log($"Movement sequence controller triggered: TargetPosition={TargetPosition}");
 
-        Transform WheelchairTransform = MyAnchorManager.GetWheelchairTransform();
+        Transform WheelchairTransform = AnchorManager.GetWheelchairTransform();
         DebugLogger.Log($"WheelchairPosition={WheelchairTransform.position}");
 
         TrajectoryLine.enabled = true;
@@ -64,7 +64,7 @@ public class MovementSequenceController : MonoBehaviour
     {
         DebugLogger.Log($"Movement sequence controller triggered to follow transform");
 
-        Transform WheelchairTransform = MyAnchorManager.GetWheelchairTransform();
+        Transform WheelchairTransform = AnchorManager.GetWheelchairTransform();
         DebugLogger.Log($"WheelchairPosition={WheelchairTransform.position}");
 
         ServerAPI.ScheduleAlignHeading2D(TargetTransform, WheelchairTransform, AbortMovementSequence);

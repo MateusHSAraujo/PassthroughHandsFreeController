@@ -45,9 +45,9 @@ public class HitpointIndicator : MonoBehaviour
 
     public void StartScaling()
     {
+        transform.localScale = Vector3.one; // Reset scale to default when activated
         isScaling = true; // Set scaling flag to true
         gameObject.SetActive(true); // Activate the hitpoint indicator
-        transform.localScale = Vector3.one; // Reset scale to default when activated
     }
 
     public void StopScaling()

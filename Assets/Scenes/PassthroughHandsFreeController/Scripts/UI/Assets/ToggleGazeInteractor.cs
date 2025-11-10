@@ -11,16 +11,16 @@ public class ToggleGazeInteractor : MonoBehaviour, IPointerEnterHandler, IPointe
     public float timeToToggle = 2.0f;
 
     private Coroutine timeoutToActivationCorroutine;
-    private Toggle m_toggle;
-    private AudioSource m_AudioSource;
+    private Toggle toggle;
+    private AudioSource AudioSource;
 
     void Awake()
     {
-        m_toggle = GetComponent<Toggle>();
-        if (m_toggle == null) DebugLogger.LogError("Toggle component not found on the GameObject.");
+        toggle = GetComponent<Toggle>();
+        if (toggle == null) DebugLogger.LogError("Toggle component not found on the GameObject.");
 
-        m_AudioSource = GetComponent<AudioSource>();
-        if (m_AudioSource == null) DebugLogger.LogError("AudioSource component not found. Toggle audio won't play.");
+        AudioSource = GetComponent<AudioSource>();
+        if (AudioSource == null) DebugLogger.LogError("AudioSource component not found. Toggle audio won't play.");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -47,7 +47,7 @@ public class ToggleGazeInteractor : MonoBehaviour, IPointerEnterHandler, IPointe
         }
 
         DebugLogger.Log("Toggle activated. Calling subscribed functions.");
-        m_AudioSource.Play();
-        m_toggle.isOn = true;
+        AudioSource.Play();
+        toggle.isOn = true;
     }
 }

@@ -3,23 +3,24 @@ using System;
 
 public class CameraGazeCursor : MonoBehaviour
 {
-    public GameObject MainCamera;
     public GameObject prefabCursor;
 
     private SelecTargetUI GazeCursorCanvas;
     private CursorController CursorController;
-    private HitpointIndicator HitPointIndicator;
+    private HitpointIndicator HitpointIndicator;
 
     public event Action<Vector3> OnSelectionFinished; // Action for when the target is selected
     public event Action<Vector3> OnMainMenuRequested; // Action for when user selects to return to main menu
 
+    private Transform MainCameraTransform;
     private Vector3 canvasPosition;
     // Awake is called when the script instance is being loaded
     void Awake()
     {
         CursorController = Instantiate(prefabCursor, Vector3.zero, Quaternion.identity).GetComponent<CursorController>();
-        HitPointIndicator = CursorController.GetComponentInChildren<HitpointIndicator>(true);
-        if (HitPointIndicator == null) DebugLogger.LogError("Hitpoint indicator not found");
+        HitpointIndicator = CursorController.GetComponentInChildren<HitpointIndicator>(true);
+        if (HitpointIndicator == null) DebugLogger.LogError("Hitpoint indicator not found");
+
         // Await for controller to activate
         gameObject.SetActive(false);
     }
@@ -28,6 +29,8 @@ public class CameraGazeCursor : MonoBehaviour
     {
         GazeCursorCanvas = SelecTargetUI.Instance;
         if (GazeCursorCanvas == null) DebugLogger.LogError("MovementCanvas component not found on the scene");
+
+        MainCameraTransform = OVRUtils.CenterEyeAnchor;
     }
 
     public void Activate()
@@ -38,12 +41,12 @@ public class CameraGazeCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray ray = new(MainCamera.transform.position, MainCamera.transform.forward);
+        Ray ray = new(MainCameraTransform.position, MainCameraTransform.forward);
 
         // Logic to make de camera gaze cursor work with the raycast based on the scene mesh pre-loaded
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Quaternion cursorRotation = Quaternion.LookRotation(hit.normal, MainCamera.transform.up);
+            Quaternion cursorRotation = Quaternion.LookRotation(hit.normal, MainCameraTransform.up);
             //DebugLogger.Log("Hit: " + hit.collider.gameObject.name);
             if (hit.collider.gameObject.name == "FLOOR_EffectMesh")
             {
@@ -95,12 +98,12 @@ public class CameraGazeCursor : MonoBehaviour
 
     void OnEnable()
     {
-        if (HitPointIndicator != null) HitPointIndicator.OnIndicatorFilled += ActivateCanvas;
+        if (HitpointIndicator != null) HitpointIndicator.OnIndicatorFilled += ActivateCanvas;
     }
 
     void OnDisable()
     {
-        if(HitPointIndicator != null) HitPointIndicator.OnIndicatorFilled -= ActivateCanvas;
+        if(HitpointIndicator != null) HitpointIndicator.OnIndicatorFilled -= ActivateCanvas;
     }
 }
 

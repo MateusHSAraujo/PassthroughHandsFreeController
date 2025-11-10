@@ -2,6 +2,10 @@
 
 A Mixed Reality Interface for Robotic Wheelchair Navigation Control, developed as an undergraduate thesis project for the Advanced Robotics Laboratory (AdRoLab) at FEEC/UNICAMP.
 
+**Full Thesis Document:** [Interface de Realidade Mista para Controle de Navegação de Cadeira de Rodas Robótica](https://github.com/MateusHSAraujo/PassthroughHandsFreeController/blob/main/Assets/Scenes/PassthroughHandsFreeController/TCC%20-%20Interface%20de%20Realidade%20Mista%20para%20Controle%20de%20Navega%C3%A7%C3%A3o%20de%20Cadeira%20de%20Rodas%20Rob%C3%B3tica.pdf).
+
+**Video Demonstration:** [Trabalho de Conclusão de Curso - Interface de Realidade Mista para Controle de Navegação de Cadeira de Rodas Robótica](https://eduplay.rnp.br/app/video/184940-tcc-passthroughhandsfreecontroller).
+
 ## Overview
 
 This project is a Unity application designed for the Meta Quest 3 headset, serving as a hands-free Human-Machine Interface (HMI) for controlling a robotic wheelchair. The primary goal is to provide an intuitive navigation system for users with motor disabilities.

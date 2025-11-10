@@ -12,7 +12,7 @@ public class MovingState : ApplicationState
     public override void Enter()
     {
         MovementController.OnMovementSequenceEnded += OnMovementEnded;
-        MovementController.PerformMovementSequence(_movementTarget);
+        MovementController.PerformLinearDisplacement(_movementTarget);
     }
 
     public override void Exit()

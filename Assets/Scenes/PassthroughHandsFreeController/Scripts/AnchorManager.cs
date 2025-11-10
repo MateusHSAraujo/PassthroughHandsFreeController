@@ -7,7 +7,7 @@ public class AnchorManager : MonoBehaviour
 
     [SerializeField] private GameObject Wheelchair_prefab;
     private GameObject Wheelchair;
-    [SerializeField] private float BackwardsOfset = 0.2f;
+    [SerializeField] private float BackwardsOffset = 0.2f;
     [SerializeField] private LineRendererDebugTool lineRendererDebugTool;
     [SerializeField] private LineRendererDebugTool lineRendererDebugToolL;
     [SerializeField] private LineRendererDebugTool lineRendererDebugToolR;
@@ -39,7 +39,7 @@ public class AnchorManager : MonoBehaviour
         Vector3 WheelchairFoward = Vector3.Cross(WheelchairUp, WheelchairRight).normalized;
 
         Vector3 WheelchairPosition = (LeftAnchor.transform.position + RightAnchor.transform.position) / 2;
-        WheelchairPosition = WheelchairPosition - BackwardsOfset * WheelchairFoward;
+        WheelchairPosition = WheelchairPosition - BackwardsOffset * WheelchairFoward;
         Wheelchair.transform.position = WheelchairPosition;
         Wheelchair.transform.rotation = Quaternion.LookRotation(WheelchairFoward, WheelchairUp);
     }

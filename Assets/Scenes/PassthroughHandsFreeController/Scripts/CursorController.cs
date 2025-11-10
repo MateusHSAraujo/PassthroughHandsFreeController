@@ -57,6 +57,7 @@ public class CursorController : MonoBehaviour
             prevPosition = newPosition; // Store the initial hit point
             transform.SetPositionAndRotation(newPosition, cursorRotation); // Update cursor position and rotation
             gameObject.SetActive(true); // Activate cursor
+            hitpointIndicator.StartScaling(); // Start the hitpoint indicator
         }
         else if (Vector3.Distance(prevPosition, newPosition) > distanceThreshold)
         {

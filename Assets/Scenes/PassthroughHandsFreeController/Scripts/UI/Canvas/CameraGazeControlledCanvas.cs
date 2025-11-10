@@ -10,7 +10,7 @@ public class CameraGazeControlledCanvas : MonoBehaviour
     [SerializeField] private GameObject SceneUIHelpers = null;
     [SerializeField] private CameraGazeControlledCanvasSettings SettingsAsset;
     
-    private LaserPointer m_lp;
+    private LaserPointer LaserPointer;
     private AudioSource AudioSource;
     private CanvasGroup CanvasGroup;
     private OVRRaycaster RayCaster;
@@ -26,16 +26,16 @@ public class CameraGazeControlledCanvas : MonoBehaviour
         DebugLogger.Log("Initiating a Camera Gaze Controlled Canvas");
 
         // Laser pointer
-        m_lp = SceneUIHelpers.GetComponentInChildren<LaserPointer>();
-        if (!m_lp) DebugLogger.LogError("A Camera Gaze Controlled Canvas requires a LaserPointer object");
+        LaserPointer = SceneUIHelpers.GetComponentInChildren<LaserPointer>();
+        if (!LaserPointer) DebugLogger.LogError("A Camera Gaze Controlled Canvas requires a LaserPointer object");
             
         // Switch this to on if you want the laser pointer to be active
-        m_lp.LaserBeamBehavior = LaserPointer.LaserBeamBehaviorEnum.Off;
+        LaserPointer.LaserBeamBehavior = LaserPointer.LaserBeamBehaviorEnum.Off;
 
         RayCaster = gameObject.GetComponent<OVRRaycaster>();
         if (!RayCaster) DebugLogger.LogError("Camera Gaze Controlled Canvas requires a OVRRaycaster");
             
-        RayCaster.pointer = m_lp.gameObject;
+        RayCaster.pointer = LaserPointer.gameObject;
 
         CanvasGroup = gameObject.GetComponent<CanvasGroup>();
         if (!CanvasGroup) DebugLogger.LogError("CameraGaze Controller Canvas requires a CanvasGroup");

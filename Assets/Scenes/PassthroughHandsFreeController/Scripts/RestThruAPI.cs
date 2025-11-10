@@ -7,9 +7,9 @@ using Debug = UnityEngine.Debug;
 using System.Threading;
 
 // TODO : Fix name typo
-public class ResThruAPI : MonoBehaviour
+public class RestThruAPI : MonoBehaviour
 {
-    public static ResThruAPI Instance;
+    public static RestThruAPI Instance;
 
     private enum APIStates
     {
@@ -88,7 +88,7 @@ public class ResThruAPI : MonoBehaviour
                     {
                         await ForceStopRobot();
                     }
-                    catch (ResThruServer.ServerConnectionException ex)
+                    catch (RestThruServer.ServerConnectionException ex)
                     {
                         DebugLogger.LogError($"Couldn't reach server to emergency stop. {ex}");
                     }
@@ -172,8 +172,8 @@ public class ResThruAPI : MonoBehaviour
         float Kint = GotoPoint2DConfigurations.Kint;
         // ==================================================================
 
-        ResThruServer.Velocity2Payload vel2;
-        ResThruServer.ServerResponse response;
+        RestThruServer.Velocity2Payload vel2;
+        RestThruServer.ServerResponse response;
 
         // First, rotate to face the goal point
         Vector2 RobotFoward2 = new(RobotTransform.forward.x, RobotTransform.forward.z);
@@ -184,7 +184,7 @@ public class ResThruAPI : MonoBehaviour
         {
             vel2 = (Angle > 0) ? new(Vrot, -Vrot) : new(-Vrot, Vrot);
 
-            response = await ResThruServer.SendPayloadToServer(ResThruServer.Velocity2Endpoint, "PUT", vel2, ct);
+            response = await RestThruServer.SendPayloadToServer(RestThruServer.Velocity2Endpoint, "PUT", vel2, ct);
 
             if (response.Result != UnityWebRequest.Result.Success)
             {
@@ -209,7 +209,7 @@ public class ResThruAPI : MonoBehaviour
 
         // Then, move to target
         vel2 = new(Vlin, Vlin);
-        response = await ResThruServer.SendPayloadToServer(ResThruServer.Velocity2Endpoint, "PUT", vel2, ct);
+        response = await RestThruServer.SendPayloadToServer(RestThruServer.Velocity2Endpoint, "PUT", vel2, ct);
 
 
         if (response.Result != UnityWebRequest.Result.Success)
@@ -287,7 +287,7 @@ public class ResThruAPI : MonoBehaviour
             vel2 = new(Vr, Vl);
 
             stopwatch.Restart();
-            response = await ResThruServer.SendPayloadToServer(ResThruServer.Velocity2Endpoint, "PUT", vel2, ct);
+            response = await RestThruServer.SendPayloadToServer(RestThruServer.Velocity2Endpoint, "PUT", vel2, ct);
             stopwatch.Stop();
             DebugLogger.Log($"Last control action took {stopwatch.ElapsedMilliseconds} ms to be answered by the server. respose={response}");
             float delayTime = currdt;
@@ -376,8 +376,8 @@ public class ResThruAPI : MonoBehaviour
 
 
         Stopwatch stopwatch = new();
-        ResThruServer.Velocity2Payload vel2;
-        ResThruServer.ServerResponse response;
+        RestThruServer.Velocity2Payload vel2;
+        RestThruServer.ServerResponse response;
 
         float StableTime = 0;
         bool isStopped = false;
@@ -434,7 +434,7 @@ public class ResThruAPI : MonoBehaviour
                     vel2 = new(Vr, Vl);
 
                     stopwatch.Restart();
-                    response = await ResThruServer.SendPayloadToServer(ResThruServer.Velocity2Endpoint, "PUT", vel2, ct); 
+                    response = await RestThruServer.SendPayloadToServer(RestThruServer.Velocity2Endpoint, "PUT", vel2, ct); 
                     stopwatch.Stop();
                     DebugLogger.Log($"Last control action took {stopwatch.ElapsedMilliseconds} ms to be answered by the server. respose={response}");
                     float delayTime = dt;
@@ -517,13 +517,13 @@ public class ResThruAPI : MonoBehaviour
     #region Utils
     private async Task ForceStopRobot()
     {
-        ResThruServer.ServerResponse response;
+        RestThruServer.ServerResponse response;
         int retryAttemps = 0;
         int maxRetrys = 3;
         do
         {
             retryAttemps++;
-            response = await ResThruServer.SendPayloadToServer(ResThruServer.StopEndpoint, "PUT");
+            response = await RestThruServer.SendPayloadToServer(RestThruServer.StopEndpoint, "PUT");
             if (response.Result != UnityWebRequest.Result.Success) DebugLogger.LogError($"Error while attempting to stopping robot. Retrying");
         } while (response.Result != UnityWebRequest.Result.Success && retryAttemps < maxRetrys);
     }

@@ -6,7 +6,7 @@ using System.Threading;
 
 
 // TODO : fix name typo
-public static class ResThruServer
+public static class RestThruServer
 {
     #region Endpoints and payloads
     public const string Velocity2Endpoint = "http://192.168.0.2:8080/motion/vel2";

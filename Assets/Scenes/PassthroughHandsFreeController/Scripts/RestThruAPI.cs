@@ -437,7 +437,7 @@ public class RestThruAPI : MonoBehaviour
                     response = await RestThruServer.SendPayloadToServer(RestThruServer.Velocity2Endpoint, "PUT", vel2, ct); 
                     stopwatch.Stop();
                     DebugLogger.Log($"Last control action took {stopwatch.ElapsedMilliseconds} ms to be answered by the server. respose={response}");
-                    float delayTime = dt;
+                    float delayTime = dt * 1000f;
                     delayTime = (stopwatch.ElapsedMilliseconds < delayTime) ? delayTime - stopwatch.ElapsedMilliseconds : 0;
 
                     // Logs for debuging PID controller

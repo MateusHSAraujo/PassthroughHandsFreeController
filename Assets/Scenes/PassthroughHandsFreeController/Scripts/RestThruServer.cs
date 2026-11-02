@@ -104,7 +104,7 @@ public static class RestThruServer
 
     public static async Task<ServerResponse> SendPayloadToServer<T>(string endpoint, string verb, T payload, CancellationToken ct)
     {
-        string json = (payload == null) ? "" : JsonUtility.ToJson(payload);
+        string json = (payload == null) ? "{}" : JsonUtility.ToJson(payload);
         DebugLogger.Log($"endpoint={endpoint} ; verb={verb} ; json={json}");
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
 

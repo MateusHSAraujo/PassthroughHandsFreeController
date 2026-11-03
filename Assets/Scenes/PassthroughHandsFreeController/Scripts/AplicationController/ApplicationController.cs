@@ -6,7 +6,8 @@ public class ApplicationController : MonoBehaviour
     [SerializeField] private CameraGazeCursor cameraGazeCursor;
     [SerializeField] private MovementSequenceController movementSequenceController;
     [SerializeField] private TwoButtonsCameraGazeControlledCanvas confirmRotationUI;
-    
+    [SerializeField] private ServerConfigUI serverConfigUI;
+
     private MainMenuUI mainMenuUI;
 
     private Coroutine pingControlCoroutine;
@@ -22,15 +23,22 @@ public class ApplicationController : MonoBehaviour
         if (movementSequenceController == null) DebugLogger.LogError("MovementSequenceController not attributed on Unity.");
 
         mainMenuUI = MainMenuUI.Instance;
-        if (movementSequenceController == null) DebugLogger.LogError("MainMenuUI instance not found.");
+        if (mainMenuUI == null) DebugLogger.LogError("MainMenuUI instance not found.");
+
+        if (serverConfigUI == null) serverConfigUI = ServerConfigUI.Instance;
+        if (serverConfigUI == null) DebugLogger.LogError("ServerConfigUI instance not found.");
+
+        DebugLogger.Log($"Initial RestThru server address: {RestThruServer.BaseUrl} (Saved in PlayerPrefs: {RestThruServer.HasSavedConfiguration})");
 
         // Creating context
         stateContext = new(cameraGazeCursor,
                             movementSequenceController,
                             confirmRotationUI,
                             mainMenuUI,
-                            this);
+                            this,
+                            serverConfigUI);
 
+        // Always start directly in MainMenuState (with default 192.168.0.2:8080 if not configured yet)
         TransitionTo(new MainMenuState(stateContext));
 
         DebugLogger.LogWarning("Starting vibration");
@@ -55,5 +63,4 @@ public class ApplicationController : MonoBehaviour
         currentState = destState;
         currentState.Enter();
     }
-
 }

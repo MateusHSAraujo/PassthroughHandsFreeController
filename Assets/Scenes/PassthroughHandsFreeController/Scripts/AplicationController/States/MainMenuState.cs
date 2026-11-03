@@ -1,47 +1,52 @@
-// State that system is when the main menu is on
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MainMenuState : ApplicationState
 {
     private readonly Vector3? positionToOpenMenu = null;
 
-    public MainMenuState(StateContext context) : base(context) {}
+    public MainMenuState(StateContext context) : base(context) { }
+
     public MainMenuState(StateContext context, Vector3 menuCanvasPosition) : base(context)
     {
         positionToOpenMenu = menuCanvasPosition;
     }
-    
+
     public override void Enter()
     {
         if (!positionToOpenMenu.HasValue)
         {
             MainMenuUI.ShowCanvas();
-        } else
+        }
+        else
         {
             MainMenuUI.ShowCanvasAtDirectionOf(positionToOpenMenu.Value);
         }
-        MainMenuUI.MoveButton.onValueChanged.AddListener(OnStartMovementTargetSelection);
-        MainMenuUI.RotateButton.onValueChanged.AddListener(OnStartRotation);
+
+        MainMenuUI.OnMoveRequested += OnStartMovementTargetSelection;
+        MainMenuUI.OnRotateRequested += OnStartRotation;
+        MainMenuUI.OnServerConfigRequested += OnOpenServerConfig;
     }
 
     public override void Exit()
     {
-        MainMenuUI.MoveButton.onValueChanged.RemoveListener(OnStartMovementTargetSelection);
-        MainMenuUI.RotateButton.onValueChanged.RemoveListener(OnStartRotation);
+        MainMenuUI.OnMoveRequested -= OnStartMovementTargetSelection;
+        MainMenuUI.OnRotateRequested -= OnStartRotation;
+        MainMenuUI.OnServerConfigRequested -= OnOpenServerConfig;
         MainMenuUI.HideCanvas();
     }
 
-    private void OnStartMovementTargetSelection(bool isOn)
+    private void OnStartMovementTargetSelection()
     {
-        if (!isOn) DebugLogger.Log("Something went wrong. This isON should not return false");
         Controller.TransitionTo(new SelectingMovementTargetState(_context));
     }
 
-    private void OnStartRotation(bool isOn)
+    private void OnStartRotation()
     {
-        if (!isOn) DebugLogger.Log("Something went wrong. This isON should not return false");
         Controller.TransitionTo(new RotatingState(_context));
+    }
+
+    private void OnOpenServerConfig()
+    {
+        Controller.TransitionTo(new ServerConfigState(_context, MainMenuUI.transform.position));
     }
 }

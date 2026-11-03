@@ -4,18 +4,21 @@ public class StateContext
     public MovementSequenceController MovementController { get; private set; }
     public TwoButtonsCameraGazeControlledCanvas ConfirmRotationUI { get; private set; }
     public MainMenuUI MainMenuUI { get; private set; }
+    public ServerConfigUI ServerConfigUI { get; private set; }
     public ApplicationController Controller { get; private set; }
 
     public StateContext(CameraGazeCursor cameraGazeCursor, 
                         MovementSequenceController movementController, 
                         TwoButtonsCameraGazeControlledCanvas confirmRotationUI, 
                         MainMenuUI mainMenuUI, 
-                        ApplicationController controller)
+                        ApplicationController controller,
+                        ServerConfigUI serverConfigUI = null)
     {
         CameraGazeCursor = cameraGazeCursor;
         MovementController = movementController;
         ConfirmRotationUI = confirmRotationUI;
         MainMenuUI = mainMenuUI;
+        ServerConfigUI = serverConfigUI;
         Controller = controller;
     }
 }
@@ -30,6 +33,7 @@ public abstract class ApplicationState : IApplicationState
     protected MovementSequenceController MovementController => _context.MovementController;
     protected TwoButtonsCameraGazeControlledCanvas ConfirmRotationUI => _context.ConfirmRotationUI;
     protected MainMenuUI MainMenuUI => _context.MainMenuUI;
+    protected ServerConfigUI ServerConfigUI => _context.ServerConfigUI;
 
     public ApplicationState(StateContext context)
     {

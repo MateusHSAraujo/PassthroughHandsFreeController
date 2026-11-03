@@ -52,7 +52,7 @@ MonoBehaviour:
   LeftAnchor: {fileID: 0}
   RightAnchor: {fileID: 0}
   Wheelchair_prefab: {fileID: 3125165527598978782, guid: 779f5eab1277241d6b58ee2c44909b20, type: 3}
-  BackwardsOfset: 0.2
+  BackwardsOffset: 0.2
   lineRendererDebugTool: {fileID: 3496170386727837191}
   lineRendererDebugToolL: {fileID: 5592055735239626156}
   lineRendererDebugToolR: {fileID: 522412629108031452}
@@ -78,13 +78,13 @@ MonoBehaviour:
     Khead: 0.1
     Kint: 0.01
   AlignHeadingConfigurations:
-    HeadingTolerance: 2.5
+    HeadingTolerance: 7.5
     maxVrot: 100
     dt: 0.5
     TimeoutToCompletion: 3
     Kp: 15
-    Ki: 0.001
-    Kd: 0.001
+    Ki: 0.05
+    Kd: 0.5
     UIFeedback: {fileID: 6566528007454315542}
 --- !u!1001 &1014875208860254216
 PrefabInstance:
@@ -240,13 +240,77 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6682079409462102559}
     m_Modifications:
+    - target: {fileID: 408004279408016059, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613943718567895035, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_text
+      value: "Wheelchair is following your head orientation. \nWhen you're done, hold your head still until the green circle fills."
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613943718567895035, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: dda8d4d183f898241969906ee2a03d81, type: 2}
+    - target: {fileID: 1613943718567895035, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7032093815205813286, guid: dda8d4d183f898241969906ee2a03d81, type: 2}
+    - target: {fileID: 2025767156621804292, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: a8ff26fc8eee4e64f84d729a22088af5, type: 2}
+    - target: {fileID: 2025767156621804292, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -9221056233183343877, guid: a8ff26fc8eee4e64f84d729a22088af5, type: 2}
+    - target: {fileID: 2084915457666614512, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835724701630237042, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4387719213770531663, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: offset.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4387719213770531663, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: offset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4387719213770531663, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: animationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860971396203025381, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5112120095495742483, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5398728489269371558, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6546993873634019392, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
       propertyPath: m_Name
       value: RotationUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6546993873634019392, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6823807377264532721, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6993570942976909328, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7148712868548905129, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
       propertyPath: m_Pivot.x
@@ -279,6 +343,18 @@ PrefabInstance:
     - target: {fileID: 7148712868548905129, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148712868548905129, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0015
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148712868548905129, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0015
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148712868548905129, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0015
       objectReference: {fileID: 0}
     - target: {fileID: 7148712868548905129, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -327,6 +403,26 @@ PrefabInstance:
     - target: {fileID: 7148712868548905129, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148712868548905129, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7791777919951322545, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958108521750808751, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9022371281286011543, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103943027676410978, guid: f210ec4960ac42f4fb71aac6ff10a5b8, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

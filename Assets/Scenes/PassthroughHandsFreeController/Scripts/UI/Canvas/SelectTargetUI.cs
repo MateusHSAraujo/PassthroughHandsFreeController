@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,12 +18,45 @@ public class SelecTargetUI : CameraGazeControlledCanvas
 
     protected override void Awake()
     {
-        // Initialize the canvas or any other setup if needed
-        Debug.Log("CameraGazeCursorSelectTarget Awake called.");
+        DebugLogger.Log("CameraGazeCursorSelectTarget Awake called.");
         Debug.Assert(Instance == null);
         Instance = this;
         minScale = transform.localScale.x;
-        base.Awake();          
+        base.Awake();
+
+        ApplyButtonStyles();
+    }
+
+    private void ApplyButtonStyles()
+    {
+        ConfigureDialogButton(ConfirmButton, GazeButtonStyle.Primary);
+        ConfigureDialogButton(CancelButton, GazeButtonStyle.Danger);
+        ConfigureDialogButton(MenuButton, GazeButtonStyle.SubtleIcon);
+    }
+
+    private void ConfigureDialogButton(Toggle buttonToggle, GazeButtonStyle style)
+    {
+        if (buttonToggle == null) return;
+
+        Transform iconTf = buttonToggle.transform.Find("Content/Background/Elements/Icon");
+        if (iconTf != null && iconTf.TryGetComponent<Graphic>(out var iconGraphic))
+        {
+            iconGraphic.color = Color.white;
+        }
+
+        Transform labelTf = buttonToggle.transform.Find("Content/Background/Elements/Text/Label");
+        if (labelTf != null && labelTf.TryGetComponent<Graphic>(out var labelGraphic))
+        {
+            labelGraphic.color = Color.white;
+        }
+
+        if (buttonToggle.TryGetComponent<ToggleGazeInteractor>(out var interactor))
+        {
+            interactor.stylePreset = style;
+            interactor.InitializeReferences();
+            interactor.ApplyStylePresetColors();
+            interactor.ResetVisualStateImmediate();
+        }
     }
 
     public override void ShowCanvasAt(Vector3 position)
@@ -33,11 +65,12 @@ public class SelecTargetUI : CameraGazeControlledCanvas
         float distance = Vector3.Distance(Positioner.targetCamera.position, position);
         float calculatedScaling = Mathf.Clamp(scaleFactor * distance, minScale, maxScale);
         transform.localScale = Vector3.one * calculatedScaling;
-        
+
         ConfirmButton.SetIsOnWithoutNotify(false);
         CancelButton.SetIsOnWithoutNotify(false);
         MenuButton.SetIsOnWithoutNotify(false);
 
+        ApplyButtonStyles();
         base.ShowCanvasAt(position);
-    }    
+    }
 }

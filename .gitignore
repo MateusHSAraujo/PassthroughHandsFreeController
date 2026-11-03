@@ -95,3 +95,14 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
 /Assets/Scenes/PassthroughHandsFreeController/Logs
+
+# Solution files (Unity 6 .slnx)
+*.slnx
+
+# Crash recovery scenes
+/[Aa]ssets/_Recovery*
+
+# Assistant workspace metadata
+.agents/
+.gemini/
+/[Aa]ssets/XR/APILayers~

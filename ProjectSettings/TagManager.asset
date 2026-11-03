@@ -22,6 +22,15 @@ TagManager:
   - QDSUISection
   - QDSUIToggleCheckboxRadio
   - QDSUIToggleSwitch
+  - QDSUIBackplate
+  - Locomotion
+  - LocoButton
+  - LocoText
+  - PassThroughButton
+  - PassThrough
+  - SamplesInfoPanel
+  - QDSUILineDrawing
+  - QDSUIToggleThumbnail
   layers:
   - Default
   - TransparentFX
@@ -68,3 +77,4 @@ TagManager:
   - Light Layer 5
   - Light Layer 6
   - Light Layer 7
+  m_MigratedRenderPipelines: []

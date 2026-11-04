@@ -46,13 +46,22 @@ public class ServerConfigState : ApplicationState
 
     private void OnConfigurationConfirmed()
     {
-        DebugLogger.Log($"Server configuration confirmed ({RestThruServer.BaseUrl}). Transitioning to MainMenuState.");
-        Controller.TransitionTo(new MainMenuState(_context, ServerConfigUI.transform.position));
+        DebugLogger.Log($"Server configuration confirmed ({RestThruServer.BaseUrl}). Returning to settings.");
+        Controller.TransitionTo(CreateReturnState());
     }
 
     private void OnConfigurationCancelled()
     {
-        DebugLogger.Log("Server configuration cancelled. Transitioning back to MainMenuState.");
-        Controller.TransitionTo(new MainMenuState(_context, ServerConfigUI.transform.position));
+        DebugLogger.Log("Server configuration cancelled. Returning to settings.");
+        Controller.TransitionTo(CreateReturnState());
+    }
+
+    // Server config is opened from the Settings hub; fall back to the main menu if Settings is not wired.
+    private IApplicationState CreateReturnState()
+    {
+        Vector3 position = ServerConfigUI.transform.position;
+        return SettingsUI != null
+            ? new SettingsState(_context, position)
+            : new MainMenuState(_context, position);
     }
 }

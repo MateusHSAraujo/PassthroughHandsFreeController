@@ -31,6 +31,11 @@ public class RestThruAPI : MonoBehaviour
         State = APIStates.IDLE;
     }
 
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
     void Update()
     {
         // Emergency stop
@@ -135,11 +140,8 @@ public class RestThruAPI : MonoBehaviour
         [Tooltip("Tolerance in m to consider the final goal point reached")]
         public float TravelTolerance = 0.1f;
 
-        [Tooltip("First aligment rotation speed (deg/s)")]
-        public float Vrot = 50;
-
-        [Tooltip("Linear travel speed (mm/s)")]
-        public float Vlin = 100;
+        // Vrot (initial alignment speed) and Vlin (cruise speed) come from SettingsStore
+        // (AppSettings.AngularSpeed / LinearSpeed). See GetEffectiveGotoSpeeds().
 
         [Tooltip("Control period (sec)")]
         public float dt = 0.5f;
@@ -164,8 +166,7 @@ public class RestThruAPI : MonoBehaviour
         // Deconstructing config to local variables
         float HeadingTolerance = GotoPoint2DConfigurations.HeadingTolerance;
         float TravelTolerance = GotoPoint2DConfigurations.TravelTolerance;
-        float Vrot = GotoPoint2DConfigurations.Vrot;
-        float Vlin = GotoPoint2DConfigurations.Vlin;
+        (float Vlin, float Vrot) = GetEffectiveGotoSpeeds();
         float dt = GotoPoint2DConfigurations.dt;
         float Kdist = GotoPoint2DConfigurations.Kdist;
         float Khead = GotoPoint2DConfigurations.Khead;
@@ -331,7 +332,7 @@ public class RestThruAPI : MonoBehaviour
         [Tooltip("Tolerance in degrees to consider the heading is aligned")]
         public float HeadingTolerance = 10;
 
-        [Tooltip("Max rotational velocity")]
+        [Tooltip("Hard cap for rotational velocity. The user's AngularSpeed setting scales this down but never above it.")]
         public float maxVrot = 100;
         
         [Tooltip("Control period (sec)")]
@@ -364,7 +365,7 @@ public class RestThruAPI : MonoBehaviour
         float Kp = AlignHeadingConfigurations.Kp;
         float Ki = AlignHeadingConfigurations.Ki;
         float Kd = AlignHeadingConfigurations.Kd;
-        float maxVrot = AlignHeadingConfigurations.maxVrot;
+        float maxVrot = GetEffectiveAlignMaxVrot();
         float timeout = AlignHeadingConfigurations.TimeoutToCompletion;
         RotationUI canvas = AlignHeadingConfigurations.UIFeedback;
         // ==================================================================
@@ -515,6 +516,35 @@ public class RestThruAPI : MonoBehaviour
     #endregion
 
     #region Utils
+    private static float ClampToServerMax(float speed)
+    {
+        float? serverMax = RestThruServer.ServerMaxWheelSpeed;
+        return serverMax.HasValue ? Mathf.Min(speed, serverMax.Value) : speed;
+    }
+
+    /// <summary>Nominal GotoPoint2D speeds from user settings, clamped by the server-reported max wheel speed.</summary>
+    public (float linear, float angular) GetEffectiveGotoSpeeds()
+    {
+        AppSettings settings = SettingsStore.Current;
+        float linear = ClampToServerMax(settings.LinearSpeed);
+        float angular = ClampToServerMax(settings.AngularSpeed);
+        DebugLogger.Log($"Effective GotoPoint2D speeds: Vlin={linear} Vrot={angular} (serverMax={RestThruServer.ServerMaxWheelSpeed})");
+        return (linear, angular);
+    }
+
+    /// <summary>
+    /// AlignHeading2D max rotation: the configured maxVrot scaled by AngularSpeed / AngularSpeedDefault,
+    /// never above the configured maxVrot, then clamped by the server-reported max wheel speed.
+    /// </summary>
+    public float GetEffectiveAlignMaxVrot()
+    {
+        float configuredMax = AlignHeadingConfigurations.maxVrot;
+        float scale = SettingsStore.Current.AngularSpeed / AppSettings.AngularSpeedDefault;
+        float effective = ClampToServerMax(Mathf.Min(configuredMax, configuredMax * scale));
+        DebugLogger.Log($"Effective AlignHeading2D maxVrot={effective} (configured={configuredMax}, scale={scale})");
+        return effective;
+    }
+
     private async Task ForceStopRobot()
     {
         RestThruServer.ServerResponse response;

@@ -70,7 +70,8 @@ The core scripts are located in `Assets/Scenes/PassthroughHandsFreeController/Sc
 
 | State | Class | Behavior |
 | :--- | :--- | :--- |
-| **Main Menu** | `MainMenuState` | Displays `MainMenuUI` in front of the user with two gaze-activated options: **Move** (transitions to `SelectingMovementTargetState`) or **Rotate** (transitions to `RotatingState`). |
+| **Main Menu** | `MainMenuState` | Displays `MainMenuUI` in front of the user with gaze-activated options: **Move** and **Rotate** (entry states provided by the active control mode, `SelectingMovementTargetState` / `RotatingState` for gaze dwell) and **Settings** (`SettingsState`). |
+| **Settings** | `SettingsState` | Displays `SettingsUI`: linear and rotation speed (Slow/Normal/Fast presets plus fine -/+ steps), MRUK room-mesh visibility, control mode, and a shortcut to the RestThru server screen (`ServerConfigState`, with IP/port keypad and HTTP/HTTPS selector). Changes are saved immediately. |
 | **Floor Target Selection** | `SelectingMovementTargetState` | Activates `CameraGazeCursor`. When the user fixates on a point on the floor mesh (`FLOOR_EffectMesh`), opens `SelecTargetUI` with options to **Confirm** (`MovingState`), **Cancel** (resumes cursor), or return to **Main Menu** (`MainMenuState`). |
 | **Linear Movement** | `MovingState` | Renders the trajectory line (`TrajectoryLine`) and schedules `GotoPoint2D` on `RestThruAPI`. Once completed or aborted, transitions to `ConfirmingRotationState`. |
 | **Post-Movement Rotation Prompt** | `ConfirmingRotationState` | Displays `ConfirmRotationUI` asking whether the user wants to adjust the wheelchair's final heading (`RotatingState`) or select a new movement target (`SelectingMovementTargetState`). |
@@ -148,6 +149,8 @@ Assets/Scenes/PassthroughHandsFreeController/
 │   └── WheelchairManager.prefab # Wheelchair anchor & control orchestrator
 ├── Scripts/
 │   ├── AplicationController/ # State machine (ApplicationController, StateContext, states)
+│   ├── Control/             # IControlMode + ControlModeRegistry (gaze dwell; joystick modes planned)
+│   ├── Settings/            # AppSettings + SettingsStore (persisted user settings)
 │   ├── UI/                  # Gaze-dwell interactors, canvas controllers, line-of-sight positioning
 │   ├── AnchorManager.cs     # 6-DoF wheelchair tracking from Touch controllers
 │   ├── CameraGazeCursor.cs  # Floor raycasting & dwell target selection
@@ -171,5 +174,5 @@ Assets/Scenes/PassthroughHandsFreeController/
 
 ### Running the Project
 1. Open the project in **Unity `6000.6.7f1`** on Windows and load `Assets/Scenes/PassthroughHandsFreeController/PassthroughHandsFreeController.unity`.
-2. Configure the target RestThru server IP and port via the in-headset **RestThru Server** menu or in [`RestThruServer.cs`](Assets/Scenes/PassthroughHandsFreeController/Scripts/RestThruServer.cs).
+2. Configure the target RestThru server (HTTP/HTTPS, IP and port), wheelchair speeds, mesh visibility and control mode via the in-headset **Settings** menu. Defaults live in [`AppSettings.cs`](Assets/Scenes/PassthroughHandsFreeController/Scripts/Settings/AppSettings.cs).
 3. Secure the left and right Touch controllers to the wheelchair's armrest mounts and run the application via **Meta Quest Link** (Play Mode) or build and deploy the Android APK to the headset.

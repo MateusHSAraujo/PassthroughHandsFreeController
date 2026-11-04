@@ -15,6 +15,8 @@ public class MainMenuUI : CameraGazeControlledCanvas
     public Toggle RotateButton;
     public Toggle ConfigButton;
 
+    private const string SettingsSubtitle = "Server, speeds, mesh & control mode";
+
     [Header("Status & Subtitle References:")]
     public TextMeshProUGUI ServerStatusBadgeText;
     public Image ServerStatusDot;
@@ -22,7 +24,7 @@ public class MainMenuUI : CameraGazeControlledCanvas
 
     public event Action OnMoveRequested;
     public event Action OnRotateRequested;
-    public event Action OnServerConfigRequested;
+    public event Action OnSettingsRequested;
 
     private static readonly Color OnlineColor = new(0.18f, 0.80f, 0.44f, 1f);
     private static readonly Color CheckingColor = new(0.95f, 0.61f, 0.07f, 1f);
@@ -48,6 +50,11 @@ public class MainMenuUI : CameraGazeControlledCanvas
         }
 
         BindButtonEvents();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
     }
 
     private void ApplyRichCardLayout()
@@ -161,8 +168,8 @@ public class MainMenuUI : CameraGazeControlledCanvas
                 ConfigButton.transform,
                 new Vector2(0f, -153f),
                 new Vector2(276f, 52f),
-                "RestThru Server",
-                RestThruServer.AddressDisplay,
+                "Settings",
+                SettingsSubtitle,
                 GazeButtonStyle.Secondary,
                 out TextMeshProUGUI serverSub);
             ConfigButtonSubtitle = serverSub;
@@ -261,13 +268,32 @@ public class MainMenuUI : CameraGazeControlledCanvas
                 textRt.sizeDelta = new Vector2(size.x - 68f, 34f);
             }
 
+            // Let the layout group size Label/Subtitle to the text column width; otherwise they keep a
+            // tiny default rect and the text overflows outside the button.
+            if (textTf.TryGetComponent<VerticalLayoutGroup>(out var textVlg))
+            {
+                textVlg.enabled = true;
+                textVlg.childAlignment = TextAnchor.MiddleLeft;
+                textVlg.childControlWidth = true;
+                textVlg.childControlHeight = true;
+                textVlg.childForceExpandWidth = true;
+                textVlg.childForceExpandHeight = false;
+                textVlg.spacing = 1f;
+            }
+            if (textTf.TryGetComponent<LayoutElement>(out var textLe))
+            {
+                textLe.preferredWidth = size.x - 68f;
+                textLe.flexibleWidth = 1f;
+            }
+
             Transform labelTf = textTf.Find("Label");
             if (labelTf != null && labelTf.TryGetComponent<TextMeshProUGUI>(out var lTmp))
             {
                 lTmp.text = labelText;
                 lTmp.fontSize = 14f;
                 lTmp.color = Color.white;
-                lTmp.overflowMode = TextOverflowModes.Overflow;
+                lTmp.alignment = TextAlignmentOptions.Left;
+                lTmp.overflowMode = TextOverflowModes.Ellipsis;
                 lTmp.textWrappingMode = TextWrappingModes.NoWrap;
             }
 
@@ -278,7 +304,8 @@ public class MainMenuUI : CameraGazeControlledCanvas
                 subtitleTmp.text = subtitleText;
                 subtitleTmp.fontSize = 10.5f;
                 subtitleTmp.color = new Color(0.75f, 0.86f, 0.96f, 0.9f);
-                subtitleTmp.overflowMode = TextOverflowModes.Overflow;
+                subtitleTmp.alignment = TextAlignmentOptions.Left;
+                subtitleTmp.overflowMode = TextOverflowModes.Ellipsis;
                 subtitleTmp.textWrappingMode = TextWrappingModes.NoWrap;
             }
         }
@@ -323,7 +350,7 @@ public class MainMenuUI : CameraGazeControlledCanvas
             {
                 if (!isOn) return;
                 ConfigButton.SetIsOnWithoutNotify(false);
-                OnServerConfigRequested?.Invoke();
+                OnSettingsRequested?.Invoke();
             });
         }
     }
@@ -409,10 +436,6 @@ public class MainMenuUI : CameraGazeControlledCanvas
         EnsureStatusReferences();
 
         string address = RestThruServer.AddressDisplay;
-        if (ConfigButtonSubtitle != null)
-        {
-            ConfigButtonSubtitle.text = address;
-        }
 
         if (ServerStatusBadgeText != null)
         {

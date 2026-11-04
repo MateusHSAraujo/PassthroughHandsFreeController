@@ -27,6 +27,12 @@ public class ServerConfigUI : CameraGazeControlledCanvas
     public Toggle CancelToggle;
     public Transform KeypadContainer;
 
+    [Header("Scheme Selector (HTTP / HTTPS):")]
+    [Tooltip("Keypad-local positions for the HTTP and HTTPS buttons (free slots of the last keypad row).")]
+    public Vector2 HttpButtonPosition = new(195f, -113.5f);
+    public Vector2 HttpsButtonPosition = new(273f, -113.5f);
+    public Vector2 SchemeButtonSize = new(72f, 28f);
+
     [Header("Gaze Dwell Settings:")]
     public float KeyDwellTime = 1.15f;
     public float ActionButtonDwellTime = 1.6f;
@@ -38,6 +44,10 @@ public class ServerConfigUI : CameraGazeControlledCanvas
     private ActiveField _activeField = ActiveField.IP;
     private string _currentIp = RestThruServer.DefaultServerIP;
     private string _currentPort = RestThruServer.DefaultServerPort.ToString();
+    private ServerScheme _currentScheme = ServerScheme.Http;
+
+    private GazeUIFactory.ButtonParts _httpButton;
+    private GazeUIFactory.ButtonParts _httpsButton;
 
     private ToggleGazeInteractor _ipFieldInteractor;
     private ToggleGazeInteractor _portFieldInteractor;
@@ -62,6 +72,61 @@ public class ServerConfigUI : CameraGazeControlledCanvas
         }
 
         BindUIEvents();
+        BuildSchemeSelector();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
+    private void BuildSchemeSelector()
+    {
+        if (KeypadContainer == null) return;
+
+        Sprite keySprite = null;
+        AudioClip clickClip = null;
+        TextMeshProUGUI keyLabel = null;
+        Button referenceKey = KeypadContainer.GetComponentInChildren<Button>(true);
+        if (referenceKey != null)
+        {
+            if (referenceKey.targetGraphic is Image keyImage) keySprite = keyImage.sprite;
+            AudioSource keyAudio = referenceKey.GetComponent<AudioSource>();
+            if (keyAudio != null) clickClip = keyAudio.clip;
+            keyLabel = referenceKey.GetComponentInChildren<TextMeshProUGUI>(true);
+        }
+
+        // Match the keypad keys' look (sprite, sound, font and style)
+        GazeUITheme theme = new() { ClickClip = clickClip, MediumFont = keyLabel != null ? keyLabel.font : null };
+        _httpButton = CreateSchemeButton("Scheme_Http", "HTTP", HttpButtonPosition, ServerScheme.Http, keySprite, theme, keyLabel);
+        _httpsButton = CreateSchemeButton("Scheme_Https", "HTTPS", HttpsButtonPosition, ServerScheme.Https, keySprite, theme, keyLabel);
+    }
+
+    private GazeUIFactory.ButtonParts CreateSchemeButton(string name, string label, Vector2 position, ServerScheme scheme, Sprite sprite,
+        GazeUITheme theme, TextMeshProUGUI keyLabel)
+    {
+        var parts = GazeUIFactory.CreateButton(KeypadContainer, name, label, GazeButtonStyle.Keypad, KeyDwellTime, false,
+            theme, 12f, SchemeButtonSize.y);
+        if (keyLabel != null) parts.Label.fontStyle = keyLabel.fontStyle;
+        if (sprite != null)
+        {
+            parts.Background.sprite = sprite;
+            parts.Background.type = Image.Type.Sliced;
+        }
+        RectTransform rt = (RectTransform)parts.Button.transform;
+        rt.anchorMin = new Vector2(0f, 1f);
+        rt.anchorMax = new Vector2(0f, 1f);
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.anchoredPosition = position;
+        rt.sizeDelta = SchemeButtonSize;
+        parts.Button.onClick.AddListener(() => SelectScheme(scheme));
+        return parts;
+    }
+
+    public void SelectScheme(ServerScheme scheme)
+    {
+        _currentScheme = scheme;
+        RefreshDisplay();
     }
 
     private void BindUIEvents()
@@ -179,6 +244,7 @@ public class ServerConfigUI : CameraGazeControlledCanvas
     {
         _currentIp = RestThruServer.ServerIP;
         _currentPort = RestThruServer.ServerPort.ToString();
+        _currentScheme = RestThruServer.Scheme;
         _activeField = ActiveField.IP;
 
         if (ConfirmToggle != null) ConfirmToggle.SetIsOnWithoutNotify(false);
@@ -268,6 +334,10 @@ public class ServerConfigUI : CameraGazeControlledCanvas
         {
             CancelConfiguration();
         }
+        if (GUILayout.Button(_currentScheme == ServerScheme.Https ? "HTTPS" : "HTTP", GUILayout.Height(30)))
+        {
+            SelectScheme(_currentScheme == ServerScheme.Https ? ServerScheme.Http : ServerScheme.Https);
+        }
         if (GUILayout.Button("Default", GUILayout.Height(30)))
         {
             RestoreDefaultValues();
@@ -302,6 +372,7 @@ public class ServerConfigUI : CameraGazeControlledCanvas
     {
         _currentIp = RestThruServer.DefaultServerIP;
         _currentPort = RestThruServer.DefaultServerPort.ToString();
+        _currentScheme = ServerScheme.Http;
         SetStatus($"Restored default ({_currentIp}:{_currentPort})", false);
         RefreshDisplay();
     }
@@ -413,7 +484,7 @@ public class ServerConfigUI : CameraGazeControlledCanvas
 
     public void ConfirmConfiguration()
     {
-        if (RestThruServer.TrySetServerAddress(_currentIp, _currentPort, out string errorMessage))
+        if (RestThruServer.TrySetServerAddress(_currentScheme, _currentIp, _currentPort, out string errorMessage))
         {
             SetStatus($"Saved: {RestThruServer.BaseUrl}", false);
             OnConfigurationConfirmed?.Invoke();
@@ -455,6 +526,9 @@ public class ServerConfigUI : CameraGazeControlledCanvas
         {
             PortValueText.text = string.IsNullOrEmpty(_currentPort) ? "_" : _currentPort;
         }
+
+        if (_httpButton != null) GazeUIFactory.ApplySelectionState(_httpButton, _currentScheme == ServerScheme.Http, true);
+        if (_httpsButton != null) GazeUIFactory.ApplySelectionState(_httpsButton, _currentScheme == ServerScheme.Https, true);
 
         Color ipColor = (_activeField == ActiveField.IP) ? SelectedFieldColor : UnselectedFieldColor;
         Color portColor = (_activeField == ActiveField.Port) ? SelectedFieldColor : UnselectedFieldColor;

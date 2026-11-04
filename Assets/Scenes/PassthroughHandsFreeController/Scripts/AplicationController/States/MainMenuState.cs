@@ -22,31 +22,50 @@ public class MainMenuState : ApplicationState
             MainMenuUI.ShowCanvasAtDirectionOf(positionToOpenMenu.Value);
         }
 
-        MainMenuUI.OnMoveRequested += OnStartMovementTargetSelection;
+        MainMenuUI.OnMoveRequested += OnStartMovement;
         MainMenuUI.OnRotateRequested += OnStartRotation;
-        MainMenuUI.OnServerConfigRequested += OnOpenServerConfig;
+        MainMenuUI.OnSettingsRequested += OnOpenSettings;
     }
 
     public override void Exit()
     {
-        MainMenuUI.OnMoveRequested -= OnStartMovementTargetSelection;
+        MainMenuUI.OnMoveRequested -= OnStartMovement;
         MainMenuUI.OnRotateRequested -= OnStartRotation;
-        MainMenuUI.OnServerConfigRequested -= OnOpenServerConfig;
+        MainMenuUI.OnSettingsRequested -= OnOpenSettings;
         MainMenuUI.HideCanvas();
     }
 
-    private void OnStartMovementTargetSelection()
+    private void OnStartMovement()
     {
-        Controller.TransitionTo(new SelectingMovementTargetState(_context));
+        TransitionToModeState(_context.ActiveControlMode.CreateMoveEntryState(_context));
     }
 
     private void OnStartRotation()
     {
-        Controller.TransitionTo(new RotatingState(_context));
+        TransitionToModeState(_context.ActiveControlMode.CreateRotateEntryState(_context));
     }
 
-    private void OnOpenServerConfig()
+    private void TransitionToModeState(IApplicationState next)
     {
-        Controller.TransitionTo(new ServerConfigState(_context, MainMenuUI.transform.position));
+        if (next == null)
+        {
+            DebugLogger.LogError($"Control mode {_context.ActiveControlMode.DisplayName} has no state for this action.");
+            return;
+        }
+        Controller.TransitionTo(next);
+    }
+
+    private void OnOpenSettings()
+    {
+        Vector3 position = MainMenuUI.transform.position;
+        if (SettingsUI != null)
+        {
+            Controller.TransitionTo(new SettingsState(_context, position));
+        }
+        else
+        {
+            // Settings hub not wired in the scene: keep the previous behavior.
+            Controller.TransitionTo(new ServerConfigState(_context, position));
+        }
     }
 }

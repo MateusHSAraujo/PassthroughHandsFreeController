@@ -7,6 +7,7 @@ public class ApplicationController : MonoBehaviour
     [SerializeField] private MovementSequenceController movementSequenceController;
     [SerializeField] private TwoButtonsCameraGazeControlledCanvas confirmRotationUI;
     [SerializeField] private ServerConfigUI serverConfigUI;
+    [SerializeField] private SettingsUI settingsUI;
 
     private MainMenuUI mainMenuUI;
 
@@ -28,7 +29,10 @@ public class ApplicationController : MonoBehaviour
         if (serverConfigUI == null) serverConfigUI = ServerConfigUI.Instance;
         if (serverConfigUI == null) DebugLogger.LogError("ServerConfigUI instance not found.");
 
-        DebugLogger.Log($"Initial RestThru server address: {RestThruServer.BaseUrl} (Saved in PlayerPrefs: {RestThruServer.HasSavedConfiguration})");
+        if (settingsUI == null) settingsUI = SettingsUI.Instance;
+        if (settingsUI == null) DebugLogger.LogWarning("SettingsUI instance not found. The settings button will open the server config directly.");
+
+        DebugLogger.Log($"Initial RestThru server address: {RestThruServer.BaseUrl} (Saved in PlayerPrefs: {RestThruServer.HasSavedConfiguration}); Settings: {JsonUtility.ToJson(SettingsStore.Current)}");
 
         // Creating context
         stateContext = new(cameraGazeCursor,
@@ -36,7 +40,8 @@ public class ApplicationController : MonoBehaviour
                             confirmRotationUI,
                             mainMenuUI,
                             this,
-                            serverConfigUI);
+                            serverConfigUI,
+                            settingsUI);
 
         // Always start directly in MainMenuState (with default 192.168.0.2:8080 if not configured yet)
         TransitionTo(new MainMenuState(stateContext));

@@ -29,7 +29,6 @@ public class GazeStepper : MonoBehaviour
     [SerializeField] private TextMeshProUGUI valueText;
 
     private float _value;
-    private float? _effectiveLimit;
     private bool _bound;
 
     public float Value => _value;
@@ -103,13 +102,6 @@ public class GazeStepper : MonoBehaviour
         increaseButton.onClick.AddListener(() => SetValue(_value + step, true));
     }
 
-    /// <summary>Optional limit shown to the user (e.g. server max). Does not change the stored value.</summary>
-    public void SetEffectiveLimit(float? limit)
-    {
-        _effectiveLimit = limit;
-        Refresh();
-    }
-
     public void SetValue(float value, bool notify)
     {
         Bind();
@@ -125,9 +117,7 @@ public class GazeStepper : MonoBehaviour
         if (valueText != null)
         {
             string suffix = string.IsNullOrEmpty(unit) ? string.Empty : $" {unit}";
-            valueText.text = _effectiveLimit.HasValue && _effectiveLimit.Value < _value
-                ? $"{_value:0} <size=80%>(max {_effectiveLimit.Value:0})</size>"
-                : $"{_value:0}{suffix}";
+            valueText.text = $"{_value:0}{suffix}";
         }
 
         for (int i = 0; i < presetButtons.Length && i < presetValues.Length; i++)

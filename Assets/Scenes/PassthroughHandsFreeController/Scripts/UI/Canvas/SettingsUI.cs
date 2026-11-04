@@ -260,8 +260,6 @@ public class SettingsUI : CameraGazeControlledCanvas
     private void OnLimitsUpdated(float? serverMax)
     {
         if (_linearStepper == null) return;
-        _linearStepper.SetEffectiveLimit(serverMax);
-        _angularStepper.SetEffectiveLimit(serverMax);
         string suffix = serverMax.HasValue ? $"  <size=85%>(server max {serverMax.Value:0})</size>" : string.Empty;
         _linearLabel.text = "Linear speed" + suffix;
         _angularLabel.text = "Rotation speed" + suffix;

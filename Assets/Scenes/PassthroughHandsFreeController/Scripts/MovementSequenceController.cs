@@ -71,6 +71,12 @@ public class MovementSequenceController : MonoBehaviour
         return;
     }
 
+    public void StartJoystickTeleop()
+    {
+        DebugLogger.Log("Movement sequence controller triggered: joystick teleoperation");
+        ServerAPI.ScheduleJoystickTeleop(AbortMovementSequence);
+    }
+
     private void AbortMovementSequence(bool res)
     {
         DebugLogger.Log($"Aborting movement sequence: res={res}");

@@ -362,9 +362,26 @@ public class MainMenuUI : CameraGazeControlledCanvas
         if (ConfigButton != null) ConfigButton.SetIsOnWithoutNotify(false);
     }
 
+    private void RefreshRotateButtonAvailability()
+    {
+        if (RotateButton == null) return;
+        bool available = ControlModeRegistry.Active.HasDistinctRotateAction;
+        RotateButton.interactable = available;
+        if (RotateButton.TryGetComponent<ToggleGazeInteractor>(out var interactor))
+        {
+            interactor.SetOverrideBaseColor(available ? null : GazeUIFactory.DisabledColor);
+        }
+        Transform labelTf = RotateButton.transform.Find("Content/Background/Elements/Text/Label");
+        if (labelTf != null && labelTf.TryGetComponent<TextMeshProUGUI>(out var label))
+        {
+            label.color = available ? GazeUIFactory.LabelColor : new Color(1f, 1f, 1f, 0.35f);
+        }
+    }
+
     public override void ShowCanvas()
     {
         ResetButtons();
+        RefreshRotateButtonAvailability();
         StartPeriodicStatusCheck();
         base.ShowCanvas();
     }
@@ -372,6 +389,7 @@ public class MainMenuUI : CameraGazeControlledCanvas
     public override void ShowCanvasAtDirectionOf(Vector3 targetPosition)
     {
         ResetButtons();
+        RefreshRotateButtonAvailability();
         StartPeriodicStatusCheck();
         base.ShowCanvasAtDirectionOf(targetPosition);
     }

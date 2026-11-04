@@ -7,6 +7,7 @@ public class GazeDwellControlMode : IControlMode
     public string DisplayName => "Gaze Dwell";
     public string Description => "Dwell on the floor to pick a target";
     public bool IsAvailable => true;
+    public bool HasDistinctRotateAction => true;
 
     public IApplicationState CreateMoveEntryState(StateContext context) => new SelectingMovementTargetState(context);
     public IApplicationState CreateRotateEntryState(StateContext context) => new RotatingState(context);
@@ -23,6 +24,7 @@ public class UnavailableControlMode : IControlMode
     public string DisplayName { get; }
     public string Description { get; }
     public bool IsAvailable => false;
+    public bool HasDistinctRotateAction => false;
 
     public UnavailableControlMode(ControlModeId id, string displayName, string description)
     {
@@ -35,12 +37,25 @@ public class UnavailableControlMode : IControlMode
     public IApplicationState CreateRotateEntryState(StateContext context) => null;
 }
 
+/// <summary>Continuous teleoperation: left stick drives forward/back, right stick rotates in place.</summary>
+public class ControllerJoystickControlMode : IControlMode
+{
+    public ControlModeId Id => ControlModeId.ControllerJoystick;
+    public string DisplayName => "Controller Joystick";
+    public string Description => "Left stick drives, right stick rotates. Left Menu button to exit.";
+    public bool IsAvailable => true;
+    public bool HasDistinctRotateAction => false;
+
+    public IApplicationState CreateMoveEntryState(StateContext context) => new JoystickTeleopState(context);
+    public IApplicationState CreateRotateEntryState(StateContext context) => new JoystickTeleopState(context);
+}
+
 public static class ControlModeRegistry
 {
     private static readonly List<IControlMode> s_modes = new()
     {
         new GazeDwellControlMode(),
-        new UnavailableControlMode(ControlModeId.ControllerJoystick, "Controller Joystick", "Coming soon"),
+        new ControllerJoystickControlMode(),
         new UnavailableControlMode(ControlModeId.FloatingJoystick, "Floating Joystick", "Coming soon"),
     };
 

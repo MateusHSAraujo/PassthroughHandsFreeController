@@ -12,6 +12,10 @@ public interface IControlMode
     /// <summary>False for modes that are listed in Settings but not implemented yet.</summary>
     bool IsAvailable { get; }
 
+    /// <summary>False when Rotate is redundant with Move (e.g. continuous joystick teleop drives both at once) —
+    /// the main menu greys out the Rotate button in that case.</summary>
+    bool HasDistinctRotateAction { get; }
+
     /// <summary>State entered when the user chooses "Move" in the main menu.</summary>
     IApplicationState CreateMoveEntryState(StateContext context);
 

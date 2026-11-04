@@ -125,6 +125,11 @@ public class RestThruAPI : MonoBehaviour
         ScheduleOperation(token => AlignHeading2D(TransformToFollow, RobotTransform, token), onCompleted);
     }
 
+    public void ScheduleJoystickTeleop(Action<bool> onCompleted)
+    {
+        ScheduleOperation(token => JoystickTeleopLoop(token), onCompleted);
+    }
+
     #endregion
 
     #region Operations
@@ -511,6 +516,59 @@ public class RestThruAPI : MonoBehaviour
         return true;
     }
 
+    #endregion
+
+    #region JoystickTeleop
+    [System.Serializable]
+    private class JoystickTeleopConfig
+    {
+        [Tooltip("Control period (sec)")]
+        public float dt = 0.1f;
+
+        [Tooltip("Thumbstick deadzone (0-1)")]
+        public float Deadzone = 0.15f;
+    }
+
+    [SerializeField] private JoystickTeleopConfig JoystickTeleopConfigurations;
+
+    private async Task<bool> JoystickTeleopLoop(CancellationToken ct)
+    {
+        float dt = JoystickTeleopConfigurations.dt;
+        float deadzone = JoystickTeleopConfigurations.Deadzone;
+        (float Vlin, float Vrot) = GetEffectiveGotoSpeeds();
+
+        while (true)
+        {
+            ct.ThrowIfCancellationRequested();
+
+            if (OVRInput.Get(OVRInput.RawButton.Start))
+            {
+                DebugLogger.Log("Joystick teleoperation: menu button pressed. Exiting.");
+                await ForceStopRobot();
+                return true;
+            }
+
+            Vector2 leftStick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.LTouch);
+            Vector2 rightStick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.RTouch);
+
+            float linearInput = Mathf.Abs(leftStick.y) > deadzone ? leftStick.y : 0f;
+            float rotationInput = Mathf.Abs(rightStick.x) > deadzone ? rightStick.x : 0f;
+
+            float linear = linearInput * Vlin;
+            // Negative sign: a right-pushed stick (rotationInput > 0) must produce a clockwise turn.
+            // AlignHeading2D establishes Vr=+Delta, Vl=-Delta => CCW turn, so CW needs the opposite sign here.
+            float rotation = -rotationInput * Vrot;
+
+            RestThruServer.Velocity2Payload vel2 = new(linear + rotation, linear - rotation);
+            RestThruServer.ServerResponse response = await RestThruServer.SendPayloadToServer(RestThruServer.Velocity2Endpoint, "PUT", vel2, ct);
+            if (response.Result != UnityWebRequest.Result.Success)
+            {
+                DebugLogger.LogError($"Joystick teleoperation: vel2 request failed. response={response}");
+            }
+
+            await Task.Delay((int)(dt * 1000), ct);
+        }
+    }
     #endregion
 
     #endregion

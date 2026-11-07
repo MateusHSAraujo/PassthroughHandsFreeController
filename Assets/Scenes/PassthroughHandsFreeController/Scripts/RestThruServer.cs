@@ -150,11 +150,32 @@ public static class RestThruServer
         return found;
     }
 
+    /// <summary>
+    /// Accepts any TLS certificate (self-signed, untrusted, or with a host/IP mismatch).
+    /// The connection is still encrypted, but the server identity is NOT verified:
+    /// the user is trusted to type the right server address.
+    /// </summary>
+    private sealed class AcceptAnyCertificateHandler : CertificateHandler
+    {
+        protected override bool ValidateCertificate(byte[] certificateData) => true;
+    }
+
+    /// <summary>Attaches <see cref="AcceptAnyCertificateHandler"/> to HTTPS requests.</summary>
+    private static void ApplyTlsPolicy(UnityWebRequest request)
+    {
+        if (request.uri != null && request.uri.Scheme == Uri.UriSchemeHttps)
+        {
+            request.certificateHandler = new AcceptAnyCertificateHandler();
+            request.disposeCertificateHandlerOnDispose = true;
+        }
+    }
+
     public static async Task<bool> CheckServerReachabilityAsync(int timeoutSeconds = 2)
     {
         string url = LimitsEndpoint;
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
+            ApplyTlsPolicy(request);
             request.timeout = Mathf.Max(1, timeoutSeconds);
             var operation = request.SendWebRequest();
             while (!operation.isDone)
@@ -165,7 +186,7 @@ public static class RestThruServer
             // HTTP 200 from /motion/limits (or any valid HTTP response < 500) confirms the RestThru server is reachable
             bool reachable = request.result == UnityWebRequest.Result.Success ||
                              (request.result != UnityWebRequest.Result.ConnectionError && request.responseCode > 0 && request.responseCode < 500);
-            DebugLogger.Log($"Server reachability check ({url}): reachable={reachable} (code={request.responseCode}, result={request.result})");
+            DebugLogger.Log($"Server reachability check ({url}): reachable={reachable} (code={request.responseCode}, result={request.result}, error={request.error})");
 
             if (request.result == UnityWebRequest.Result.Success && url == LimitsEndpoint)
             {
@@ -281,6 +302,7 @@ public static class RestThruServer
 
         using (UnityWebRequest request = new(endpoint, verb))
         {
+            ApplyTlsPolicy(request);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");

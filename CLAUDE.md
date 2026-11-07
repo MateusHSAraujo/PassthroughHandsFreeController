@@ -29,7 +29,7 @@ Guidance for Claude Code in this repository. Longer architecture write-ups live 
 - **Name quirk**: the class is `SelecTargetUI` (no first "t") in `SelectTargetUI.cs`. Do not "fix" it in passing, because scene and prefab references depend on it.
 - **Wheelchair safety**: this code moves a real, occupied wheelchair. Do not loosen tolerances, timeouts, speed limits or the emergency-stop path without being explicitly asked, and call out any change that affects motion behavior.
 - `RestThruServer` sends `"{}"` when `payload == null` (avoids Unity's empty `UploadHandlerRaw` exception). Preserve this.
-- Server scheme/host/port persist via `SettingsStore`, defaulting to `http://192.168.0.2:8080`. HTTPS requires a valid certificate (no permissive `CertificateHandler`).
+- Server scheme/host/port persist via `SettingsStore`, defaulting to `http://192.168.0.2:8080`. HTTPS accepts any server certificate (self-signed, untrusted or name-mismatched) through `RestThruServer.AcceptAnyCertificateHandler`, by the user's explicit choice (2026-11-07): traffic is encrypted but the server identity is not verified.
 
 ## Working with Unity safely
 

@@ -62,8 +62,21 @@ public class SettingsUI : CameraGazeControlledCanvas
             DebugLogger.LogWarning("SettingsUI layout references are missing; building layout at runtime. Run Rebuild Layout on the prefab.");
             RebuildLayout();
         }
+        ApplySpeedLimits();
         BindEvents();
     }
+
+    /// <summary>The SpeedLimits asset overrides the ranges/presets baked into the prefab steppers.</summary>
+    private void ApplySpeedLimits()
+    {
+        SpeedRange linear = AppSettings.LinearRange;
+        SpeedRange angular = AppSettings.AngularRange;
+        _linearStepper.Configure(linear.Min, linear.Max, linear.Step, PresetValues(linear));
+        _angularStepper.Configure(angular.Min, angular.Max, angular.Step, PresetValues(angular));
+    }
+
+    private static float[] PresetValues(SpeedRange range) =>
+        new[] { range.GetPreset(SpeedPreset.Slow), range.GetPreset(SpeedPreset.Normal), range.GetPreset(SpeedPreset.Fast) };
 
     private void BindEvents()
     {
@@ -87,17 +100,6 @@ public class SettingsUI : CameraGazeControlledCanvas
     private void OnDestroy()
     {
         if (Instance == this) Instance = null;
-        RestThruServer.LimitsUpdated -= OnLimitsUpdated;
-    }
-
-    private void OnEnable()
-    {
-        RestThruServer.LimitsUpdated += OnLimitsUpdated;
-    }
-
-    private void OnDisable()
-    {
-        RestThruServer.LimitsUpdated -= OnLimitsUpdated;
     }
 
     #region Layout
@@ -164,13 +166,13 @@ public class SettingsUI : CameraGazeControlledCanvas
         // Linear speed
         _linearLabel = AddSectionLabel(panel, "Linear speed", theme);
         _linearStepper = GazeStepper.Create(panel, "LinearSpeed",
-            AppSettings.LinearSpeedMin, AppSettings.LinearSpeedMax, AppSettings.LinearSpeedStep, "mm/s",
+            AppSettings.LinearRange.Min, AppSettings.LinearRange.Max, AppSettings.LinearRange.Step, "mm/s",
             BuildPresets(AppSettings.GetLinearPreset), OptionDwellTime, theme, RowHeight);
 
         // Angular speed
         _angularLabel = AddSectionLabel(panel, "Rotation speed", theme);
         _angularStepper = GazeStepper.Create(panel, "AngularSpeed",
-            AppSettings.AngularSpeedMin, AppSettings.AngularSpeedMax, AppSettings.AngularSpeedStep, string.Empty,
+            AppSettings.AngularRange.Min, AppSettings.AngularRange.Max, AppSettings.AngularRange.Step, string.Empty,
             BuildPresets(AppSettings.GetAngularPreset), OptionDwellTime, theme, RowHeight);
 
         // Room mesh
@@ -244,8 +246,8 @@ public class SettingsUI : CameraGazeControlledCanvas
 
         if (_serverSubtitle != null) _serverSubtitle.text = $"{RestThruServer.BaseUrl}  <size=80%>(edit)</size>";
 
-        _linearStepper.SetValue(settings.LinearSpeed, false);
-        _angularStepper.SetValue(settings.AngularSpeed, false);
+        _linearStepper.SetValue(settings.LinearSpeed, false, false);
+        _angularStepper.SetValue(settings.AngularSpeed, false, false);
         _meshSelector.Select(settings.MeshVisible ? 0 : 1, false);
         _anchorsSelector.Select(settings.DebugAnchorsVisible ? 0 : 1, false);
 
@@ -256,21 +258,12 @@ public class SettingsUI : CameraGazeControlledCanvas
             if (modes[i].Id == active.Id) _modeSelector.Select(i, false);
         }
         RefreshModeDescription();
-        OnLimitsUpdated(RestThruServer.ServerMaxWheelSpeed);
     }
 
     private void RefreshModeDescription()
     {
         if (_modeDescription == null) return;
         _modeDescription.text = ControlModeRegistry.Active.Description;
-    }
-
-    private void OnLimitsUpdated(float? serverMax)
-    {
-        if (_linearStepper == null) return;
-        string suffix = serverMax.HasValue ? $"  <size=85%>(server max {serverMax.Value:0})</size>" : string.Empty;
-        _linearLabel.text = "Linear speed" + suffix;
-        _angularLabel.text = "Rotation speed" + suffix;
     }
 
     #endregion

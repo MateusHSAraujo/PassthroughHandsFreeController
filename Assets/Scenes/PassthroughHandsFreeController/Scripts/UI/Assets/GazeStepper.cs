@@ -95,17 +95,37 @@ public class GazeStepper : MonoBehaviour
 
         for (int i = 0; i < presetButtons.Length && i < presetValues.Length; i++)
         {
-            float presetValue = presetValues[i];
-            if (presetButtons[i] != null) presetButtons[i].onClick.AddListener(() => SetValue(presetValue, true));
+            int index = i; // read the value at click time so Configure can change it
+            if (presetButtons[i] != null) presetButtons[i].onClick.AddListener(() => SetValue(presetValues[index], true, false));
         }
         decreaseButton.onClick.AddListener(() => SetValue(_value - step, true));
         increaseButton.onClick.AddListener(() => SetValue(_value + step, true));
     }
 
-    public void SetValue(float value, bool notify)
+    /// <summary>
+    /// Overrides the range and preset values serialized in the prefab (e.g. from the SpeedLimits asset).
+    /// Preset values are matched by position; extra values are ignored. The current value is re-clamped silently.
+    /// </summary>
+    public void Configure(float newMin, float newMax, float newStep, float[] newPresetValues)
+    {
+        min = newMin;
+        max = Mathf.Max(newMin, newMax);
+        step = Mathf.Max(0.0001f, newStep);
+        if (newPresetValues != null)
+        {
+            for (int i = 0; i < presetValues.Length && i < newPresetValues.Length; i++) presetValues[i] = newPresetValues[i];
+        }
+        SetValue(_value, false, false);
+    }
+
+    /// <summary>Sets the value, clamped to [min, max]. snap=true also rounds it to the step grid (-/+ buttons).</summary>
+    public void SetValue(float value, bool notify, bool snap = true)
     {
         Bind();
-        float clamped = Mathf.Clamp(Mathf.Round(value / step) * step, min, max);
+        // Keep the exact min/max reachable even when they are not multiples of step.
+        float clamped = Mathf.Clamp(snap ? Mathf.Round(value / step) * step : value, min, max);
+        if (value <= min) clamped = min;
+        else if (value >= max) clamped = max;
         bool changed = !Mathf.Approximately(clamped, _value);
         _value = clamped;
         Refresh();
@@ -120,10 +140,14 @@ public class GazeStepper : MonoBehaviour
             valueText.text = $"{_value:0}{suffix}";
         }
 
+        // At most one preset is highlighted (the first match), even if several presets share a value.
+        bool highlighted = false;
         for (int i = 0; i < presetButtons.Length && i < presetValues.Length; i++)
         {
+            bool selected = !highlighted && Mathf.Approximately(presetValues[i], _value);
+            highlighted |= selected;
             var parts = GazeUIFactory.GetParts(presetButtons[i]);
-            if (parts?.Interactor != null) GazeUIFactory.ApplySelectionState(parts, Mathf.Approximately(presetValues[i], _value), true);
+            if (parts?.Interactor != null) GazeUIFactory.ApplySelectionState(parts, selected, true);
         }
     }
 }

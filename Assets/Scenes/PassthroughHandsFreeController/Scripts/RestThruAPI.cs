@@ -838,31 +838,28 @@ public class RestThruAPI : MonoBehaviour
     #endregion
 
     #region Utils
-    private static float ClampToServerMax(float speed)
-    {
-        float? serverMax = RestThruServer.ServerMaxWheelSpeed;
-        return serverMax.HasValue ? Mathf.Min(speed, serverMax.Value) : speed;
-    }
-
-    /// <summary>Nominal GotoPoint2D speeds from user settings, clamped by the server-reported max wheel speed.</summary>
+    /// <summary>
+    /// Nominal speeds from user settings. SettingsStore already keeps them inside the SpeedLimits asset ranges,
+    /// which are the only speed limits: nothing is read from the server.
+    /// </summary>
     public (float linear, float angular) GetEffectiveGotoSpeeds()
     {
         AppSettings settings = SettingsStore.Current;
-        float linear = ClampToServerMax(settings.LinearSpeed);
-        float angular = ClampToServerMax(settings.AngularSpeed);
-        DebugLogger.Log($"Effective GotoPoint2D speeds: Vlin={linear} Vrot={angular} (serverMax={RestThruServer.ServerMaxWheelSpeed})");
+        float linear = settings.LinearSpeed;
+        float angular = settings.AngularSpeed;
+        DebugLogger.Log($"Effective speeds: Vlin={linear} Vrot={angular}");
         return (linear, angular);
     }
 
     /// <summary>
-    /// AlignHeading2D max rotation: the configured maxVrot scaled by AngularSpeed / AngularSpeedDefault,
-    /// never above the configured maxVrot, then clamped by the server-reported max wheel speed.
+    /// AlignHeading2D max rotation: the configured maxVrot scaled by AngularSpeed / angular Default (SpeedLimits),
+    /// never above the configured maxVrot.
     /// </summary>
     public float GetEffectiveAlignMaxVrot()
     {
         float configuredMax = AlignHeadingConfigurations.maxVrot;
-        float scale = SettingsStore.Current.AngularSpeed / AppSettings.AngularSpeedDefault;
-        float effective = ClampToServerMax(Mathf.Min(configuredMax, configuredMax * scale));
+        float scale = SettingsStore.Current.AngularSpeed / AppSettings.AngularRange.Default;
+        float effective = Mathf.Min(configuredMax, configuredMax * scale);
         DebugLogger.Log($"Effective AlignHeading2D maxVrot={effective} (configured={configuredMax}, scale={scale})");
         return effective;
     }

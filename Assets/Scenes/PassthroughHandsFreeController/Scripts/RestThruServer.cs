@@ -41,14 +41,6 @@ public static class RestThruServer
     public static string StopEndpoint => $"{BaseUrl}/motion/stop";
     public static string LimitsEndpoint => $"{BaseUrl}/motion/limits";
 
-    /// <summary>
-    /// Maximum wheel speed reported by GET /motion/limits, or null when unknown.
-    /// Parsed leniently (see <see cref="TryParseMaxWheelSpeed"/>) because the exact response schema may vary between servers.
-    /// </summary>
-    public static float? ServerMaxWheelSpeed { get; private set; }
-
-    public static event Action<float?> LimitsUpdated;
-
     public static void ResetToDefault()
     {
         SettingsStore.Update(s =>
@@ -57,7 +49,6 @@ public static class RestThruServer
             s.Host = DefaultServerIP;
             s.Port = DefaultServerPort;
         });
-        ClearLimits();
         DebugLogger.Log($"RestThru server reset to default: {BaseUrl}");
     }
 
@@ -82,7 +73,6 @@ public static class RestThruServer
             s.Host = trimmedHost;
             s.Port = parsedPort;
         });
-        ClearLimits();
 
         DebugLogger.Log($"RestThru server configured to {BaseUrl}");
         errorMessage = string.Empty;
@@ -118,36 +108,6 @@ public static class RestThruServer
 
         errorMessage = string.Empty;
         return true;
-    }
-
-    private static void ClearLimits()
-    {
-        if (ServerMaxWheelSpeed == null) return;
-        ServerMaxWheelSpeed = null;
-        LimitsUpdated?.Invoke(null);
-    }
-
-    /// <summary>
-    /// Extracts a maximum wheel speed from a /motion/limits JSON body: the smallest positive numeric value
-    /// whose key mentions "vel" or "speed" (and not "acc"). Returns false when nothing matches.
-    /// </summary>
-    public static bool TryParseMaxWheelSpeed(string json, out float maxWheelSpeed)
-    {
-        maxWheelSpeed = 0f;
-        if (string.IsNullOrEmpty(json)) return false;
-
-        bool found = false;
-        foreach (Match m in Regex.Matches(json, "\"([^\"]+)\"\\s*:\\s*(-?\\d+(?:\\.\\d+)?)"))
-        {
-            string key = m.Groups[1].Value.ToLowerInvariant();
-            if (!(key.Contains("vel") || key.Contains("speed")) || key.Contains("acc")) continue;
-            if (!float.TryParse(m.Groups[2].Value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float value)) continue;
-            value = Mathf.Abs(value);
-            if (value <= 0f) continue;
-            if (!found || value < maxWheelSpeed) maxWheelSpeed = value;
-            found = true;
-        }
-        return found;
     }
 
     /// <summary>
@@ -187,19 +147,7 @@ public static class RestThruServer
             bool reachable = request.result == UnityWebRequest.Result.Success ||
                              (request.result != UnityWebRequest.Result.ConnectionError && request.responseCode > 0 && request.responseCode < 500);
             DebugLogger.Log($"Server reachability check ({url}): reachable={reachable} (code={request.responseCode}, result={request.result}, error={request.error})");
-
-            if (request.result == UnityWebRequest.Result.Success && url == LimitsEndpoint)
-            {
-                string body = request.downloadHandler?.text;
-                float? parsed = TryParseMaxWheelSpeed(body, out float maxSpeed) ? maxSpeed : null;
-                if (parsed == null) DebugLogger.LogWarning($"Could not find a max speed in /motion/limits response: {body}");
-                if (parsed != ServerMaxWheelSpeed)
-                {
-                    ServerMaxWheelSpeed = parsed;
-                    DebugLogger.Log($"Server max wheel speed: {(parsed.HasValue ? parsed.Value.ToString() : "unknown")}");
-                    LimitsUpdated?.Invoke(parsed);
-                }
-            }
+            // The response body is intentionally ignored: speed limits come only from the app's SpeedLimits asset.
             return reachable;
         }
     }

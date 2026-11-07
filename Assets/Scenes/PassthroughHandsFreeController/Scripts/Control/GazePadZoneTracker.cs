@@ -243,7 +243,7 @@ public class GazePadZoneTracker
     {
         switch (status)
         {
-            case PadStatus.NeedsCenter: return "Look at the center to start";
+            case PadStatus.NeedsCenter: return "Look at the center";
             case PadStatus.Ready: return "Look at an arrow to move";
             case PadStatus.Arming: return "Hold…";
             case PadStatus.TrackingLost: return "Tracking lost";

@@ -39,6 +39,12 @@ public class FloatingJoystickUI : CameraGazeControlledCanvas, ITeleopInput, ITel
     [SerializeField] private Graphic[] _wedgeIcons = new Graphic[0];
     [SerializeField] private TextMeshProUGUI[] _wedgeLabels = new TextMeshProUGUI[4];
     [SerializeField] private TextMeshProUGUI _status;
+    [Tooltip("Centre rest zone. Pulses while the gaze must visit it. Falls back to the Status text's parent when empty.")]
+    [SerializeField] private Image _center;
+
+    [Header("Centre Prompt:")]
+    [Tooltip("Pulse frequency (Hz) of the centre while the pad waits for the gaze to visit it.")]
+    public float CenterPulseHz = 1.2f;
 
     // Palette shared with ToggleGazeInteractor presets.
     private static readonly Color IdleColor = new(1f, 1f, 1f, 0.10f);
@@ -46,6 +52,8 @@ public class FloatingJoystickUI : CameraGazeControlledCanvas, ITeleopInput, ITel
     private static readonly Color ActiveColor = new(0.18f, 0.58f, 1f, 1f);
     private static readonly Color IconColor = Color.white;
     private static readonly Color IconDimColor = new(1f, 1f, 1f, 0.35f);
+    private static readonly Color CenterIdleColor = new(1f, 1f, 1f, 0.06f);
+    private static readonly Color CenterPromptColor = new(0.18f, 0.58f, 1f, 0.55f);
 
     private GazePadZoneTracker _tracker;
     private AudioSource _audio;
@@ -75,6 +83,8 @@ public class FloatingJoystickUI : CameraGazeControlledCanvas, ITeleopInput, ITel
             DebugLogger.LogWarning("FloatingJoystickUI layout references are missing; building layout at runtime. Run Rebuild Layout on the prefab.");
             RebuildLayout();
         }
+        if (_center == null && _status != null && _status.transform.parent != null)
+            _center = _status.transform.parent.GetComponent<Image>();
     }
 
     private void OnDestroy()
@@ -211,6 +221,15 @@ public class FloatingJoystickUI : CameraGazeControlledCanvas, ITeleopInput, ITel
             foreach (Graphic icon in _wedgeIcons) if (icon != null) icon.color = iconColor;
         }
 
+        // The gaze must go back to the centre before any wedge can arm: make that impossible to miss.
+        bool promptCenter = waiting && !blocked;
+        if (_center != null)
+        {
+            float pulse = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * CenterPulseHz * 2f * Mathf.PI);
+            _center.color = promptCenter ? Color.Lerp(CenterIdleColor, CenterPromptColor, pulse) : CenterIdleColor;
+        }
+        _status.color = promptCenter ? Color.white : GazeUIFactory.SubtleTextColor;
+
         _status.text = _linkFault ? "No link. Stopping..." : GazePadZoneTracker.Describe(status, _tracker.Active);
     }
 
@@ -305,8 +324,9 @@ public class FloatingJoystickUI : CameraGazeControlledCanvas, ITeleopInput, ITel
         float centerSize = (inner - 4f) * 2f;
         RectTransform centerRt = CreateCentered("Center", discRt, new Vector2(centerSize, centerSize), Vector2.zero);
         Image center = centerRt.gameObject.AddComponent<Image>();
-        center.color = new Color(1f, 1f, 1f, 0.06f);
+        center.color = CenterIdleColor;
         center.raycastTarget = false;
+        _center = center;
         GazeUIFactory.ApplyRounded(center, theme, centerSize * 0.5f);
 
         _status = GazeUIFactory.CreateText(centerRt, "Status", string.Empty, 8.5f, GazeUIFactory.SubtleTextColor,

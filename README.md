@@ -149,7 +149,7 @@ Assets/Scenes/PassthroughHandsFreeController/
 │   └── WheelchairManager.prefab # Wheelchair anchor & control orchestrator
 ├── Scripts/
 │   ├── AplicationController/ # State machine (ApplicationController, StateContext, states)
-│   ├── Control/             # IControlMode + ControlModeRegistry (gaze dwell; joystick modes planned)
+│   ├── Control/             # IControlMode + ControlModeRegistry (gaze dwell, controller joystick; floating joystick planned)
 │   ├── Settings/            # AppSettings + SettingsStore (persisted user settings)
 │   ├── UI/                  # Gaze-dwell interactors, canvas controllers, line-of-sight positioning
 │   ├── AnchorManager.cs     # 6-DoF wheelchair tracking from Touch controllers

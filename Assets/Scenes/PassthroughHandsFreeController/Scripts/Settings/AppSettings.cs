@@ -56,7 +56,11 @@ public class AppSettings
     public float LinearSpeed = LinearSpeedDefault;
     public float AngularSpeed = AngularSpeedDefault;
 
-    public bool MeshVisible = true;
+    // Debug visuals default to hidden: end users should not see the room mesh or the anchor axes.
+    public bool MeshVisible = false;
+
+    // Debug axes drawn on both controllers and on the wheelchair anchor (AnchorManager).
+    public bool DebugAnchorsVisible = false;
 
     public ControlModeId ControlMode = ControlModeId.GazeDwell;
 

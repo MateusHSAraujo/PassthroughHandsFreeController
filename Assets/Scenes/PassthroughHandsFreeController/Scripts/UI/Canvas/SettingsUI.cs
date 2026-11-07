@@ -23,7 +23,7 @@ public class SettingsUI : CameraGazeControlledCanvas
     public TMP_FontAsset RegularFont;
     public TMP_FontAsset MediumFont;
     public TMP_FontAsset BoldFont;
-    public Vector2 PanelSize = new(340f, 404f);
+    public Vector2 PanelSize = new(340f, 458f);
     public float RowHeight = 32f;
 
     [Header("Gaze Dwell Settings:")]
@@ -41,12 +41,13 @@ public class SettingsUI : CameraGazeControlledCanvas
     [SerializeField] private GazeStepper _linearStepper;
     [SerializeField] private GazeStepper _angularStepper;
     [SerializeField] private GazeOptionSelector _meshSelector;
+    [SerializeField] private GazeOptionSelector _anchorsSelector;
     [SerializeField] private GazeOptionSelector _modeSelector;
     [SerializeField] private TextMeshProUGUI _modeDescription;
     [SerializeField] private Button _backButton;
 
     private bool HasLayout => _serverButton != null && _linearStepper != null && _angularStepper != null &&
-                              _meshSelector != null && _modeSelector != null && _backButton != null;
+                              _meshSelector != null && _anchorsSelector != null && _modeSelector != null && _backButton != null;
 
     protected override void Awake()
     {
@@ -72,6 +73,7 @@ public class SettingsUI : CameraGazeControlledCanvas
         _linearStepper.ValueChanged += v => SettingsStore.Update(s => s.LinearSpeed = v);
         _angularStepper.ValueChanged += v => SettingsStore.Update(s => s.AngularSpeed = v);
         _meshSelector.OptionSelected += i => SettingsStore.Update(s => s.MeshVisible = i == 0);
+        _anchorsSelector.OptionSelected += i => SettingsStore.Update(s => s.DebugAnchorsVisible = i == 0);
 
         var modes = ControlModeRegistry.All;
         for (int i = 0; i < modes.Count && i < _modeSelector.OptionCount; i++) _modeSelector.SetAvailable(i, modes[i].IsAvailable);
@@ -176,6 +178,11 @@ public class SettingsUI : CameraGazeControlledCanvas
         _meshSelector = GazeOptionSelector.Create(panel, "MeshVisibility", new[] { "Visible", "Hidden" },
             OptionDwellTime, theme, RowHeight);
 
+        // Debug anchors (controller + wheelchair axes)
+        AddSectionLabel(panel, "Debug anchors", theme);
+        _anchorsSelector = GazeOptionSelector.Create(panel, "DebugAnchors", new[] { "Visible", "Hidden" },
+            OptionDwellTime, theme, RowHeight);
+
         // Control mode
         AddSectionLabel(panel, "Control mode", theme);
         var modes = ControlModeRegistry.All;
@@ -240,6 +247,7 @@ public class SettingsUI : CameraGazeControlledCanvas
         _linearStepper.SetValue(settings.LinearSpeed, false);
         _angularStepper.SetValue(settings.AngularSpeed, false);
         _meshSelector.Select(settings.MeshVisible ? 0 : 1, false);
+        _anchorsSelector.Select(settings.DebugAnchorsVisible ? 0 : 1, false);
 
         IControlMode active = ControlModeRegistry.Active;
         var modes = ControlModeRegistry.All;

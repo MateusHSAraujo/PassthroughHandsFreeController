@@ -71,11 +71,15 @@ public class MovementSequenceController : MonoBehaviour
         return;
     }
 
-    public void StartJoystickTeleop()
+    /// <summary>Starts continuous teleoperation driven by <paramref name="input"/> (joystick, floating pad, ...).</summary>
+    public void StartTeleop(ITeleopInput input)
     {
-        DebugLogger.Log("Movement sequence controller triggered: joystick teleoperation");
-        ServerAPI.ScheduleJoystickTeleop(AbortMovementSequence);
+        DebugLogger.Log($"Movement sequence controller triggered: teleoperation ({input.GetType().Name})");
+        ServerAPI.ScheduleTeleop(input, AbortMovementSequence);
     }
+
+    /// <summary>Thumbstick deadzone configured on RestThruAPI (used by the controller-joystick mode).</summary>
+    public float TeleopDeadzone => ServerAPI != null ? ServerAPI.TeleopDeadzone : 0.15f;
 
     private void AbortMovementSequence(bool res)
     {

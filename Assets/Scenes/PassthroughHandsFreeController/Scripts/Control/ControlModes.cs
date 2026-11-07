@@ -8,6 +8,7 @@ public class GazeDwellControlMode : IControlMode
     public string Description => "Dwell on the floor to pick a target";
     public bool IsAvailable => true;
     public bool HasDistinctRotateAction => true;
+    public string MoveActionSubtitle => "Gaze at floor to choose destination";
 
     public IApplicationState CreateMoveEntryState(StateContext context) => new SelectingMovementTargetState(context);
     public IApplicationState CreateRotateEntryState(StateContext context) => new RotatingState(context);
@@ -15,8 +16,7 @@ public class GazeDwellControlMode : IControlMode
 
 /// <summary>
 /// Placeholder for a mode that is not implemented yet. Shown disabled in Settings.
-/// Implementing joystick teleoperation will need a continuous vel2 streaming path in RestThruAPI
-/// and an emergency stop that works outside scheduled operations.
+/// Continuous modes should implement ITeleopInput and use RestThruAPI.ScheduleTeleop (keeps the X+Y emergency stop).
 /// </summary>
 public class UnavailableControlMode : IControlMode
 {
@@ -25,6 +25,7 @@ public class UnavailableControlMode : IControlMode
     public string Description { get; }
     public bool IsAvailable => false;
     public bool HasDistinctRotateAction => false;
+    public string MoveActionSubtitle => string.Empty;
 
     public UnavailableControlMode(ControlModeId id, string displayName, string description)
     {
@@ -45,9 +46,27 @@ public class ControllerJoystickControlMode : IControlMode
     public string Description => "Left stick drives, right stick rotates. Left Menu button to exit.";
     public bool IsAvailable => true;
     public bool HasDistinctRotateAction => false;
+    public string MoveActionSubtitle => "Drive with the thumbsticks";
 
     public IApplicationState CreateMoveEntryState(StateContext context) => new JoystickTeleopState(context);
     public IApplicationState CreateRotateEntryState(StateContext context) => new JoystickTeleopState(context);
+}
+
+/// <summary>
+/// Hands-free continuous teleoperation: a gaze pad anchored to the wheelchair. Looking at an arrow wedge moves
+/// the chair (after a short arm delay); looking away stops it. Armrest buttons open the menu and minimize the pad.
+/// </summary>
+public class FloatingJoystickControlMode : IControlMode
+{
+    public ControlModeId Id => ControlModeId.FloatingJoystick;
+    public string DisplayName => "Floating Joystick";
+    public string Description => "Look at an arrow to move, look away to stop.";
+    public bool IsAvailable => true;
+    public bool HasDistinctRotateAction => false;
+    public string MoveActionSubtitle => "Drive by looking at the pad";
+
+    public IApplicationState CreateMoveEntryState(StateContext context) => new FloatingJoystickState(context);
+    public IApplicationState CreateRotateEntryState(StateContext context) => new FloatingJoystickState(context);
 }
 
 public static class ControlModeRegistry
@@ -56,7 +75,7 @@ public static class ControlModeRegistry
     {
         new GazeDwellControlMode(),
         new ControllerJoystickControlMode(),
-        new UnavailableControlMode(ControlModeId.FloatingJoystick, "Floating Joystick", "Coming soon"),
+        new FloatingJoystickControlMode(),
     };
 
     public static IReadOnlyList<IControlMode> All => s_modes;

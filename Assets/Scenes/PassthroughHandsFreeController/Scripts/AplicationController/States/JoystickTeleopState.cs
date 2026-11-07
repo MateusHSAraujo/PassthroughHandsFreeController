@@ -5,7 +5,7 @@ public class JoystickTeleopState : ApplicationState
     public override void Enter()
     {
         MovementController.OnMovementSequenceEnded += OnTeleopEnded;
-        MovementController.StartJoystickTeleop();
+        MovementController.StartTeleop(new ThumbstickTeleopInput(MovementController.TeleopDeadzone));
     }
 
     public override void Exit()

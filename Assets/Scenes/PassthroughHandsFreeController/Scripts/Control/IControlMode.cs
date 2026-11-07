@@ -16,6 +16,9 @@ public interface IControlMode
     /// the main menu greys out the Rotate button in that case.</summary>
     bool HasDistinctRotateAction { get; }
 
+    /// <summary>Subtitle shown under the main menu "Move" card for this mode.</summary>
+    string MoveActionSubtitle { get; }
+
     /// <summary>State entered when the user chooses "Move" in the main menu.</summary>
     IApplicationState CreateMoveEntryState(StateContext context);
 

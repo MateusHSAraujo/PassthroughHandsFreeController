@@ -12,6 +12,10 @@ public class AnchorManager : MonoBehaviour
     [SerializeField] private LineRendererDebugTool lineRendererDebugToolL;
     [SerializeField] private LineRendererDebugTool lineRendererDebugToolR;
 
+    public Transform LeftControllerAnchor => LeftAnchor;
+    public Transform RightControllerAnchor => RightAnchor;
+    public Vector3 ControllerMidpoint => (LeftAnchor.position + RightAnchor.position) / 2f;
+
     private void OnEnable()
     {
         SettingsStore.Changed += OnSettingsChanged;
@@ -43,7 +47,7 @@ public class AnchorManager : MonoBehaviour
     void Start()
     {
         if (!LeftAnchor) DebugLogger.LogError("Missing Left Anchor");
-        if (!RightAnchor) DebugLogger.LogError("Missing Left Anchor");
+        if (!RightAnchor) DebugLogger.LogError("Missing Right Anchor");
         DebugLogger.Log("Anchor Manager initiated");
         if (Wheelchair_prefab)
         {

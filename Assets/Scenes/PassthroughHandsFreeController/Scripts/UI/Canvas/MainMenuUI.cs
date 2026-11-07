@@ -32,6 +32,7 @@ public class MainMenuUI : CameraGazeControlledCanvas
 
     private int _statusCheckVersion = 0;
     private Coroutine _periodicStatusCoroutine;
+    private TextMeshProUGUI _moveButtonSubtitle;
 
     protected override void Awake()
     {
@@ -147,7 +148,8 @@ public class MainMenuUI : CameraGazeControlledCanvas
                 "Move Wheelchair",
                 "Gaze at floor to choose destination",
                 GazeButtonStyle.Primary,
-                out _);
+                out TextMeshProUGUI moveSub);
+            _moveButtonSubtitle = moveSub;
         }
 
         if (RotateButton != null)
@@ -362,6 +364,13 @@ public class MainMenuUI : CameraGazeControlledCanvas
         if (ConfigButton != null) ConfigButton.SetIsOnWithoutNotify(false);
     }
 
+    private void RefreshMoveSubtitle()
+    {
+        if (_moveButtonSubtitle == null) return;
+        string subtitle = ControlModeRegistry.Active.MoveActionSubtitle;
+        if (!string.IsNullOrEmpty(subtitle)) _moveButtonSubtitle.text = subtitle;
+    }
+
     private void RefreshRotateButtonAvailability()
     {
         if (RotateButton == null) return;
@@ -382,6 +391,7 @@ public class MainMenuUI : CameraGazeControlledCanvas
     {
         ResetButtons();
         RefreshRotateButtonAvailability();
+        RefreshMoveSubtitle();
         StartPeriodicStatusCheck();
         base.ShowCanvas();
     }
@@ -390,6 +400,7 @@ public class MainMenuUI : CameraGazeControlledCanvas
     {
         ResetButtons();
         RefreshRotateButtonAvailability();
+        RefreshMoveSubtitle();
         StartPeriodicStatusCheck();
         base.ShowCanvasAtDirectionOf(targetPosition);
     }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 using System.Threading;
+using UnityEngine.Serialization;
 
 // TODO : Fix name typo
 public class RestThruAPI : MonoBehaviour
@@ -34,6 +35,45 @@ public class RestThruAPI : MonoBehaviour
     void OnDestroy()
     {
         if (Instance == this) Instance = null;
+    }
+
+    void OnEnable()
+    {
+        OVRManager.HMDUnmounted += OnHmdUnmounted;
+        OVRManager.InputFocusLost += OnInputFocusLost;
+    }
+
+    void OnDisable()
+    {
+        OVRManager.HMDUnmounted -= OnHmdUnmounted;
+        OVRManager.InputFocusLost -= OnInputFocusLost;
+    }
+
+    // Safety: stop any running operation when the app can no longer be driven by the user.
+    // In the Editor, focus changes happen constantly (switching windows), so only device builds react to them.
+    void OnApplicationPause(bool paused)
+    {
+        if (paused && !Application.isEditor) SafetyStop("application paused");
+    }
+
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus && !Application.isEditor) SafetyStop("application lost focus");
+    }
+
+    private void OnHmdUnmounted() => SafetyStop("headset unmounted");
+    private void OnInputFocusLost() => SafetyStop("input focus lost");
+
+    /// <summary>
+    /// Cancels the running operation through the emergency-stop path, so ScheduleOperation sends /motion/stop.
+    /// Best effort: if the OS suspends the app, the stop is sent when it resumes. A server-side watchdog is still recommended.
+    /// </summary>
+    private void SafetyStop(string reason)
+    {
+        if (State != APIStates.BUSY) return;
+        DebugLogger.LogWarning($"Safety stop: {reason}. State -> EMERGENCY_STOP");
+        State = APIStates.EMERGENCY_STOP;
+        currtOperationCt?.Cancel();
     }
 
     void Update()
@@ -125,10 +165,13 @@ public class RestThruAPI : MonoBehaviour
         ScheduleOperation(token => AlignHeading2D(TransformToFollow, RobotTransform, token), onCompleted);
     }
 
-    public void ScheduleJoystickTeleop(Action<bool> onCompleted)
+    /// <summary>Streams continuous velocity commands from <paramref name="input"/> until it requests exit, fails or is cancelled.</summary>
+    public void ScheduleTeleop(ITeleopInput input, Action<bool> onCompleted, ITeleopCommandFilter filter = null)
     {
-        ScheduleOperation(token => JoystickTeleopLoop(token), onCompleted);
+        ScheduleOperation(token => StreamTeleopLoop(input, filter ?? new PassThroughTeleopFilter(), token), onCompleted);
     }
+
+    public float TeleopDeadzone => TeleopStreamConfigurations.Deadzone;
 
     #endregion
 
@@ -518,55 +561,276 @@ public class RestThruAPI : MonoBehaviour
 
     #endregion
 
-    #region JoystickTeleop
+    #region Teleop streaming
     [System.Serializable]
-    private class JoystickTeleopConfig
+    private class TeleopStreamConfig
     {
-        [Tooltip("Control period (sec)")]
+        [Tooltip("Keepalive / maximum send period for non-zero commands (sec)")]
         public float dt = 0.1f;
 
-        [Tooltip("Thumbstick deadzone (0-1)")]
+        [Tooltip("Thumbstick deadzone (0-1), used by the controller-joystick mode")]
         public float Deadzone = 0.15f;
+
+        [Tooltip("HTTP timeout for streamed vel2/stop requests (sec). Generous because the robot is reached over WiFi and answered by a small on-board computer. A stalled vel2 never delays a stop: it is aborted as soon as the command changes or is released.")]
+        public int RequestTimeoutSeconds = 5;
+
+        [Tooltip("While a stop is not acknowledged by the server, it is re-sent at this period (sec).")]
+        public float StopRetryInterval = 0.5f;
+
+        [Tooltip("When the user leaves the mode (Menu/Minimize), the stop is attempted for at most this long (sec). The mode is left even if the robot cannot be reached, so a dead link never traps the user in the app.")]
+        public float ExitStopGraceSeconds = 2f;
     }
 
-    [SerializeField] private JoystickTeleopConfig JoystickTeleopConfigurations;
+    [FormerlySerializedAs("JoystickTeleopConfigurations")]
+    [SerializeField] private TeleopStreamConfig TeleopStreamConfigurations;
 
-    private async Task<bool> JoystickTeleopLoop(CancellationToken ct)
+    private enum RequestOutcome { Ok, Failed, Aborted }
+
+    /// <summary>One in-flight streamed request (vel2 or stop). Aborted by cancelling <see cref="Cts"/>.</summary>
+    private sealed class TeleopRequest
     {
-        float dt = JoystickTeleopConfigurations.dt;
-        float deadzone = JoystickTeleopConfigurations.Deadzone;
-        (float Vlin, float Vrot) = GetEffectiveGotoSpeeds();
+        public Task<RestThruServer.ServerResponse> Task;
+        public CancellationTokenSource Cts;
+        public bool IsStop;
+        public TeleopCommand Command;
+        public float StartedAt;
+    }
 
-        while (true)
+    private TeleopRequest StartTeleopRequest(bool isStop, TeleopCommand sendCommand, TeleopCommand identity, float linearSpeed, float angularSpeed, int timeout, CancellationToken ct)
+    {
+        CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+        Task<RestThruServer.ServerResponse> task;
+        if (isStop)
         {
-            ct.ThrowIfCancellationRequested();
-
-            if (OVRInput.Get(OVRInput.RawButton.Start))
-            {
-                DebugLogger.Log("Joystick teleoperation: menu button pressed. Exiting.");
-                await ForceStopRobot();
-                return true;
-            }
-
-            Vector2 leftStick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.LTouch);
-            Vector2 rightStick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.RTouch);
-
-            float linearInput = Mathf.Abs(leftStick.y) > deadzone ? leftStick.y : 0f;
-            float rotationInput = Mathf.Abs(rightStick.x) > deadzone ? rightStick.x : 0f;
-
-            float linear = linearInput * Vlin;
-            // Negative sign: a right-pushed stick (rotationInput > 0) must produce a clockwise turn.
-            // AlignHeading2D establishes Vr=+Delta, Vl=-Delta => CCW turn, so CW needs the opposite sign here.
-            float rotation = -rotationInput * Vrot;
-
+            task = RestThruServer.SendPayloadToServer<object>(RestThruServer.StopEndpoint, "PUT", null, cts.Token, timeout);
+        }
+        else
+        {
+            float linear = sendCommand.Linear * linearSpeed;
+            float rotation = sendCommand.Angular * angularSpeed; // +Angular = CCW: Vr = +rotation, Vl = -rotation
             RestThruServer.Velocity2Payload vel2 = new(linear + rotation, linear - rotation);
-            RestThruServer.ServerResponse response = await RestThruServer.SendPayloadToServer(RestThruServer.Velocity2Endpoint, "PUT", vel2, ct);
-            if (response.Result != UnityWebRequest.Result.Success)
-            {
-                DebugLogger.LogError($"Joystick teleoperation: vel2 request failed. response={response}");
-            }
+            task = RestThruServer.SendPayloadToServer(RestThruServer.Velocity2Endpoint, "PUT", vel2, cts.Token, timeout);
+        }
+        return new TeleopRequest { Task = task, Cts = cts, IsStop = isStop, Command = identity, StartedAt = Time.realtimeSinceStartup };
+    }
 
-            await Task.Delay((int)(dt * 1000), ct);
+    /// <summary>Cancels an in-flight request (aborts the web request) and makes sure its exception is observed.</summary>
+    private static void AbortTeleopRequest(TeleopRequest request)
+    {
+        if (request == null) return;
+        request.Cts.Cancel();
+        request.Task.ContinueWith(t => { _ = t.Exception; request.Cts.Dispose(); }, TaskScheduler.Default);
+    }
+
+    private static RequestOutcome EvaluateTeleopRequest(TeleopRequest request, out string detail)
+    {
+        detail = string.Empty;
+        Task<RestThruServer.ServerResponse> task = request.Task;
+        request.Cts.Dispose();
+        if (task.IsCanceled) return RequestOutcome.Aborted;
+        if (task.IsFaulted)
+        {
+            Exception ex = task.Exception?.GetBaseException();
+            if (ex is OperationCanceledException) return RequestOutcome.Aborted;
+            detail = ex?.Message ?? "unknown error";
+            return RequestOutcome.Failed;
+        }
+        if (task.Result.Result != UnityWebRequest.Result.Success)
+        {
+            detail = task.Result.ToString();
+            return RequestOutcome.Failed;
+        }
+        return RequestOutcome.Ok;
+    }
+
+    /// <summary>
+    /// Continuous teleoperation shared by all streaming control modes. Polls the input every frame without ever
+    /// blocking on the network:
+    /// - A zero command aborts any in-flight vel2 and sends /motion/stop immediately; an unacknowledged stop is re-sent
+    ///   every StopRetryInterval until the server answers.
+    /// - A non-zero command sends vel2 when it changes or every dt as keepalive.
+    /// - A failed or timed-out request never ends the operation: it latches a link fault (reported to the input when it
+    ///   implements <see cref="ITeleopLinkListener"/>), the command is treated as zero until the stop is acknowledged and
+    ///   the input has been released, and only then can motion resume.
+    /// - An exit request ends the operation as soon as a stop attempt made after the request finished (acknowledged or
+    ///   failed) or ExitStopGraceSeconds elapsed: an unreachable robot never traps the user in the app.
+    /// - Any cancellation (emergency stop, safety stop) aborts the request in flight and stops the robot before propagating.
+    /// </summary>
+    private async Task<bool> StreamTeleopLoop(ITeleopInput input, ITeleopCommandFilter filter, CancellationToken ct)
+    {
+        float dt = TeleopStreamConfigurations.dt;
+        int timeout = Mathf.Max(1, TeleopStreamConfigurations.RequestTimeoutSeconds);
+        float stopRetryInterval = Mathf.Max(0.1f, TeleopStreamConfigurations.StopRetryInterval);
+        float exitGrace = Mathf.Max(0.5f, TeleopStreamConfigurations.ExitStopGraceSeconds);
+        (float Vlin, float Vrot) = GetEffectiveGotoSpeeds();
+        ITeleopLinkListener linkListener = input as ITeleopLinkListener;
+
+        TeleopRequest inFlight = null;
+        TeleopCommand sentCommand = TeleopCommand.Zero;
+        bool robotStopped = false;   // a stop was acknowledged and no vel2 has been sent since
+        bool faulted = false;        // link fault latched: motion is blocked until stop acknowledged and input released
+        float lastSendTime = float.NegativeInfinity;
+        float nextStopTime = 0f;
+        float extraStopAt = -1f;     // after aborting a vel2, send one more stop in case that vel2 reached the server late
+        float lastFrameTime = Time.realtimeSinceStartup;
+        float exitStart = -1f;       // when the exit request was first seen
+        bool exitStopAttempted = false; // a stop that started after the exit request has finished (ok or failed)
+
+        filter.Reset();
+        input.OnTeleopStarted();
+        DebugLogger.Log($"Teleop streaming started: input={input.GetType().Name} Vlin={Vlin} Vrot={Vrot} dt={dt} timeout={timeout}s");
+
+        try
+        {
+            while (true)
+            {
+                ct.ThrowIfCancellationRequested();
+
+                float now = Time.realtimeSinceStartup;
+                float frameDt = now - lastFrameTime;
+                lastFrameTime = now;
+
+                // 1. Collect the result of the request in flight, if it finished.
+                if (inFlight != null && inFlight.Task.IsCompleted)
+                {
+                    bool wasStop = inFlight.IsStop;
+                    bool startedAfterExit = exitStart >= 0f && inFlight.StartedAt >= exitStart;
+                    RequestOutcome outcome = EvaluateTeleopRequest(inFlight, out string detail);
+                    inFlight = null;
+                    if (wasStop && startedAfterExit && outcome != RequestOutcome.Aborted) exitStopAttempted = true;
+
+                    if (outcome == RequestOutcome.Ok)
+                    {
+                        if (wasStop) robotStopped = true;
+                    }
+                    else if (outcome == RequestOutcome.Failed)
+                    {
+                        DebugLogger.LogError($"Teleop streaming: {(wasStop ? "stop" : "vel2")} request failed ({detail}). Link fault: stopping robot and waiting for the input to be released.");
+                        robotStopped = false;
+                        nextStopTime = wasStop ? now + stopRetryInterval : now;
+                        if (!faulted)
+                        {
+                            faulted = true;
+                            linkListener?.OnTeleopLinkFault();
+                        }
+                    }
+                }
+
+                // 2. Effective command.
+                bool exiting = input.ExitRequested;
+                if (exiting && exitStart < 0f) exitStart = now;
+                TeleopCommand raw = input.Current;
+
+                if (faulted && !exiting && raw.IsZero && robotStopped && inFlight == null)
+                {
+                    DebugLogger.Log("Teleop streaming: link recovered (stop acknowledged, input released).");
+                    faulted = false;
+                    linkListener?.OnTeleopLinkRecovered();
+                }
+
+                TeleopCommand target = (faulted || exiting) ? TeleopCommand.Zero : raw;
+
+                // 3. Act.
+                if (exiting && inFlight == null && (robotStopped || exitStopAttempted))
+                {
+                    if (robotStopped) DebugLogger.Log("Teleop streaming: exit requested and stop acknowledged.");
+                    else DebugLogger.LogWarning("Teleop streaming: exit requested but the stop was not acknowledged (link down). Leaving the mode anyway.");
+                    return true;
+                }
+
+                if (exiting && now - exitStart >= exitGrace)
+                {
+                    DebugLogger.LogWarning($"Teleop streaming: exit requested but no stop acknowledgement within {exitGrace:0.#}s. Leaving the mode and sending one last stop.");
+                    AbortTeleopRequest(inFlight);
+                    inFlight = null;
+                    _ = ForceStopDetached(timeout);
+                    return true;
+                }
+
+                if (target.IsZero)
+                {
+                    filter.Reset();
+                    if (inFlight != null && !inFlight.IsStop)
+                    {
+                        AbortTeleopRequest(inFlight);
+                        inFlight = null;
+                        robotStopped = false;
+                        nextStopTime = now;
+                        extraStopAt = now + 0.3f;
+                    }
+
+                    if (inFlight == null && !robotStopped && now >= nextStopTime)
+                    {
+                        inFlight = StartTeleopRequest(true, TeleopCommand.Zero, TeleopCommand.Zero, Vlin, Vrot, timeout, ct);
+                        nextStopTime = now + stopRetryInterval;
+                    }
+                    else if (inFlight == null && robotStopped && extraStopAt > 0f && now >= extraStopAt)
+                    {
+                        extraStopAt = -1f;
+                        robotStopped = false; // force one more stop
+                        nextStopTime = now;
+                    }
+                }
+                else
+                {
+                    extraStopAt = -1f;
+                    // A stop in flight must finish first; a vel2 for a different command is replaced right away.
+                    if (inFlight != null && !inFlight.IsStop && !inFlight.Command.Approximately(target))
+                    {
+                        AbortTeleopRequest(inFlight);
+                        inFlight = null;
+                    }
+
+                    if (inFlight == null && (robotStopped || !sentCommand.Approximately(target) || now - lastSendTime >= dt))
+                    {
+                        TeleopCommand shaped = filter.Apply(target, frameDt); // hook for a future acceleration ramp
+                        inFlight = StartTeleopRequest(false, shaped, target, Vlin, Vrot, timeout, ct);
+                        sentCommand = target;
+                        lastSendTime = now;
+                        robotStopped = false;
+                    }
+                }
+
+                await Task.Yield();
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            DebugLogger.LogWarning("Teleop streaming cancelled. Stopping robot.");
+            AbortTeleopRequest(inFlight);
+            await TryStopRobot();
+            throw;
+        }
+        finally
+        {
+            input.OnTeleopEnded();
+            DebugLogger.Log("Teleop streaming ended.");
+        }
+    }
+
+    /// <summary>Last-chance stop sent after the loop has given up waiting. Not tied to the operation token and never throws.</summary>
+    private static async Task ForceStopDetached(int timeout)
+    {
+        try
+        {
+            await RestThruServer.SendPayloadToServer<object>(RestThruServer.StopEndpoint, "PUT", null, CancellationToken.None, timeout);
+        }
+        catch (Exception ex)
+        {
+            DebugLogger.LogError($"Final stop could not be delivered: {ex.Message}");
+        }
+    }
+
+    /// <summary>ForceStopRobot that never throws (used on cancellation paths).</summary>
+    private async Task TryStopRobot()
+    {
+        try
+        {
+            await ForceStopRobot();
+        }
+        catch (Exception ex)
+        {
+            DebugLogger.LogError($"Couldn't reach server to stop the robot. {ex.Message}");
         }
     }
     #endregion

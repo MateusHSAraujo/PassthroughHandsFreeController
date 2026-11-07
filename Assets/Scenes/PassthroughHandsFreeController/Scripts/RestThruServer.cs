@@ -273,7 +273,7 @@ public static class RestThruServer
         return SendPayloadToServer<object>(endpoint, verb, payload, CancellationToken.None);
     }
 
-    public static async Task<ServerResponse> SendPayloadToServer<T>(string endpoint, string verb, T payload, CancellationToken ct)
+    public static async Task<ServerResponse> SendPayloadToServer<T>(string endpoint, string verb, T payload, CancellationToken ct, int timeoutSeconds = 10)
     {
         string json = (payload == null) ? "{}" : JsonUtility.ToJson(payload);
         DebugLogger.Log($"endpoint={endpoint} ; verb={verb} ; json={json}");
@@ -284,7 +284,7 @@ public static class RestThruServer
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
-            request.timeout = 10;
+            request.timeout = Mathf.Max(1, timeoutSeconds);
 
             var operation = request.SendWebRequest();
 

@@ -40,6 +40,9 @@ public class CameraGazeControlledCanvas : MonoBehaviour
 
     public bool IsVisible => visible;
 
+    /// <summary>True once the canvas is visible and the anti-gaze-through input delay has elapsed.</summary>
+    protected bool IsInputUnlocked => visible && CanvasGroup != null && CanvasGroup.interactable;
+
     protected virtual void Awake()
     {
         DebugLogger.Log("Initiating a Camera Gaze Controlled Canvas");

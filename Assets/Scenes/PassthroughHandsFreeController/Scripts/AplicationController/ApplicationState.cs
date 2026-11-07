@@ -6,6 +6,9 @@ public class StateContext
     public MainMenuUI MainMenuUI { get; private set; }
     public ServerConfigUI ServerConfigUI { get; private set; }
     public SettingsUI SettingsUI { get; private set; }
+    public FloatingJoystickUI FloatingJoystickUI { get; private set; }
+    public ArmrestButtonUI LeftArmrestButton { get; private set; }
+    public ArmrestButtonUI RightArmrestButton { get; private set; }
     public ApplicationController Controller { get; private set; }
 
     /// <summary>The control mode currently selected in settings (falls back to the default mode).</summary>
@@ -17,8 +20,14 @@ public class StateContext
                         MainMenuUI mainMenuUI,
                         ApplicationController controller,
                         ServerConfigUI serverConfigUI = null,
-                        SettingsUI settingsUI = null)
+                        SettingsUI settingsUI = null,
+                        FloatingJoystickUI floatingJoystickUI = null,
+                        ArmrestButtonUI leftArmrestButton = null,
+                        ArmrestButtonUI rightArmrestButton = null)
     {
+        FloatingJoystickUI = floatingJoystickUI;
+        LeftArmrestButton = leftArmrestButton;
+        RightArmrestButton = rightArmrestButton;
         CameraGazeCursor = cameraGazeCursor;
         MovementController = movementController;
         ConfirmRotationUI = confirmRotationUI;

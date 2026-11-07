@@ -41,14 +41,6 @@ public static class RestThruServer
     public static string StopEndpoint => $"{BaseUrl}/motion/stop";
     public static string LimitsEndpoint => $"{BaseUrl}/motion/limits";
 
-    /// <summary>
-    /// Maximum wheel speed reported by GET /motion/limits, or null when unknown.
-    /// Parsed leniently (see <see cref="TryParseMaxWheelSpeed"/>) because the exact response schema may vary between servers.
-    /// </summary>
-    public static float? ServerMaxWheelSpeed { get; private set; }
-
-    public static event Action<float?> LimitsUpdated;
-
     public static void ResetToDefault()
     {
         SettingsStore.Update(s =>
@@ -57,7 +49,6 @@ public static class RestThruServer
             s.Host = DefaultServerIP;
             s.Port = DefaultServerPort;
         });
-        ClearLimits();
         DebugLogger.Log($"RestThru server reset to default: {BaseUrl}");
     }
 
@@ -82,7 +73,6 @@ public static class RestThruServer
             s.Host = trimmedHost;
             s.Port = parsedPort;
         });
-        ClearLimits();
 
         DebugLogger.Log($"RestThru server configured to {BaseUrl}");
         errorMessage = string.Empty;
@@ -120,34 +110,24 @@ public static class RestThruServer
         return true;
     }
 
-    private static void ClearLimits()
+    /// <summary>
+    /// Accepts any TLS certificate (self-signed, untrusted, or with a host/IP mismatch).
+    /// The connection is still encrypted, but the server identity is NOT verified:
+    /// the user is trusted to type the right server address.
+    /// </summary>
+    private sealed class AcceptAnyCertificateHandler : CertificateHandler
     {
-        if (ServerMaxWheelSpeed == null) return;
-        ServerMaxWheelSpeed = null;
-        LimitsUpdated?.Invoke(null);
+        protected override bool ValidateCertificate(byte[] certificateData) => true;
     }
 
-    /// <summary>
-    /// Extracts a maximum wheel speed from a /motion/limits JSON body: the smallest positive numeric value
-    /// whose key mentions "vel" or "speed" (and not "acc"). Returns false when nothing matches.
-    /// </summary>
-    public static bool TryParseMaxWheelSpeed(string json, out float maxWheelSpeed)
+    /// <summary>Attaches <see cref="AcceptAnyCertificateHandler"/> to HTTPS requests.</summary>
+    private static void ApplyTlsPolicy(UnityWebRequest request)
     {
-        maxWheelSpeed = 0f;
-        if (string.IsNullOrEmpty(json)) return false;
-
-        bool found = false;
-        foreach (Match m in Regex.Matches(json, "\"([^\"]+)\"\\s*:\\s*(-?\\d+(?:\\.\\d+)?)"))
+        if (request.uri != null && request.uri.Scheme == Uri.UriSchemeHttps)
         {
-            string key = m.Groups[1].Value.ToLowerInvariant();
-            if (!(key.Contains("vel") || key.Contains("speed")) || key.Contains("acc")) continue;
-            if (!float.TryParse(m.Groups[2].Value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float value)) continue;
-            value = Mathf.Abs(value);
-            if (value <= 0f) continue;
-            if (!found || value < maxWheelSpeed) maxWheelSpeed = value;
-            found = true;
+            request.certificateHandler = new AcceptAnyCertificateHandler();
+            request.disposeCertificateHandlerOnDispose = true;
         }
-        return found;
     }
 
     public static async Task<bool> CheckServerReachabilityAsync(int timeoutSeconds = 2)
@@ -155,6 +135,7 @@ public static class RestThruServer
         string url = LimitsEndpoint;
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
+            ApplyTlsPolicy(request);
             request.timeout = Mathf.Max(1, timeoutSeconds);
             var operation = request.SendWebRequest();
             while (!operation.isDone)
@@ -165,20 +146,8 @@ public static class RestThruServer
             // HTTP 200 from /motion/limits (or any valid HTTP response < 500) confirms the RestThru server is reachable
             bool reachable = request.result == UnityWebRequest.Result.Success ||
                              (request.result != UnityWebRequest.Result.ConnectionError && request.responseCode > 0 && request.responseCode < 500);
-            DebugLogger.Log($"Server reachability check ({url}): reachable={reachable} (code={request.responseCode}, result={request.result})");
-
-            if (request.result == UnityWebRequest.Result.Success && url == LimitsEndpoint)
-            {
-                string body = request.downloadHandler?.text;
-                float? parsed = TryParseMaxWheelSpeed(body, out float maxSpeed) ? maxSpeed : null;
-                if (parsed == null) DebugLogger.LogWarning($"Could not find a max speed in /motion/limits response: {body}");
-                if (parsed != ServerMaxWheelSpeed)
-                {
-                    ServerMaxWheelSpeed = parsed;
-                    DebugLogger.Log($"Server max wheel speed: {(parsed.HasValue ? parsed.Value.ToString() : "unknown")}");
-                    LimitsUpdated?.Invoke(parsed);
-                }
-            }
+            DebugLogger.Log($"Server reachability check ({url}): reachable={reachable} (code={request.responseCode}, result={request.result}, error={request.error})");
+            // The response body is intentionally ignored: speed limits come only from the app's SpeedLimits asset.
             return reachable;
         }
     }
@@ -273,7 +242,7 @@ public static class RestThruServer
         return SendPayloadToServer<object>(endpoint, verb, payload, CancellationToken.None);
     }
 
-    public static async Task<ServerResponse> SendPayloadToServer<T>(string endpoint, string verb, T payload, CancellationToken ct)
+    public static async Task<ServerResponse> SendPayloadToServer<T>(string endpoint, string verb, T payload, CancellationToken ct, int timeoutSeconds = 10)
     {
         string json = (payload == null) ? "{}" : JsonUtility.ToJson(payload);
         DebugLogger.Log($"endpoint={endpoint} ; verb={verb} ; json={json}");
@@ -281,10 +250,11 @@ public static class RestThruServer
 
         using (UnityWebRequest request = new(endpoint, verb))
         {
+            ApplyTlsPolicy(request);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
-            request.timeout = 10;
+            request.timeout = Mathf.Max(1, timeoutSeconds);
 
             var operation = request.SendWebRequest();
 

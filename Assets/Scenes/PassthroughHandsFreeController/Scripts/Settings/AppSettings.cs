@@ -34,18 +34,10 @@ public class AppSettings
     public const string DefaultHost = "192.168.0.2";
     public const int DefaultPort = 8080;
 
-    // Linear speed (nominal cruise speed of GotoPoint2D)
-    public const float LinearSpeedMin = 20f;
-    public const float LinearSpeedMax = 200f;
-    public const float LinearSpeedDefault = 100f;
-    public const float LinearSpeedStep = 10f;
-
-    // Angular speed (in-place rotation speed). The default matches the previous hardcoded
-    // GotoPoint2D initial-alignment Vrot. AlignHeading2D scales from it but never exceeds its configured maxVrot.
-    public const float AngularSpeedMin = 20f;
-    public const float AngularSpeedMax = 100f;
-    public const float AngularSpeedDefault = 50f;
-    public const float AngularSpeedStep = 5f;
+    // Speed ranges, defaults and presets live in the SpeedLimits asset (Inspector-editable). They are the only
+    // limits on the speeds the app sends: nothing is read from the server.
+    public static SpeedRange LinearRange => SpeedLimits.Instance.EffectiveLinear;
+    public static SpeedRange AngularRange => SpeedLimits.Instance.EffectiveAngular;
 
     public int Version = CurrentVersion;
 
@@ -53,28 +45,24 @@ public class AppSettings
     public string Host = DefaultHost;
     public int Port = DefaultPort;
 
-    public float LinearSpeed = LinearSpeedDefault;
-    public float AngularSpeed = AngularSpeedDefault;
+    // NaN = "not set yet": Sanitize replaces it with the asset default (field initializers run during
+    // deserialization, where Resources.Load is not allowed).
+    public float LinearSpeed = float.NaN;
+    public float AngularSpeed = float.NaN;
 
-    public bool MeshVisible = true;
+    // Debug visuals default to hidden: end users should not see the room mesh or the anchor axes.
+    public bool MeshVisible = false;
+
+    // Debug axes drawn on both controllers and on the wheelchair anchor (AnchorManager).
+    public bool DebugAnchorsVisible = false;
 
     public ControlModeId ControlMode = ControlModeId.GazeDwell;
 
     public string SchemePrefix => Scheme == ServerScheme.Https ? "https" : "http";
 
-    public static float GetLinearPreset(SpeedPreset preset) => preset switch
-    {
-        SpeedPreset.Slow => 60f,
-        SpeedPreset.Fast => 150f,
-        _ => LinearSpeedDefault
-    };
+    public static float GetLinearPreset(SpeedPreset preset) => LinearRange.GetPreset(preset);
 
-    public static float GetAngularPreset(SpeedPreset preset) => preset switch
-    {
-        SpeedPreset.Slow => 30f,
-        SpeedPreset.Fast => 80f,
-        _ => AngularSpeedDefault
-    };
+    public static float GetAngularPreset(SpeedPreset preset) => AngularRange.GetPreset(preset);
 
     /// <summary>Clamps every field into its valid range. Never throws.</summary>
     public void Sanitize()
@@ -84,8 +72,8 @@ public class AppSettings
         if (Port < 1 || Port > 65535) Port = DefaultPort;
         if (!Enum.IsDefined(typeof(ServerScheme), Scheme)) Scheme = ServerScheme.Http;
 
-        LinearSpeed = float.IsNaN(LinearSpeed) ? LinearSpeedDefault : Mathf.Clamp(LinearSpeed, LinearSpeedMin, LinearSpeedMax);
-        AngularSpeed = float.IsNaN(AngularSpeed) ? AngularSpeedDefault : Mathf.Clamp(AngularSpeed, AngularSpeedMin, AngularSpeedMax);
+        LinearSpeed = LinearRange.Clamp(LinearSpeed);
+        AngularSpeed = AngularRange.Clamp(AngularSpeed);
 
         if (!Enum.IsDefined(typeof(ControlModeId), ControlMode)) ControlMode = ControlModeId.GazeDwell;
 

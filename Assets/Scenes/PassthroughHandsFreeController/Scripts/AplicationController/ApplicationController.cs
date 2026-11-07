@@ -9,6 +9,13 @@ public class ApplicationController : MonoBehaviour
     [SerializeField] private ServerConfigUI serverConfigUI;
     [SerializeField] private SettingsUI settingsUI;
 
+    [Header("Floating Joystick mode")]
+    [SerializeField] private FloatingJoystickUI floatingJoystickUI;
+    [Tooltip("Left armrest dwell button: Menu.")]
+    [SerializeField] private ArmrestButtonUI leftArmrestButton;
+    [Tooltip("Right armrest dwell button: Minimize / Open pad.")]
+    [SerializeField] private ArmrestButtonUI rightArmrestButton;
+
     private MainMenuUI mainMenuUI;
 
     private Coroutine pingControlCoroutine;
@@ -32,6 +39,10 @@ public class ApplicationController : MonoBehaviour
         if (settingsUI == null) settingsUI = SettingsUI.Instance;
         if (settingsUI == null) DebugLogger.LogWarning("SettingsUI instance not found. The settings button will open the server config directly.");
 
+        if (floatingJoystickUI == null) floatingJoystickUI = FloatingJoystickUI.Instance;
+        if (floatingJoystickUI == null || leftArmrestButton == null || rightArmrestButton == null)
+            DebugLogger.LogWarning("Floating Joystick UI or armrest buttons not assigned. That control mode will fall back to the main menu.");
+
         DebugLogger.Log($"Initial RestThru server address: {RestThruServer.BaseUrl} (Saved in PlayerPrefs: {RestThruServer.HasSavedConfiguration}); Settings: {JsonUtility.ToJson(SettingsStore.Current)}");
 
         // Creating context
@@ -41,7 +52,10 @@ public class ApplicationController : MonoBehaviour
                             mainMenuUI,
                             this,
                             serverConfigUI,
-                            settingsUI);
+                            settingsUI,
+                            floatingJoystickUI,
+                            leftArmrestButton,
+                            rightArmrestButton);
 
         // Always start directly in MainMenuState (with default 192.168.0.2:8080 if not configured yet)
         TransitionTo(new MainMenuState(stateContext));
